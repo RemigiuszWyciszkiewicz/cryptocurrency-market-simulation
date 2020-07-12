@@ -16,7 +16,7 @@ export class AppComponent {
   ) {}
 
   action() {
-    this._httpClient.get('/api/test').subscribe(console.log);
+    this._httpClient.get('/api/cryptocurrencies/all').subscribe(console.log);
   }
   redirect() {
     this.router.navigate(['./home'], { relativeTo: this.avtivatedRoute });
