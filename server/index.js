@@ -3,7 +3,7 @@ const compression = require("compression");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const _app_folder = "dist/my-dream-app";
+const _app_folder = "server/dist/my-dream-app";
 let PORT = process.env.PORT || 4100;
 const app = express();
 app.use(compression());
