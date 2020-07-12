@@ -2,9 +2,9 @@ const express = require("express");
 const compression = require("compression");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const _port = 4100;
-const _app_folder = "dist/my-dream-app";
 
+const _app_folder = "dist/my-dream-app";
+let PORT = process.env.PORT || 4100;
 const app = express();
 app.use(compression());
 app.use(cors());
@@ -38,11 +38,11 @@ app.all("*", function (req, res) {
 // });
 
 // ---- START UP THE NODE SERVER  ----
-app.listen(_port, function () {
+app.listen(PORT, function () {
   console.log(
     "Node Express server for " +
       app.name +
       " listening on http://localhost:" +
-      _port
+      PORT
   );
 });
