@@ -15,13 +15,13 @@ export class AppComponent {
     private avtivatedRoute: ActivatedRoute
   ) {}
 
-  action() {
+  action(): void {
     this._httpClient.get('/api/cryptocurrencies/all').subscribe(console.log);
   }
-  redirect() {
+  redirect(): void {
     this.router.navigate(['./home'], { relativeTo: this.avtivatedRoute });
   }
-  back() {
+  back(): void {
     this.router.navigate([''], { relativeTo: this.avtivatedRoute });
   }
 }

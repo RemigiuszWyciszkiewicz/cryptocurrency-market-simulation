@@ -3,9 +3,12 @@ const compression = require("compression");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cryptoRoute = require("./routers");
-
+const User = require("./data-access/mongose").User;
 const _app_folder = "server/dist/my-dream-app";
-
+const localStrategy = require("passport-local").Strategy;
+const JWTstrategy = require("passport-jwt").Strategy;
+const ExtractJWT = require("passport-jwt").ExtractJwt;
+const passport = require("passport");
 let PORT = process.env.PORT || 4100;
 
 const app = express();
@@ -14,37 +17,94 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use("/api/cryptocurrencies", cryptoRoute.A_router);
+passport.use(
+  "signup",
+  new localStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      try {
+        const user = await User.create({ email, password });
+
+        return done(null, user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  "login",
+  new localStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      console.log("login");
+      try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+          return done(null, false, { message: "User not found" });
+        }
+
+        const validate = await user.isValidPassword(password);
+        if (!validate) {
+          return done(null, false, { message: "Wrong Password" });
+        }
+        return done(null, user, { message: "Logged in Successfully" });
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: "top_secret",
+      jwtFromRequest: ExtractJWT.fromHeader("auth-token"),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+app.use(
+  "/api/cryptocurrencies",
+  passport.authenticate("jwt", { session: false }),
+  cryptoRoute.A_router
+);
 app.use("/api/wallet", cryptoRoute.A_router);
+app.use("/api/user", cryptoRoute.B_router);
 app.use("/api/news", cryptoRoute.A_router);
-app.use("/api/user", cryptoRoute.A_router);
 
 // ---- SERVE STATIC FILES ---- //
 app.get("*.*", express.static(_app_folder, { maxAge: "1y" }));
 
-// app.use((req, res, next) => {
-//   if (req.url === "/api/test") {
-//     res.send({ dupa: "jeża", age: 22 });
-//   } else {
-//     next();
-//   }
-// });
-
 app.get("api/test", (req, res) => {
-  console.log("api/test " + req.url);
   res.send("HELLO WORLD");
 });
 
 // ---- SERVE APLICATION PATHS ---- //
 app.all("*", function (req, res) {
-  console.log("app.all", req.url);
   res.status(200).sendFile(`/`, { root: _app_folder });
 });
 
-// // ---- SERVE STATIC FILES ---- //
-// app.get("*.*", function (req, res) {
-//   console.log(req.url);
-//   express.static(_app_folder, { maxAge: "0" });
+// app.use(function (err, req, res, next) {
+
+//   res.status(err.status || 500);
+//   res.json({ error: err });
 // });
 
 // ---- START UP THE NODE SERVER  ----
