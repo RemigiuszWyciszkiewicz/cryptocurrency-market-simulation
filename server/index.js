@@ -80,11 +80,12 @@ passport.use(
   )
 );
 
-app.use(
-  "/api/cryptocurrencies",
-  passport.authenticate("jwt", { session: false }),
-  cryptoRoute.A_router
-);
+app.use("/api/cryptocurrencies", cryptoRoute.A_router);
+// app.use(
+//   "/api/cryptocurrencies",
+//   passport.authenticate("jwt", { session: false }),
+//   cryptoRoute.A_router
+// );
 app.use("/api/wallet", cryptoRoute.A_router);
 app.use("/api/user", cryptoRoute.B_router);
 app.use("/api/news", cryptoRoute.A_router);
