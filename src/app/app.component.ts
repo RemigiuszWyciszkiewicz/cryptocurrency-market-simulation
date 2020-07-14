@@ -17,7 +17,7 @@ export class AppComponent {
   token;
   action(): void {
     this._httpClient
-      .post('/api/cryptocurrencies/api/user/signin', {
+      .post('/api/user/signin', {
         email: 'remigiusz@wp.pl',
         password: 'fwafafa',
       })
