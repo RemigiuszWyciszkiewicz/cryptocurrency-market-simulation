@@ -5,6 +5,13 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  {
+    path: 'test',
+    loadChildren: () =>
+      import('./crypto-data-access/crypto-data-access.module').then(
+        (m) => m.CryptoDataAccessModule
+      ),
+  },
   { path: '', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -19,7 +19,7 @@ export class AppComponent {
     this._httpClient.get('/api/cryptocurrencies/all').subscribe(console.log);
   }
   redirect(): void {
-    this.router.navigate(['./home'], { relativeTo: this.avtivatedRoute });
+    this.router.navigate(['./test'], { relativeTo: this.avtivatedRoute });
   }
   back(): void {
     this.router.navigate([''], { relativeTo: this.avtivatedRoute });
