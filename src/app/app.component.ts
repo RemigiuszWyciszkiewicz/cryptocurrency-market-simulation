@@ -14,9 +14,14 @@ export class AppComponent {
     private router: Router,
     private avtivatedRoute: ActivatedRoute
   ) {}
-
+  token;
   action(): void {
-    this._httpClient.get('/api/cryptocurrencies/all').subscribe(console.log);
+    this._httpClient
+      .post('/api/cryptocurrencies/api/user/signin', {
+        email: 'remigiusz@wp.pl',
+        password: 'fwafafa',
+      })
+      .subscribe((value) => (this.token = value));
   }
   redirect(): void {
     this.router.navigate(['./test'], { relativeTo: this.avtivatedRoute });
