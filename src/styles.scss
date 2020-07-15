@@ -1,0 +1,10 @@
+// -----------------------------------------------------------------------
+// --                             FONTS                                 --
+// -----------------------------------------------------------------------
+$roboto-font-path: "~roboto-fontface/fonts";
+@import "~roboto-fontface/css/roboto/sass/roboto-fontface";
+
+// $geomanist-font-path: "libs/shared/ui/fonts/src/lib/geomanist/files";
+// @import "libs/shared/ui/fonts/src/lib/geomanist/geomanist-typeface";
+
+@import "src/app/utils/global.styles.scss";

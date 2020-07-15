@@ -1,0 +1,24 @@
+<ng-template #statusWithMessage> {{ status }} - {{ message }} </ng-template>
+
+<div class="error-container mt-5 d-flex flex-column align-items-center">
+  <div class="header mb-5" *ngIf="header">{{ header }}</div>
+  <div class="error-content mb-5 d-flex flex-column align-items-center">
+    <div
+      class="description text-uppercase mb-3"
+      *ngIf="!status; else statusWithMessage"
+    >
+      {{ message }}
+    </div>
+    <div class="hint" *ngIf="hint">
+      {{ hint }}
+    </div>
+  </div>
+  <a *ngIf="showBackLink" class="btn btn-primary" [routerLink]="backLinkUrl">
+    <ng-container *ngIf="backLinkLabel; else defaultBackButtonLabel">
+      {{ backLinkLabel }}
+    </ng-container>
+    <ng-template #defaultBackButtonLabel>
+      Wróć na stronę główną
+    </ng-template>
+  </a>
+</div>

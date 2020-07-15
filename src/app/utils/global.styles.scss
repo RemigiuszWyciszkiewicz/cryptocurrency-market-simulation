@@ -1,0 +1,22 @@
+.btn {
+  border-width: 1px !important;
+  cursor: pointer !important;
+}
+
+// html {
+//   font-size: 14px;
+// }
+
+button {
+  cursor: pointer;
+
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+html {
+  font-size: 15px;
+  font-family: Helvetica;
+}
