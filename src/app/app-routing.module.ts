@@ -1,18 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
   {
-    path: 'test',
+    path: 'pages',
     loadChildren: () =>
-      import('./crypto-data-access/crypto-data-access.module').then(
-        (m) => m.CryptoDataAccessModule
-      ),
+      import('./pages/pages.module').then((m) => m.PagesModule),
   },
-  { path: '', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
