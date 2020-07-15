@@ -7,12 +7,13 @@
     "array-type": false,
     "arrow-return-shorthand": true,
     "curly": true,
+    "class-name": true,
     "deprecation": {
       "severity": "warning"
     },
     "component-class-suffix": true,
     "contextual-lifecycle": true,
-    "directive-class-suffix": true,
+    "directive-class-suffix": false,
     "directive-selector": [true, "attribute", "coin-market", "camelCase"],
     "component-selector": [true, "element", "coin-market", "kebab-case"],
     "eofline": true,
@@ -26,12 +27,7 @@
     "member-ordering": [
       true,
       {
-        "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
-        ]
+        "order": ["static-field", "instance-field", "static-method", "instance-method"]
       }
     ],
     "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
@@ -74,18 +70,9 @@
         }
       ]
     },
-    "variable-name": {
-      "options": ["ban-keywords", "check-format", "allow-pascal-case"]
-    },
+    "variable-name": false,
     "whitespace": {
-      "options": [
-        "check-branch",
-        "check-decl",
-        "check-operator",
-        "check-separator",
-        "check-type",
-        "check-typecast"
-      ]
+      "options": ["check-branch", "check-decl", "check-operator", "check-separator", "check-type", "check-typecast"]
     },
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,

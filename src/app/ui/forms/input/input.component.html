@@ -1,0 +1,29 @@
+<ng-container>
+  {{ label }}
+</ng-container>
+<ng-container>
+  <div class="col-md-12">
+    <input
+      nbInput
+      fullWidth
+      class="form-control"
+      [type]="type"
+      [placeholder]="placeholder"
+      [value]="value"
+      [class.input-danger]="isMarkedAsInvalid"
+      [disabled]="disabled"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      (focusout)="onTouched(); onChange($event.currentTarget.value, $event)"
+      (keyup)="onChange($event.currentTarget.value, $event)"
+      (mouseup)="onMouseUp($event.currentTarget.value)"
+      (change)="onChange($event.currentTarget.value, $event)"
+      (keydown)="onKeyDown($event)"
+    />
+  </div>
+</ng-container>
+<ng-container *ngIf="isMarkedAsInvalid && isTouched">
+  <div>error template</div>
+</ng-container>
+{{ errors | json }}

@@ -3,16 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'coin-market',
   templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'my-dream-app';
-  constructor(
-    private _httpClient: HttpClient,
-    private router: Router,
-    private avtivatedRoute: ActivatedRoute
-  ) {}
+  constructor(private _httpClient: HttpClient, private router: Router, private avtivatedRoute: ActivatedRoute) {}
   token;
   action(): void {
     this._httpClient

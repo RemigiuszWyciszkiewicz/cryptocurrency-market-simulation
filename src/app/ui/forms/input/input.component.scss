@@ -1,0 +1,11 @@
+input:disabled {
+  background-color: #fbfbfb;
+}
+input {
+  &::placeholder {
+    color: #757575;
+  }
+}
+div {
+  padding: 0;
+}
