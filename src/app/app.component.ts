@@ -23,7 +23,7 @@ export class AppComponent {
       .subscribe((value) => (this.token = value));
   }
   redirect(): void {
-    this.router.navigate(['./test'], { relativeTo: this.avtivatedRoute });
+    this.router.navigate(['./pages'], { relativeTo: this.avtivatedRoute });
   }
   back(): void {
     this.router.navigate([''], { relativeTo: this.avtivatedRoute });

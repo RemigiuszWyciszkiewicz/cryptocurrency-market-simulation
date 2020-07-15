@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
   {
-    path: 'pages',
-    loadChildren: () =>
-      import('../feature/profile/index').then((m) => m.ProfileModule),
+    path: '',
+    component: PagesComponent,
+    children: [
+      {
+        path: 'pages',
+        loadChildren: () =>
+          import('../feature/profile/index').then((m) => m.ProfileModule),
+      },
+    ],
   },
 ];
 
