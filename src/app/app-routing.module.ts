@@ -8,6 +8,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/pages.module').then((m) => m.PagesModule),
   },
+  {
+    path: 'hello',
+    loadChildren: () =>
+      import('@coin-market/feature/start-page').then((m) => m.StartPageModule),
+  },
   { path: '**', redirectTo: 'pages' },
 ];
 

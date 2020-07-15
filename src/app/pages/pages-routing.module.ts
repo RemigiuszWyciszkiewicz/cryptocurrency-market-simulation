@@ -11,7 +11,7 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () =>
-          import('src/app/feature/profile/index').then((m) => m.ProfileModule),
+          import('@coin-market/feature/profile').then((m) => m.ProfileModule),
       },
 
       {
