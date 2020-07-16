@@ -3,14 +3,14 @@ export class EndpointUrlBuilder {
 
   addApiUrl(value?: string): this {
     if (value) {
-      this._endpointArray.push('/', this.stripTrailingSlash(value));
+      this._endpointArray.push(this.stripTrailingSlash(value));
     }
     return this;
   }
 
   addRoute(apiUrl?: string): this {
     if (apiUrl) {
-      this._endpointArray.push(this.stripTrailingSlash(apiUrl));
+      this._endpointArray.push('/', this.stripTrailingSlash(apiUrl));
     }
     return this;
   }

@@ -1,27 +1,17 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'coin-market',
   templateUrl: './app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private router: Router, private avtivatedRoute: ActivatedRoute) {}
   title = 'my-dream-app';
-  constructor(private _httpClient: HttpClient, private router: Router, private avtivatedRoute: ActivatedRoute) {}
-  token;
-  action(): void {
-    this._httpClient
-      .post('/api/user/signin', {
-        email: 'remigiusz@wp.pl',
-        password: 'fwafafa',
-      })
-      .subscribe((value) => (this.token = value));
-  }
+
+  ngOnInit(): void {}
+
   redirect(): void {
     this.router.navigate(['./pages'], { relativeTo: this.avtivatedRoute });
-  }
-  back(): void {
-    this.router.navigate([''], { relativeTo: this.avtivatedRoute });
   }
 }

@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { UserFormBuilder } from '@coin-market/ui/forms';
 
 @Component({
   selector: 'coin-market-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
 })
-export class LoginFormComponent implements OnInit {
-  constructor(private userFormBuilder: UserFormBuilder) {}
+export class LoginFormComponent {
+  @Output() loginFormSubmit = new EventEmitter();
+  @Input() formGroup: FormGroup;
 
-  userFormGroup: FormGroup;
-
-  ngOnInit(): void {
-    this.userFormGroup = this.userFormBuilder.createLoginForm().getForm();
+  signIn(): void {
+    if (this.formGroup.valid) {
+      this.loginFormSubmit.next(this.formGroup.value);
+    }
   }
-
-  signIn(): void {}
 }

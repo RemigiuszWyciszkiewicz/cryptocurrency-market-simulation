@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { EndpointUrlBuilder } from './api-url-builder';
@@ -17,12 +18,15 @@ export interface ApiUrlConfiguration {
 }
 
 export abstract class ApiService<T, ID> implements RestService<T, ID> {
-  protected _apiServiceUrl = '/api';
+  protected _apiServiceUrl = 'http://localhost:4100/api';
   protected _httpClient: HttpClient;
 
-  constructor(protected httpClient: HttpClient) {}
+  constructor(protected _injector: Injector) {
+    this._httpClient = _injector.get(HttpClient);
+  }
 
   post(item: Partial<T> | FormData, contentType = 'application/json'): Observable<T> {
+    console.log(this.generateEndpointUrl());
     if (item instanceof FormData) {
       return this._httpClient.post<T>(`${this.generateEndpointUrl()}`, item);
     }
