@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+
+import { NotFoundPageComponent } from './ui/error-components/not-found-page/not-found-page.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,9 @@ const routes: Routes = [
     path: 'hello',
     loadChildren: () => import('@coin-market/feature/start-page').then((m) => m.StartPageModule),
   },
-  { path: '**', redirectTo: 'pages' },
+
+  { path: '**', redirectTo: 'not-found-page' },
+  { path: 'not-found-page', component: NotFoundPageComponent },
 ];
 
 @NgModule({

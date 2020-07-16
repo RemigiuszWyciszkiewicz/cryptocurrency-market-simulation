@@ -4,11 +4,16 @@
       *ngIf="isLoginFormVisible; else registerForm"
       [formGroup]="loginFormGroup"
       (loginFormSubmit)="signIn($event)"
-    ></coin-market-login-form>
+    >
+    </coin-market-login-form>
 
-    <ng-template #registerForm> <coin-market-register-form></coin-market-register-form></ng-template>
-    <coin-market-button class="d-inline" [formGroup]="registerFormGroup" (clickEvent)="changeForm()" text="Create an account">
-    </coin-market-button>
+    <ng-template #registerForm>
+      <coin-market-register-form
+        (registerFormSubmit)="createAccount($event)"
+        [formGroup]="registerFormGroup"
+      ></coin-market-register-form>
+    </ng-template>
+    <coin-market-button class="d-inline" text="Create an account" (clickEvent)="changeForm()"> </coin-market-button>
   </div>
   <div class="col-6 bg-info h-100">bacground</div>
 </div>
