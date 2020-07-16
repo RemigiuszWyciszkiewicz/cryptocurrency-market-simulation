@@ -1,12 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from './input/input.component';
+import { NgModule } from '@angular/core';
 import { FormsModule as AngularFormsModule, ReactiveFormsModule } from '@angular/forms';
-const COMPONENTS = [InputComponent];
+
+import { ControlErrorMessageComponent } from './control-error-message/control-error-message.component';
+import { InputComponent } from './input/input.component';
+
+const EXPORTED_COMPONENTS = [InputComponent];
+const COMPONENTS = [ControlErrorMessageComponent];
 
 @NgModule({
-  declarations: [...COMPONENTS],
-  exports: [...COMPONENTS, AngularFormsModule, ReactiveFormsModule],
+  declarations: [...EXPORTED_COMPONENTS, ...COMPONENTS],
+  exports: [...EXPORTED_COMPONENTS, AngularFormsModule, ReactiveFormsModule],
   imports: [CommonModule, AngularFormsModule, ReactiveFormsModule],
 })
 export class FormsModule {}

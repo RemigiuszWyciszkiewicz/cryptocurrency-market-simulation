@@ -1,12 +1,13 @@
-import { Injector, Input, OnInit, Directive } from '@angular/core';
+import { Injector, Input, OnInit, Directive, ContentChildren, QueryList } from '@angular/core';
 import { AbstractControl, ControlContainer, ControlValueAccessor, NgControl, ValidationErrors } from '@angular/forms';
+import { CustomInputErrorsDirective } from './custom-input-errors.directive';
 
 @Directive()
 export class BaseControlValueAccessor<T> implements ControlValueAccessor, OnInit {
+  @ContentChildren(CustomInputErrorsDirective) customErrors: QueryList<CustomInputErrorsDirective>;
+
   @Input() label: string;
-
   @Input() placeholder = '';
-
   @Input() disabled: boolean;
 
   value: T;

@@ -1,0 +1,35 @@
+<span class="invalid-input d-block">
+  <ng-container *ngIf="getErrorName() as errorName; else otherError">
+    <ng-container *ngIf="useDefaultMessage(errorName); else customTemplate">
+      <ng-container *ngTemplateOutlet="standardError; context: { errorName: errorName }"></ng-container>
+    </ng-container>
+    <ng-template #customTemplate>
+      <ng-container *ngTemplateOutlet="getTemplate(errorName); context: { error: errors[getErrorName()] }"></ng-container>
+    </ng-template>
+  </ng-container>
+</span>
+
+<ng-template #standardError let-errorName="errorName">
+  <ng-container [ngSwitch]="errorName">
+    <ng-container *ngSwitchCase="'required'">This field is required.</ng-container>
+    <ng-container *ngSwitchCase="'email'">Email address is invalid.</ng-container>
+    <ng-container *ngSwitchCase="'minlength'">
+      This field may contain minimum of {{ errors['minlength']['requiredLength'] }} chars.
+    </ng-container>
+    <ng-container *ngSwitchCase="'maxlength'">
+      This field may contain maximum of {{ errors['maxlength']['requiredLength'] }} chars.
+    </ng-container>
+    <ng-container *ngSwitchCase="'min'"><span>Minimum value is </span>{{ errors['min']['min'] }}</ng-container>
+    <ng-container *ngSwitchCase="'max'"><span>Maximum value is </span>{{ errors['max']['max'] }}</ng-container>
+    <ng-container *ngSwitchCase="'notUnique'">Value can not duplicate.</ng-container>
+    <ng-container *ngSwitchCase="'lettersOnly'">Digits are not allowed.</ng-container>
+    <ng-container *ngSwitchCase="'integerNumber'">Value has to be integer number.</ng-container>
+    <ng-container *ngSwitchDefault>
+      <ng-container *ngTemplateOutlet="otherError"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #otherError>
+  Entered value is invalid.
+</ng-template>

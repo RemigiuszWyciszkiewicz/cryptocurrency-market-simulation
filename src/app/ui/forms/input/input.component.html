@@ -23,7 +23,11 @@
     />
   </div>
 </ng-container>
-<ng-container *ngIf="isMarkedAsInvalid && isTouched">
-  <div>error template</div>
+<ng-container>
+  <coin-market-control-error-message
+    *ngIf="isMarkedAsInvalid"
+    [errors]="errors"
+    [customErrors]="customErrors"
+  ></coin-market-control-error-message>
 </ng-container>
 {{ errors | json }}
