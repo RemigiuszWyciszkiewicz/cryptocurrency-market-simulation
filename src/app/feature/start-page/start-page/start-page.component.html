@@ -1,7 +1,8 @@
 <div class="row">
-  <div class="col-6">
+  <div class="col-6 p-5">
     <coin-market-login-form *ngIf="isLoginFormVisible; else registerForm"></coin-market-login-form>
     <ng-template #registerForm> <coin-market-register-form></coin-market-register-form></ng-template>
+    <coin-market-button class="d-inline" (clickEvent)="changeForm()" text="Create an account"> </coin-market-button>
   </div>
   <div class="col-6 bg-info h-100">bacground</div>
 </div>

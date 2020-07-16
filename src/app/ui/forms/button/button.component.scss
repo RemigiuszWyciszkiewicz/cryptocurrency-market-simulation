@@ -1,0 +1,92 @@
+@import 'src/app/utils/variables';
+
+@mixin btn-outline-style($color, $background-color-state) {
+  border: 1px solid $color;
+  color: $color;
+  background-color: transparent;
+  &:hover {
+    color: white;
+    background-color: $color;
+  }
+  &:focus {
+    background-color: $background-color-state;
+  }
+}
+
+@mixin btn-text-style($color, $background-color-state) {
+  color: $color;
+  border: 1px solid transparent;
+  &:hover {
+    border: 1px solid transparent;
+    background-color: $background-color-state;
+  }
+  &:focus {
+    border: 1px solid $background-color-state;
+    background-color: $background-color-state;
+  }
+}
+
+//   display: block;
+//   border: none;
+
+.btn {
+  .btn-link {
+    color: $color-primary;
+  }
+}
+
+a.not-active,
+span.not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  opacity: 0.3;
+}
+
+button:disabled {
+  cursor: default !important;
+}
+
+.btn-link {
+  color: $color-primary;
+}
+
+.btn-outline-primary {
+  @include btn-outline-style($color-primary, $button-state-background-color-primary);
+}
+
+.btn-outline-secondary {
+  @include btn-outline-style($color-secondary, $button-state-background-color-secondary);
+}
+
+.btn-outline-danger {
+  @include btn-outline-style($color-danger, $button-state-background-color-danger);
+}
+
+.btn-outline-success {
+  @include btn-outline-style($color-success, $button-state-background-color-success);
+}
+
+.btn-outline-warning {
+  @include btn-outline-style($color-warning, $button-state-background-color-warning);
+}
+
+.btn-text-primary {
+  @include btn-text-style($color-primary, $button-state-background-color-primary);
+}
+
+.btn-text-secondary {
+  @include btn-text-style($color-secondary, $button-state-background-color-secondary);
+}
+
+.btn-text-success {
+  @include btn-text-style($color-success, $button-state-background-color-success);
+}
+
+.btn-text-danger {
+  @include btn-text-style($color-danger, $button-state-background-color-danger);
+}
+
+.btn-text-warning {
+  @include btn-text-style($color-warning, $button-state-background-color-warning);
+}

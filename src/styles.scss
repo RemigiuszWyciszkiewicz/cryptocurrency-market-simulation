@@ -1,10 +1,27 @@
 // -----------------------------------------------------------------------
 // --                             FONTS                                 --
 // -----------------------------------------------------------------------
-$roboto-font-path: "~roboto-fontface/fonts";
-@import "~roboto-fontface/css/roboto/sass/roboto-fontface";
+$roboto-font-path: '~roboto-fontface/fonts';
+@import '~roboto-fontface/css/roboto/sass/roboto-fontface';
 
 // $geomanist-font-path: "libs/shared/ui/fonts/src/lib/geomanist/files";
 // @import "libs/shared/ui/fonts/src/lib/geomanist/geomanist-typeface";
 
-@import "src/app/utils/global.styles.scss";
+@import 'src/app/utils/global.styles.scss';
+// @import 'src/app/utils/bootstrap.variables.scss';
+
+// @import 'node_modules/bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+// $theme-colors: (
+//   'primary': #00e065,
+//   'danger': #ff4136,
+// );
+// $brand-primary: red;
+// $primary: #00e065;
+// $body-bg: #000;
+// $body-color: #111;
+// .btn-primary {
+//   color: #fff;
+//   background-color: #b8b8b8;
+//   border-color: #929496;
+// }

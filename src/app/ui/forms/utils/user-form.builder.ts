@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BaseFormBuilder } from './base-form.builder';
 import { FormBuilder, Validators } from '@angular/forms';
+
+import { BaseFormBuilder } from './base-form.builder';
+
 @Injectable()
 export class UserFormBuilder extends BaseFormBuilder {
   constructor(formBuilder: FormBuilder) {
@@ -8,15 +10,19 @@ export class UserFormBuilder extends BaseFormBuilder {
   }
 
   createLoginForm(): BaseFormBuilder {
-    this._form = this._formBuilder.group({ password: ['', Validators.required], email: ['', Validators.required] });
+    this._form = this._formBuilder.group({
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+    });
     return this;
   }
 
   createRegisterForm(): BaseFormBuilder {
     this._form = this._formBuilder.group({
-      name: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required]],
+      passwordConfirmation: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       country: ['', Validators.required],
     });
     return this;

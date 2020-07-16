@@ -1,1 +1,12 @@
-<p>register-form works!</p>
+<div [formGroup]="userFormGroup">
+  <coin-market-input label="Email" placeholder="Email" formControlName="email"></coin-market-input>
+  <coin-market-input label="Password" placeholder="Password" formControlName="password"></coin-market-input>
+  <coin-market-input
+    label="Password confirmation"
+    placeholder="Password confirmation"
+    formControlName="passwordConfirmation"
+  ></coin-market-input>
+  <coin-market-input label="Name" placeholder="Name" formControlName="name"></coin-market-input>
+  <coin-market-input label="Country" placeholder="Country" formControlName="country"></coin-market-input>
+  <coin-market-button (clickEvent)="createUser()" text="Submit"> </coin-market-button>
+</div>

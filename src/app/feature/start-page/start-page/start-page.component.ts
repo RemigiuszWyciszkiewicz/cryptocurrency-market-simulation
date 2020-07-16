@@ -11,4 +11,8 @@ export class StartPageComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  changeForm(): void {
+    this.isLoginFormVisible = !this.isLoginFormVisible;
+  }
 }

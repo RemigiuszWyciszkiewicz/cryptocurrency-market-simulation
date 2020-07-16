@@ -16,7 +16,7 @@
     "paths": {
       "@coin-market/feature/profile": ["src/app/feature/profile/index.ts"],
       "@coin-market/feature/start-page": ["src/app/feature/start-page/index.ts"],
-      "@coin-market/ui/forms": ["src/app/ui/forms"]
+      "@coin-market/ui/forms": ["src/app/ui/forms/index.ts"]
     }
   }
 }

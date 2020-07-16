@@ -1,14 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, UserFormBuilder } from 'src/app/ui/forms/index';
+import { NgModule } from '@angular/core';
+import { FormsModule, UserFormBuilder } from '@coin-market/ui/forms';
+
+import { AuthorizationModule } from '../../data-access/authorization';
 import { StartPageRoutingModule } from './start-page-routing.module';
-import { StartPageComponent } from './start-page/start-page.component';
 import { LoginFormComponent } from './start-page/login-form/login-form.component';
 import { RegisterFormComponent } from './start-page/register-form/register-form.component';
+import { StartPageComponent } from './start-page/start-page.component';
 
 @NgModule({
   declarations: [StartPageComponent, LoginFormComponent, RegisterFormComponent],
-  imports: [CommonModule, StartPageRoutingModule, FormsModule],
+  imports: [CommonModule, StartPageRoutingModule, FormsModule, AuthorizationModule],
   providers: [UserFormBuilder],
 })
 export class StartPageModule {}

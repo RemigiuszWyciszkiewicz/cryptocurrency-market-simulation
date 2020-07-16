@@ -1,0 +1,29 @@
+<ng-container *ngIf="type == 'link'; then linkElement; else buttonElement"> </ng-container>
+
+<ng-template #linkElement>
+  <a
+    [class]="getElementClasses()"
+    [ngClass]="{ 'not-active': disabled || loader }"
+    [routerLink]="linkUrl"
+    *ngIf="!disabled && !loader; else linkWithoutUrl"
+  >
+    {{ text }}
+  </a>
+</ng-template>
+
+<ng-template #linkWithoutUrl>
+  <span [class]="getElementClasses()" [ngClass]="{ 'not-active': disabled || loader }">
+    {{ text }}
+  </span>
+</ng-template>
+
+<ng-template #buttonElement>
+  <button
+    (click)="onButtonClick()"
+    [class]="getElementClasses()"
+    [disabled]="disabled || loader ? 'disabled' : null"
+    [type]="type"
+  >
+    {{ text }}
+  </button>
+</ng-template>
