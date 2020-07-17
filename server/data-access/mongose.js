@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const url = 'mongodb+srv://dbUser:remik@cluster0.tvq44.mongodb.net/coin-market?retryWrites=true&w=majority';
-
+const remoteDbUrl = 'mongodb+srv://dbUser:remik@cluster0.tvq44.mongodb.net/coin-market?retryWrites=true&w=majority';
+const localDbUrl = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false';
 mongoose
-  .connect(url, {
+  .connect(localDbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -35,8 +35,5 @@ userSchema.methods.isValidPassword = async function (password) {
 };
 
 const User = mongoose.model('users', userSchema);
-// new User({
-//   email: "remigiudafsz@wp.pl",
-//   password: "fwafafa",
-// }).save();
+
 module.exports.User = User;

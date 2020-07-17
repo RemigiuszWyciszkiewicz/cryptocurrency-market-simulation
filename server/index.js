@@ -105,11 +105,10 @@ app.all('*', function (req, res) {
   res.status(200).sendFile(`/`, { root: _app_folder });
 });
 
-// app.use(function (err, req, res, next) {
-
-//   res.status(err.status || 500);
-//   res.json({ error: err });
-// });
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({ error: err });
+});
 
 // ---- START UP THE NODE SERVER  ----
 app.listen(PORT, function () {
