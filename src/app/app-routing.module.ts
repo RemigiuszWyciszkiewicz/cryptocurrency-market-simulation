@@ -6,7 +6,7 @@ import { NotFoundPageComponent } from './ui/error-components/not-found-page/not-
 const routes: Routes = [
   {
     path: 'pages',
-    loadChildren: () => import('./pages/pages.module').then((m) => m.PagesModule),
+    loadChildren: () => import('@coin-market/feature/pages').then((m) => m.PagesModule),
   },
   {
     path: 'hello',

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbSidebarService } from '@nebular/theme';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-layout',
@@ -8,17 +9,12 @@ import { NbSidebarService } from '@nebular/theme';
 })
 export class LayoutComponent implements OnInit {
   constructor(private sidebarService: NbSidebarService) {}
-  toggle = false;
 
   ngOnInit(): void {
-    this.sidebarService.toggle(this.toggle);
-    this.sidebarService.onToggle().subscribe(console.log);
+    this.sidebarService.onToggle().pipe(startWith(true)).subscribe(console.log);
   }
-  test() {
-    if (this.toggle) {
-      this.toggle = false;
-    } else {
-      this.toggle = true;
-    }
+
+  toggleSidebar(): void {
+    this.sidebarService.toggle(true, 'extended');
   }
 }
