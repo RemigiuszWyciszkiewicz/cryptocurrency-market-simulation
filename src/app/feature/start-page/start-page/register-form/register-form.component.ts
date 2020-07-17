@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
 })
-export class RegisterFormComponent {
+export class RegisterFormComponent implements OnDestroy {
   @Output() registerFormSubmit = new EventEmitter();
   @Input() formGroup: FormGroup;
 
@@ -14,5 +14,9 @@ export class RegisterFormComponent {
     if (this.formGroup.valid) {
       this.registerFormSubmit.next(this.formGroup.value);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.formGroup.reset();
   }
 }

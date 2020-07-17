@@ -30,27 +30,34 @@ export class StartPageComponent implements OnInit {
   }
 
   changeForm(): void {
-    console.log(this.registerFormGroup);
     this.isLoginFormVisible = !this.isLoginFormVisible;
-    this._toastr.success('Succesful login.');
   }
 
-  signIn(user: Partial<User>): void {
-    this._authService.post(user).subscribe(
+  signIn(user: User): void {
+    this._authService.signIn(user).subscribe(
       () => {
         this._router.navigate(['/pages'], { relativeTo: this._activatedRoute });
         this._toastr.success('Succesful login.');
       },
-      (error) => {
-        console.log('ERROR', error);
+      () => {
         this.loginFormGroup.reset();
-        this.registerFormGroup.reset();
         this._toastr.error('Bad creditials, try again.');
       }
     );
   }
 
-  createAccount(user: User): void {}
+  createAccount(user: User): void {
+    this._authService.signUp(user).subscribe(
+      () => {
+        this.isLoginFormVisible = true;
+        this._toastr.success('Account created');
+      },
+      () => {
+        this.registerFormGroup.reset();
+        this._toastr.error('Error');
+      }
+    );
+  }
 
   private createFormGroups(): void {
     this.loginFormGroup = this._userFormBuilder.createLoginForm().getForm();

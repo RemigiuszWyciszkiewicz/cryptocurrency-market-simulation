@@ -23,14 +23,21 @@ passport.use(
     {
       usernameField: 'email',
       passwordField: 'password',
+      passReqToCallback: true,
     },
-    async (email, password, done) => {
+    async (req, email, password, done) => {
       try {
-        const user = await User.create({ email, password });
+        const user = await User.findOne({ email: email }).exec();
 
-        return done(null, user);
+        if (user) {
+          return done(null, false, 'signupMessage', 'email duplication');
+        } else {
+          await User.create({ email, password, ...req.body });
+
+          return done(null, { email, password, ...req.body });
+        }
       } catch (error) {
-        done(error);
+        return done(error);
       }
     }
   )
@@ -44,7 +51,6 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
-      console.log('login');
       try {
         const user = await User.findOne({ email });
 
@@ -69,8 +75,10 @@ passport.use(
     {
       secretOrKey: 'top_secret',
       jwtFromRequest: ExtractJWT.fromHeader('auth-token'),
+      passReqToCallback: true,
     },
-    async (token, done) => {
+    async (req, token, done) => {
+      console.log(req.body);
       try {
         return done(null, token.user);
       } catch (error) {

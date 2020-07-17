@@ -4,61 +4,51 @@ import { Observable } from 'rxjs';
 
 import { EndpointUrlBuilder } from './api-url-builder';
 
-export interface RestService<T, ID> {
-  post(item: T): Observable<T>;
-  get(id: ID): Observable<T>;
-  put(id: ID, item: T): Observable<T>;
-  delete(id: ID): Observable<T>;
-  getAll(): Observable<T[]>;
+export interface RestService {
+  post<T>(item: Partial<T> | FormData, contentType: string, endpoint: string): Observable<T>;
+  get<T>(id: string, endpoint: string): Observable<T>;
+  put<T>(id: string, item: T, endpoint: string): Observable<T>;
+  delete<T>(id: string, endpoint: string): Observable<T>;
+  getAll<T>(endpoint: string): Observable<T[]>;
 }
 
-export interface ApiUrlConfiguration {
-  route: string;
-  endpoint: string;
-}
-
-export abstract class ApiService<T, ID> implements RestService<T, ID> {
+export abstract class ApiService implements RestService {
   protected _apiServiceUrl = 'http://localhost:4100/api';
   protected _httpClient: HttpClient;
+  protected _route: string;
 
-  constructor(protected _injector: Injector) {
+  constructor(protected _injector: Injector, route: string) {
     this._httpClient = _injector.get(HttpClient);
+    this._route = route;
   }
 
-  post(item: Partial<T> | FormData, contentType = 'application/json'): Observable<T> {
-    console.log(this.generateEndpointUrl());
+  post<T>(item: Partial<T> | FormData, endpoint: string, contentType = 'application/json'): Observable<T> {
     if (item instanceof FormData) {
-      return this._httpClient.post<T>(`${this.generateEndpointUrl()}`, item);
+      return this._httpClient.post<T>(`${this.generateEndpointUrl(endpoint)}`, item);
     }
 
-    return this._httpClient.post<T>(`${this.generateEndpointUrl()}`, item, {
+    return this._httpClient.post<T>(`${this.generateEndpointUrl(endpoint)}`, item, {
       headers: new HttpHeaders().set('Content-Type', contentType),
     });
   }
 
-  get(id: ID): Observable<T> {
-    return this._httpClient.get<T>(`${this.generateEndpointUrl()}/${id}`);
+  get<T>(id: string, endpoint: string): Observable<T> {
+    return this._httpClient.get<T>(`${this.generateEndpointUrl(endpoint)}/${id}`);
   }
 
-  put(id: ID, item: Partial<T>): Observable<T> {
-    return this._httpClient.put<T>(`${this.generateEndpointUrl()}/${id}`, item);
+  put<T>(id: string, item: Partial<T>, endpoint: string): Observable<T> {
+    return this._httpClient.put<T>(`${this.generateEndpointUrl(endpoint)}/${id}`, item);
   }
 
-  delete(id: ID): Observable<T> {
-    return this._httpClient.delete<T>(`${this.generateEndpointUrl()}/${id}`);
+  delete<T>(id: string, endpoint: string): Observable<T> {
+    return this._httpClient.delete<T>(`${this.generateEndpointUrl(endpoint)}/${id}`);
   }
 
-  getAll(): Observable<T[]> {
-    return this._httpClient.get<T[]>(`${this.generateEndpointUrl()}`);
+  getAll<T>(endpoint: string): Observable<T[]> {
+    return this._httpClient.get<T[]>(`${this.generateEndpointUrl(endpoint)}`);
   }
 
-  protected generateEndpointUrl(): string {
-    return new EndpointUrlBuilder()
-      .addApiUrl(this._apiServiceUrl)
-      .addRoute(this.getApiUrlConfiguration().route)
-      .addEndpoint(this.getApiUrlConfiguration().endpoint)
-      .getUrl();
+  protected generateEndpointUrl(endpoint?: string): string {
+    return new EndpointUrlBuilder().addApiUrl(this._apiServiceUrl).addRoute(this._route).addEndpoint(endpoint).getUrl();
   }
-
-  protected abstract getApiUrlConfiguration(): ApiUrlConfiguration;
 }

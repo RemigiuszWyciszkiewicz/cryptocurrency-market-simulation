@@ -1,8 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const url =
-  "mongodb+srv://dbUser:remik@cluster0.tvq44.mongodb.net/coin-market?retryWrites=true&w=majority";
+const url = 'mongodb+srv://dbUser:remik@cluster0.tvq44.mongodb.net/coin-market?retryWrites=true&w=majority';
 
 mongoose
   .connect(url, {
@@ -11,19 +10,20 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("connected succesfully");
+    console.log('connected succesfully');
   })
   .catch((error) => {
-    console.log("error " + error);
+    console.log('error ' + error);
   });
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
+  name: { type: String, required: true },
+  country: { type: String, required: true },
 });
 
-userSchema.pre("save", async function (next) {
-  const user = this;
+userSchema.pre('save', async function (next) {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
@@ -34,7 +34,7 @@ userSchema.methods.isValidPassword = async function (password) {
   return await bcrypt.compare(password, user.password);
 };
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model('users', userSchema);
 // new User({
 //   email: "remigiudafsz@wp.pl",
 //   password: "fwafafa",
