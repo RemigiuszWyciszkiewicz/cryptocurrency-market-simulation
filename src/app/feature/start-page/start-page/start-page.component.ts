@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorResponses } from '@coin-market/data-access/api';
 import { AuthService } from '@coin-market/data-access/authorization';
 import { User } from '@coin-market/data-access/models';
 import { UserFormBuilder } from '@coin-market/ui/forms';
@@ -52,9 +53,14 @@ export class StartPageComponent implements OnInit {
         this.isLoginFormVisible = true;
         this._toastr.success('Account created');
       },
-      () => {
-        this.registerFormGroup.reset();
-        this._toastr.error('Error');
+      (error) => {
+        if (error.error === ErrorResponses.EMAIL_DUPLICATION) {
+          this.registerFormGroup.reset();
+          this._toastr.error('This email already exists');
+        } else {
+          this.registerFormGroup.reset();
+          this._toastr.error('Server error');
+        }
       }
     );
   }
