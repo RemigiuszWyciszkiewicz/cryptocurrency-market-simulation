@@ -1,7 +1,8 @@
-const controller = require("./cryptocurrency-controller");
+const cryptocurrencyController = require('./cryptocurrency.controller');
+const authorizationController = require('./authorization.controller');
 
 module.exports = {
-    cryptoController: controller,
-    authorizationController: controller,
-    walletController: controller,
+  cryptoController: cryptocurrencyController,
+  authorizationController: authorizationController,
+  walletController: null,
 };
