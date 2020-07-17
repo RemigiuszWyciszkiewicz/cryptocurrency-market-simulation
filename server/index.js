@@ -30,7 +30,7 @@ passport.use(
         const user = await User.findOne({ email: email }).exec();
 
         if (user) {
-          return done(null, false, 'signupMessage', 'email duplication');
+          return done(null, false);
         } else {
           await User.create({ email, password, ...req.body });
 
