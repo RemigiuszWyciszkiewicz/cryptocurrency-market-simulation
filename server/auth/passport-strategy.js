@@ -13,12 +13,14 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
-      console.log('signup');
       try {
-        const user = await User.findOne({ email: email }).exec();
+        const documentsCountWithGivenEmails = await User.find({ email: req.body.email }).countDocuments().exec();
+        const documentsCountWithGivenNames = await User.find({ name: req.body.name }).countDocuments().exec();
 
-        if (user) {
-          return done(null, false);
+        if (documentsCountWithGivenEmails !== 0) {
+          return done(null, false, { emailDuplication: 'User with given email already exists.' });
+        } else if (documentsCountWithGivenNames !== 0) {
+          return done(null, false, { nameDuplication: 'User with given name already exists.' });
         } else {
           await User.create({ email, password, ...req.body });
 
@@ -39,7 +41,6 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
-      console.log('login');
       try {
         const user = await User.findOne({ email });
 
@@ -67,7 +68,6 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, token, done) => {
-      console.log('JWT strategy', req);
       try {
         return done(null, token.user);
       } catch (error) {

@@ -1,12 +1,11 @@
 const passport = require('../auth').passport;
 const jwt = require('jsonwebtoken');
-
+const ErrorResponse = require('../data-access').ErrorResponse;
 const passportAuthenticateLogin = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
-    console.log(user);
     try {
       if (err || !user) {
-        res.status(401).send('Wrong email or password');
+        res.status(401).send(new ErrorResponse('emailDuplication', 'Wrong email or password'));
         return next('Wrong email or password');
       }
 
@@ -27,13 +26,17 @@ const passportAuthenticateLogin = async (req, res, next) => {
 
 const passportAuthenticateSignUp = async (req, res, next) => {
   passport.authenticate('signup', async (err, user, info) => {
+    if (info && info.nameDuplication) {
+      res.status(409).send(new ErrorResponse('emailDuplication', info.nameDuplication));
+    }
+
+    if (info && info.emailDuplication) {
+      res.status(409).send(new ErrorResponse('emailDuplication', info.emailDuplication));
+    }
     if (user) {
       res.send(user);
     }
 
-    if (!user) {
-      res.status(409).send('Duplication error');
-    }
     if (err) {
       next(err);
     }

@@ -55,12 +55,22 @@ export class StartPageComponent implements OnInit {
         this._toastr.success('Account created');
       },
       (error: HttpErrorResponse) => {
-        if (error.error === ErrorResponses.EMAIL_DUPLICATION) {
-          this.registerFormGroup.reset();
-          this._toastr.error('This email already exists');
-        } else {
-          this.registerFormGroup.reset();
-          this._toastr.error('Server error');
+        switch (error.error.type) {
+          case ErrorResponses.EMAIL_DUPLICATION: {
+            this.registerFormGroup.reset();
+            this._toastr.error('Given email already exists');
+            break;
+          }
+          case ErrorResponses.NAME_DUPLICATION: {
+            this.registerFormGroup.reset();
+            this._toastr.error('Given name already exists');
+            break;
+          }
+          default: {
+            this.registerFormGroup.reset();
+            this._toastr.error('Server error');
+            break;
+          }
         }
       }
     );

@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'hello',
     loadChildren: () => import('@coin-market/feature/start-page').then((m) => m.StartPageModule),
   },
-
+  { path: '', redirectTo: 'hello', pathMatch: 'full' },
   { path: '**', redirectTo: 'not-found-page' },
   { path: 'not-found-page', component: NotFoundPageComponent },
 ];

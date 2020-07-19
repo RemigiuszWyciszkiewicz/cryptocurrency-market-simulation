@@ -1,3 +1,4 @@
 export enum ErrorResponses {
-  EMAIL_DUPLICATION = 'Duplication error',
+  EMAIL_DUPLICATION = 'emailDuplication',
+  NAME_DUPLICATION = 'nameDuplication',
 }
