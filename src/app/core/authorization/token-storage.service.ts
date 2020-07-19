@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LoginResponse } from '@coin-market/data-access/models';
 
 const TOKEN_KEY = 'AuthToken';
 const EMAIL_KEY = 'AuthEmail';
@@ -11,34 +12,34 @@ export class TokenStorageService {
 
   constructor() {}
 
-  ignOut(): void {
+  signOut(): void {
     window.sessionStorage.clear();
   }
 
-  public saveToken(token: string): void {
+  saveToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
-  public getToken(): string {
+  getToken(): string {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
-  public saveEmail(email: string): void {
+  saveEmail(email: string): void {
     window.sessionStorage.removeItem(EMAIL_KEY);
     window.sessionStorage.setItem(EMAIL_KEY, email);
   }
 
-  public getEmail(): string {
+  getEmail(): string {
     return sessionStorage.getItem(EMAIL_KEY);
   }
 
-  public saveAuthorities(authorities: string[]): void {
+  saveAuthorities(authorities: string[]): void {
     window.sessionStorage.removeItem(AUTHORITIES_KEY);
     window.sessionStorage.setItem(AUTHORITIES_KEY, JSON.stringify(authorities));
   }
 
-  public getAuthorities(): string[] {
+  getAuthorities(): string[] {
     this.roles = [];
 
     if (sessionStorage.getItem(TOKEN_KEY)) {
@@ -50,13 +51,18 @@ export class TokenStorageService {
     return this.roles;
   }
 
-  public saveId(id: number): void {
-    console.log(id);
+  saveId(id: string): void {
     window.sessionStorage.removeItem(ID_KEY);
     window.sessionStorage.setItem(ID_KEY, id + '');
   }
 
-  public getId(): string {
+  getId(): string {
     return sessionStorage.getItem(ID_KEY);
+  }
+
+  saveLoginResponse(loginResponse: LoginResponse): void {
+    this.saveEmail(loginResponse.email);
+    this.saveId(loginResponse._id);
+    this.saveToken(loginResponse.token);
   }
 }

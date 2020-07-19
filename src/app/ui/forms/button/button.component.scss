@@ -1,4 +1,4 @@
-@import 'src/app/utils/variables';
+@import 'src/app/utils/styles/variables';
 
 @mixin btn-outline-style($color, $background-color-state) {
   border: 1px solid $color;

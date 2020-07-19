@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { AuthorizationModule } from '@coin-market/data-access/authorization';
+import { AuthorizationModule, httpInterceptorProviders } from '@coin-market/core/authorization';
 import { LayoutModule } from '@coin-market/ui/layout';
 import { MenuModule } from '@coin-market/ui/menu';
 import { ToastrModule } from '@coin-market/ui/toastr';
@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
     ToastrModule,
     AuthorizationModule,
   ],
-  providers: [LayoutModule.providers, MenuModule.providers],
+  providers: [LayoutModule.providers, MenuModule.providers, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

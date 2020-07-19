@@ -1,9 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService, TokenStorageService } from '@coin-market/core/authorization';
 import { ErrorResponses } from '@coin-market/data-access/api';
-import { AuthService } from '@coin-market/data-access/authorization';
-import { User } from '@coin-market/data-access/models';
+import { LoginResponse, User } from '@coin-market/data-access/models';
 import { UserFormBuilder } from '@coin-market/ui/forms';
 import { ToastrService } from '@coin-market/ui/toastr';
 
@@ -13,18 +14,19 @@ import { ToastrService } from '@coin-market/ui/toastr';
   styleUrls: ['./start-page.component.scss'],
 })
 export class StartPageComponent implements OnInit {
-  isLoginFormVisible = true;
-
   constructor(
-    private _router: Router,
-    private _authService: AuthService,
-    private _userFormBuilder: UserFormBuilder,
-    private _toastr: ToastrService,
-    private _activatedRoute: ActivatedRoute
+    private readonly _router: Router,
+    private readonly _toastr: ToastrService,
+    private readonly _authService: AuthService,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _userFormBuilder: UserFormBuilder,
+    private readonly _tokenStorageService: TokenStorageService
   ) {}
 
   loginFormGroup: FormGroup;
   registerFormGroup: FormGroup;
+
+  isLoginFormVisible = true;
 
   ngOnInit(): void {
     this.createFormGroups();
@@ -36,9 +38,8 @@ export class StartPageComponent implements OnInit {
 
   signIn(user: User): void {
     this._authService.signIn(user).subscribe(
-      () => {
-        this._router.navigate(['/pages'], { relativeTo: this._activatedRoute });
-        this._toastr.success('Succesful login.');
+      (response: LoginResponse) => {
+        this.handleSuccesfulLogin(response);
       },
       () => {
         this.loginFormGroup.reset();
@@ -53,7 +54,7 @@ export class StartPageComponent implements OnInit {
         this.isLoginFormVisible = true;
         this._toastr.success('Account created');
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
         if (error.error === ErrorResponses.EMAIL_DUPLICATION) {
           this.registerFormGroup.reset();
           this._toastr.error('This email already exists');
@@ -65,8 +66,15 @@ export class StartPageComponent implements OnInit {
     );
   }
 
-  private createFormGroups(): void {
+  createFormGroups(): void {
     this.loginFormGroup = this._userFormBuilder.createLoginForm().getForm();
     this.registerFormGroup = this._userFormBuilder.createRegisterForm().getForm();
+  }
+
+  handleSuccesfulLogin(response: LoginResponse): void {
+    this._tokenStorageService.saveLoginResponse(response);
+    this._authService.setUserAuthorizationStatus(true);
+    this._router.navigate(['/pages'], { relativeTo: this._activatedRoute });
+    this._toastr.success('Succesful login.');
   }
 }

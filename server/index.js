@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const routes = require('./routers');
 const _app_folder = 'server/dist/my-dream-app';
 const passport = require('./auth').passport;
+const { Router } = require('express');
+const authorizationController = require('./controller').authorizationController;
+const router = Router();
 
 let PORT = process.env.PORT || 4100;
 
@@ -17,6 +20,11 @@ app.use(cors());
 app.use('/api/cryptocurrencies', passport.authenticate('jwt', { session: false }), routes.A_router);
 app.use('/api/wallet', routes.A_router);
 app.use('/api/user', routes.B_router);
+app.use(
+  '/api/user',
+  passport.authenticate('jwt', { session: false }),
+  router.post('/tokenValidation', authorizationController.tokenValidation)
+);
 app.use('/api/news', routes.A_router);
 
 // ---- SERVE STATIC FILES ---- //

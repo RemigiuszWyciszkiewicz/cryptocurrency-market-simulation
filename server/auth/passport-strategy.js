@@ -13,6 +13,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
+      console.log('signup');
       try {
         const user = await User.findOne({ email: email }).exec();
 
@@ -38,6 +39,7 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
+      console.log('login');
       try {
         const user = await User.findOne({ email });
 
@@ -65,7 +67,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, token, done) => {
-      console.log(req.body);
+      console.log('JWT strategy', req);
       try {
         return done(null, token.user);
       } catch (error) {

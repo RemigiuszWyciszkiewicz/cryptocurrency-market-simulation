@@ -1,2 +1,2 @@
 export * from './user';
-export * from './token-response';
+export * from './login-response';

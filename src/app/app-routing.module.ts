@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { NotFoundPageComponent } from './ui/error-components/not-found-page/not-found-page.component';
+import { NotFoundPageComponent } from '@coin-market/ui/error-components/not-found-page/not-found-page.component';
 
 const routes: Routes = [
   {

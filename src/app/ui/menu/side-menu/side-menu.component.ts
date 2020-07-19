@@ -9,7 +9,7 @@ import { NbMenuItem } from '@nebular/theme';
 export class SideMenuComponent implements OnInit {
   items: NbMenuItem[] = [
     {
-      title: 'Profile',
+      title: 'Dashboard',
       link: './',
       home: true,
     },
@@ -24,6 +24,10 @@ export class SideMenuComponent implements OnInit {
     {
       title: 'History',
       link: './user-history',
+    },
+    {
+      title: 'Profile',
+      link: './profile',
     },
   ];
   constructor() {}
