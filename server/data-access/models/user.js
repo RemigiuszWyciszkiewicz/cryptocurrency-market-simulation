@@ -1,7 +1,7 @@
 const mongoose = require('../mongose');
 const bcrypt = require('bcrypt');
 
-const Transaction = require('../models/transaction');
+const assetSchema = require('../models/asset').assetSchema;
 
 const Schema = mongoose.Schema;
 
@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   country: { type: String, required: true },
   transactions: [{ type: Schema.Types.ObjectId, ref: 'transactions' }],
+  assets: [assetSchema],
 });
 
 // userSchema.pre('save', async function (next) {
@@ -30,4 +31,3 @@ userSchema.methods.isValidPassword = async function (password) {
 const User = mongoose.model('users', userSchema);
 
 module.exports.User = User;
-module.exports.Transaction = Transaction;

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Cryptocurrency } from '@coin-market/data-access/models';
+import { Cryptocurrency, TransactionType } from '@coin-market/data-access/models';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
@@ -26,9 +26,14 @@ export class CoinTransactionModalComponent implements OnInit {
   }
 
   buy(): void {
-    console.log(this.cryptocurrency);
     if (this.cryptoAmountControl.valid) {
-      this._ref.close({});
+      this._ref.close({
+        amount: this.cryptoAmountControl.value,
+        value: this.transactionValue,
+        cryptocurrency: this.cryptocurrency.id,
+        price: this.cryptocurrency.current_price,
+        type: TransactionType.BUY,
+      });
     }
   }
 

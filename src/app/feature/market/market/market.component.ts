@@ -6,9 +6,10 @@ import { TransactionType } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
 import { TransactionsService } from '@coin-market/data-access/transactions';
 import { CoinTransactionModalComponent } from '@coin-market/ui/modal';
+import { ToastrService } from '@coin-market/ui/toastr';
 import { NbDialogService } from '@nebular/theme';
 import { of } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-market',
@@ -17,6 +18,7 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 })
 export class MarketComponent implements OnInit {
   constructor(
+    private readonly _toastrService: ToastrService,
     private readonly _nbDialogService: NbDialogService,
     private readonly _tokenStorage: TokenStorageService,
     private readonly _transactionService: TransactionsService,
@@ -49,10 +51,19 @@ export class MarketComponent implements OnInit {
   buy(coin: Cryptocurrency): void {
     this._nbDialogService
       .open(CoinTransactionModalComponent, { context: { cryptocurrency: coin, title: 'Purchase: ' + coin.name } })
-      .onClose.subscribe(console.log);
-    // this._transactionService
-    //   .saveTransaction({ cryptocurrency: coid.id, amount: 200, price: 60, type: TransactionType.BUY }, this._tokenStorage.getId())
-    //   .subscribe();
+      .onClose.pipe(
+        switchMap((value) => {
+          return this._transactionService.saveTransaction(value, this._tokenStorage.getId());
+        })
+      )
+      .subscribe(
+        () => {
+          this._toastrService.success('Transaction completed');
+        },
+        (error: HttpErrorResponse) => {
+          this._toastrService.error('ERROR: ' + error.error.message);
+        }
+      );
   }
 
   sell(coin: Cryptocurrency): void {

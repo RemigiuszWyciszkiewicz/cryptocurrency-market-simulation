@@ -11,8 +11,8 @@ export class UserFormBuilder extends BaseFormBuilder {
 
   createLoginForm(): BaseFormBuilder {
     this._form = this._formBuilder.group({
-      password: ['test11', Validators.required],
-      email: ['qweq@qweq.pl', [Validators.required, Validators.email]],
+      password: ['remik123', Validators.required],
+      email: ['remik@remik.pl', [Validators.required, Validators.email]],
     });
     return this;
   }

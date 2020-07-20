@@ -10,6 +10,7 @@ export class BaseControlValueAccessor<T> implements ControlValueAccessor, OnInit
   @Input() label: string;
   @Input() placeholder = '';
   @Input() disabled: boolean;
+  @Input() showErrorStatement = true;
 
   value: T;
 
@@ -84,9 +85,9 @@ export class BaseControlValueAccessor<T> implements ControlValueAccessor, OnInit
       const validator = abstractControl.validator({} as AbstractControl);
       return validator && validator.required;
     }
-    if (abstractControl.controls) {
-      for (const controlName in abstractControl.controls) {
-        if (abstractControl.controls[controlName] && this.hasRequiredField(abstractControl.controls[controlName])) {
+    if (abstractControl['controls']) {
+      for (const controlName in abstractControl['controls']) {
+        if (abstractControl['controls'][controlName] && this.hasRequiredField(abstractControl['controls'][controlName])) {
           return true;
         }
       }
