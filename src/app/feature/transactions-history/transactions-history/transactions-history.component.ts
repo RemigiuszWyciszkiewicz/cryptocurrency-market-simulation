@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenStorageService } from '@coin-market/core/authorization';
+import { Transaction } from '@coin-market/data-access/models';
+import { TransactionsService } from '@coin-market/data-access/transactions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'coin-market-transactions-history',
@@ -6,7 +10,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transactions-history.component.scss'],
 })
 export class TransactionsHistoryComponent implements OnInit {
-  constructor() {}
+  transaction$: Observable<Transaction[]>;
 
-  ngOnInit(): void {}
+  constructor(
+    private readonly _transactionService: TransactionsService,
+    private readonly _tokenStorageService: TokenStorageService
+  ) {}
+
+  ngOnInit(): void {
+    this.transaction$ = this._transactionService.getAllTransactions(this._tokenStorageService.getId());
+  }
 }

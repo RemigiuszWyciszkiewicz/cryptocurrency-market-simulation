@@ -1,0 +1,35 @@
+<ng-container *ngIf="hasVisibleContent(); else missingContentTpl">
+  <ng-container *ngTemplateOutlet="pageContentTpl.tpl"></ng-container>
+</ng-container>
+
+<ng-template #missingContentTpl>
+  <ng-container *ngIf="isLoading">
+    <div class="mt-5">
+      <ng-container *ngIf="getCustomLoaderTpl() as customPageLoaderTpl; else defaultPageLoaderTpl">
+        <ng-container *ngTemplateOutlet="customPageLoaderTpl"></ng-container>
+      </ng-container>
+    </div>
+
+    <ng-template #defaultPageLoaderTpl>
+      <div class="loader-container mx-auto">
+        <ng-container *ngIf="!disableLabel; else withoutLabel">
+          <coin-market-spinner class="default-loader" message="Loading..."> </coin-market-spinner>
+        </ng-container>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="error">
+    <ng-container *ngIf="getCustomErrorTpl() as customPageErrorTpl; else defaultPageErrorTpl">
+      <ng-container *ngTemplateOutlet="pageErrorTpl.tpl; context: { $implicit: error }"></ng-container>
+    </ng-container>
+
+    <ng-template #defaultPageErrorTpl>
+      <coin-market-error [status]="error.status" [message]="error.statusText"></coin-market-error>
+    </ng-template>
+  </ng-container>
+</ng-template>
+
+<ng-template #withoutLabel>
+  <coin-market-spinner class="default-loader"> </coin-market-spinner>
+</ng-template>

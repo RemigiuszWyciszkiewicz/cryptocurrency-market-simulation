@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginResponse } from '@coin-market/data-access/models';
+import { ToastrService } from '@coin-market/ui/toastr';
 
 const TOKEN_KEY = 'AuthToken';
 const EMAIL_KEY = 'AuthEmail';
@@ -10,7 +12,7 @@ const ID_KEY = 'userId';
 export class TokenStorageService {
   private roles: Array<string> = [];
 
-  constructor() {}
+  constructor(private readonly _toastr: ToastrService, private readonly _router: Router) {}
 
   signOut(): void {
     window.sessionStorage.clear();
@@ -57,7 +59,13 @@ export class TokenStorageService {
   }
 
   getId(): string {
-    return sessionStorage.getItem(ID_KEY);
+    if (!sessionStorage.getItem(ID_KEY)) {
+      this._toastr.error('Your identifier is not avaiable, please sign in again.');
+      this._router.navigate(['./hello']);
+      return;
+    } else {
+      return sessionStorage.getItem(ID_KEY);
+    }
   }
 
   saveLoginResponse(loginResponse: LoginResponse): void {
