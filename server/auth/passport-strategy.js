@@ -3,6 +3,7 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const passport = require('passport');
 const User = require('../data-access/models').User;
+const bcrypt = require('bcrypt');
 
 passport.use(
   'signup',
@@ -22,9 +23,10 @@ passport.use(
         } else if (documentsCountWithGivenNames !== 0) {
           return done(null, false, { nameDuplication: 'User with given name already exists.' });
         } else {
-          await User.create({ email, password, ...req.body });
+          req.body.password = await bcrypt.hash(password, 10);
+          await User.create({ email, ...req.body });
 
-          return done(null, { email, password, ...req.body });
+          return done(null, { email, ...req.body });
         }
       } catch (error) {
         return done(error);
@@ -49,6 +51,7 @@ passport.use(
         }
 
         const validate = await user.isValidPassword(password);
+
         if (!validate) {
           return done(null, false, { message: 'Wrong Password' });
         }

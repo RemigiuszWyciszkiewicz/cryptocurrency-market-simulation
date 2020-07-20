@@ -19,7 +19,7 @@ export class SideMenuComponent implements OnInit {
     },
     {
       title: 'Rankings',
-      link: './ranks',
+      link: './ranking',
     },
     {
       title: 'Transactions history',

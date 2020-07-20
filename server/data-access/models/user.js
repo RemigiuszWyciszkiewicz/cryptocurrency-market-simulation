@@ -14,15 +14,18 @@ const userSchema = new mongoose.Schema({
   transactions: [{ type: Schema.Types.ObjectId, ref: 'transactions' }],
 });
 
-userSchema.pre('save', async function (next) {
-  const hash = await bcrypt.hash(this.password, 10);
-  this.password = hash;
-  next();
-});
+// userSchema.pre('save', async function (next) {
+//   this.
+//   const hash = await bcrypt.hash(this.password, 10);
+//   this.password = hash;
+//   next();
+// });
 
 userSchema.methods.isValidPassword = async function (password) {
   const user = this;
-  return await bcrypt.compare(password, user.password);
+  const result = await bcrypt.compare(password, user.password);
+
+  return result;
 };
 
 const User = mongoose.model('users', userSchema);

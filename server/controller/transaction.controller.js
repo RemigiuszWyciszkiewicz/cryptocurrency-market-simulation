@@ -40,12 +40,11 @@ const save = async (req, res, next) => {
   }
 
   transaction.value = roundToX(transaction.price * transaction.amount, 2);
-  console.log(transaction);
+
   try {
     User.findById(req.params.userId)
       .exec()
       .then(async (user) => {
-        console.log(user);
         await transaction.save();
         user.transactions.push(transaction);
         user.save();
