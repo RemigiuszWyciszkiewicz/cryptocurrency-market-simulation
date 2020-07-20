@@ -23,10 +23,43 @@ const getAll = async (req, res, next) => {
 };
 
 const save = async (req, res, next) => {
-  console.log(req.body);
-  User.findById(req.params.userId);
-  res.send('JEST OK');
+  const transaction = new Transaction({
+    date: new Date().toISOString(),
+    amount: req.body.amount,
+    price: req.body.price,
+    cryptocurrency: req.body.cryptocurrency,
+    type: req.body.type,
+  });
+
+  const error = transaction.validateSync();
+
+  if (error) {
+    const invalidFields = Object.keys(error.errors);
+    res.status(404).send(new ErrorResponse('invalidFileds', 'Given properties are invalid: ' + invalidFields.join(',')));
+    return next();
+  }
+
+  transaction.value = roundToX(transaction.price * transaction.amount, 2);
+
+  try {
+    User.findById(req.params.userId)
+      .exec()
+      .then(async (user) => {
+        await transaction.save();
+        user.transactions.push(transaction);
+        user.save();
+      });
+  } catch (error) {
+    res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
+    return next();
+  }
+
+  res.send(req.body);
   return next();
 };
+
+function roundToX(num, X) {
+  return +(Math.round(num + 'e+' + X) + 'e-' + X);
+}
 
 module.exports = { getAll, save };
