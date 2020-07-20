@@ -15,6 +15,10 @@ const routes: Routes = [
         loadChildren: () => import('@coin-market/feature/profile').then((m) => m.ProfileModule),
       },
       {
+        path: 'market',
+        loadChildren: () => import('@coin-market/feature/market').then((m) => m.MarketModule),
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('@coin-market/feature/dashboard').then((m) => m.DashboardModule),
       },

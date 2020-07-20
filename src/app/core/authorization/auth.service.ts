@@ -2,7 +2,6 @@ import { Injectable, Injector } from '@angular/core';
 import { ApiService } from '@coin-market/data-access/api';
 import { User } from '@coin-market/data-access/models';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService extends ApiService {
@@ -29,6 +28,6 @@ export class AuthService extends ApiService {
   }
 
   checkTokenValidity(): Observable<any> {
-    return this.post<any>({ test: 'wfafafa' }, 'tokenValidation').pipe(tap(console.log));
+    return this.post<any>({ test: 'wfafafa' }, 'tokenValidation');
   }
 }

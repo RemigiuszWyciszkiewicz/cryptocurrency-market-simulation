@@ -17,15 +17,16 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/cryptocurrencies', passport.authenticate('jwt', { session: false }), routes.A_router);
-app.use('/api/wallet', routes.A_router);
-app.use('/api/user', routes.B_router);
+app.use('/api/cryptocurrencies', passport.authenticate('jwt', { session: false }), routes.cryptocurrenciesRouter);
+app.use('/api/wallet', passport.authenticate('jwt', { session: false }), routes.cryptocurrenciesRouter);
+app.use('/api/transactions', passport.authenticate('jwt', { session: false }), routes.transactionsRouter);
+app.use('/api/user', routes.authorizationRouter);
 app.use(
   '/api/user',
   passport.authenticate('jwt', { session: false }),
   router.post('/tokenValidation', authorizationController.tokenValidation)
 );
-app.use('/api/news', routes.A_router);
+app.use('/api/news', routes.authorizationRouter);
 
 // ---- SERVE STATIC FILES ---- //
 app.get('*.*', express.static(_app_folder, { maxAge: '1y' }));

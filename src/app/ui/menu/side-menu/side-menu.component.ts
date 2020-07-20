@@ -14,8 +14,8 @@ export class SideMenuComponent implements OnInit {
       home: true,
     },
     {
-      title: 'Coin Market',
-      link: './coin-market-list',
+      title: 'Market',
+      link: './market',
     },
     {
       title: 'Rankings',

@@ -5,7 +5,7 @@ const passportAuthenticateLogin = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
       if (err || !user) {
-        res.status(401).send(new ErrorResponse('emailDuplication', 'Wrong email or password'));
+        res.status(401).send(new ErrorResponse('authorizationError', 'Wrong email or password'));
         return next('Wrong email or password');
       }
 

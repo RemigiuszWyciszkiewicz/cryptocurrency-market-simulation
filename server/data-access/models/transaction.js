@@ -1,9 +1,18 @@
 const mongoose = require('../mongose');
+const SUPPORTED_CRYPTOCURRENCIES = require('../../cryptocurrency-clients').SUPPORTED_CRYPTOCURRENCIES;
 
-const userSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const transactionSchema = new mongoose.Schema({
   __v: { type: Number, select: false },
   date: { type: String },
-  amount: { type: String },
-  cryptocurrency: { type: String, enum: [] },
-  fafa: { type: String },
+  amount: { type: Number },
+  value: { type: Number },
+  cryptocurrency: { type: String, enum: SUPPORTED_CRYPTOCURRENCIES },
+  type: { type: String, enum: ['sell', 'buy'] },
+  user: { type: Schema.ObjectId, ref: 'users' },
 });
+
+const Transaction = mongoose.model('transactions', transactionSchema);
+
+module.exports = Transaction;
