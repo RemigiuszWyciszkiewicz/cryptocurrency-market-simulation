@@ -1,24 +1,26 @@
-<p>transactions-history works!</p>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">amount</th>
-      <th scope="col">cryptocurrency</th>
-      <th scope="col">date</th>
-      <th scope="col">price</th>
-      <th scope="col">type</th>
-      <th scope="col">value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let coin of transaction$ | async">
-      <th scope="row">{{ coin.amount }}</th>
-      <td>{{ coin.cryptocurrency }}</td>
-      <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
-      <td>{{ coin.price }}</td>
-      <td>{{ coin.type }}</td>
-      <td>{{ coin.value }}</td>
-    </tr>
-  </tbody>
-</table>
+<coin-market-page-loader [isLoading]="isLoading" [error]="getTransactionsError">
+  <ng-template aumsDigitalPageContentTpl>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">amount</th>
+          <th scope="col">cryptocurrency</th>
+          <th scope="col">date</th>
+          <th scope="col">price</th>
+          <th scope="col">type</th>
+          <th scope="col">value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let coin of transaction">
+          <th scope="row">{{ coin.amount }}</th>
+          <td>{{ coin.cryptocurrency }}</td>
+          <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
+          <td>{{ coin.price }}</td>
+          <td>{{ coin.type }}</td>
+          <td>{{ coin.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</coin-market-page-loader>

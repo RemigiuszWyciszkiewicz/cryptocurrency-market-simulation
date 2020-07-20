@@ -1,0 +1,27 @@
+<div
+  class="modal-container"
+  [ngClass]="{
+    'size-lg': this.modalSize === 'lg',
+    'size-md': this.modalSize === 'md',
+    'size-sm': this.modalSize === 'sm'
+  }"
+>
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <div class="title">
+        {{ modalTitle }}
+      </div>
+      <div class="d-flex align-items-center ml-4" *ngIf="!hideCancel">
+        <button type="button" class="close" (click)="onCancel()">&times;</button>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div [class.loading-container]="loading" [nbSpinner]="loading" [nbSpinnerMessage]="loadingMessage">
+        <ng-content select="coin-market-modal-card-body"></ng-content>
+      </div>
+    </nb-card-body>
+    <nb-card-footer *ngIf="!loading && !hideFooter">
+      <ng-content select="coin-market-modal-card-footer"></ng-content>
+    </nb-card-footer>
+  </nb-card>
+</div>

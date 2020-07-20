@@ -1,0 +1,21 @@
+nb-card {
+  max-width: 600px;
+  max-height: 500px;
+  box-shadow: 0 2px 15px 0 #707070;
+
+  nb-card-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+nb-card-header::ng-deep {
+  border: unset;
+}
+nb-card-footer::ng-deep {
+  border: unset;
+}
+
+.input-container {
+  display: flex;
+}

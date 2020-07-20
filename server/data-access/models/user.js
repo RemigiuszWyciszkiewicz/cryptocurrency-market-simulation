@@ -23,9 +23,8 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.isValidPassword = async function (password) {
   const user = this;
-  const result = await bcrypt.compare(password, user.password);
 
-  return result;
+  return await bcrypt.compare(password, user.password);
 };
 
 const User = mongoose.model('users', userSchema);

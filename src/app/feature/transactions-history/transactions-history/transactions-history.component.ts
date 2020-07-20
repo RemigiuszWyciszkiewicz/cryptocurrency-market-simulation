@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '@coin-market/core/authorization';
 import { Transaction } from '@coin-market/data-access/models';
 import { TransactionsService } from '@coin-market/data-access/transactions';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-transactions-history',
@@ -10,7 +12,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./transactions-history.component.scss'],
 })
 export class TransactionsHistoryComponent implements OnInit {
-  transaction$: Observable<Transaction[]>;
+  transaction: Transaction[];
+  isLoading = true;
+  getTransactionsError: HttpErrorResponse;
 
   constructor(
     private readonly _transactionService: TransactionsService,
@@ -18,6 +22,20 @@ export class TransactionsHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.transaction$ = this._transactionService.getAllTransactions(this._tokenStorageService.getId());
+    this._transactionService
+      .getAllTransactions(this._tokenStorageService.getId())
+      .pipe(
+        tap((value) => {
+          this.transaction = value;
+        }),
+        finalize(() => {
+          this.isLoading = false;
+        }),
+        catchError((error) => {
+          this.getTransactionsError = error;
+          return of(error);
+        })
+      )
+      .subscribe();
   }
 }

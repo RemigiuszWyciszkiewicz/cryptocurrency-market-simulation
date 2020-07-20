@@ -1,5 +1,6 @@
-import { Injector, Input, OnInit, Directive, ContentChildren, QueryList } from '@angular/core';
+import { ContentChildren, Directive, Injector, Input, OnInit, QueryList } from '@angular/core';
 import { AbstractControl, ControlContainer, ControlValueAccessor, NgControl, ValidationErrors } from '@angular/forms';
+
 import { CustomInputErrorsDirective } from './custom-input-errors.directive';
 
 @Directive()
@@ -83,9 +84,9 @@ export class BaseControlValueAccessor<T> implements ControlValueAccessor, OnInit
       const validator = abstractControl.validator({} as AbstractControl);
       return validator && validator.required;
     }
-    if (abstractControl['controls']) {
-      for (const controlName in abstractControl['controls']) {
-        if (abstractControl['controls'][controlName] && this.hasRequiredField(abstractControl['controls'][controlName])) {
+    if (abstractControl.controls) {
+      for (const controlName in abstractControl.controls) {
+        if (abstractControl.controls[controlName] && this.hasRequiredField(abstractControl.controls[controlName])) {
           return true;
         }
       }

@@ -1,0 +1,13 @@
+<coin-market-modal-card [modalTitle]="title">
+  <coin-market-modal-card-body>
+    <div [formGroup]="formGroup" class="mb-3 input-container">
+      <coin-market-input type="number" formControlName="cryptoAmount"></coin-market-input>
+      <div>
+        <span>CURRENT PRICE </span> <span>{{ cryptocurrency.current_price }} </span> <span>VALUE </span
+        ><span>{{ transactionValue }} </span>
+      </div>
+    </div>
+    <coin-market-button (click)="buy()" text="Buy"></coin-market-button>
+    <coin-market-button (click)="cancel()" class="ml-2" text="Cancel"></coin-market-button>
+  </coin-market-modal-card-body>
+</coin-market-modal-card>

@@ -5,6 +5,8 @@ import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { TransactionType } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
 import { TransactionsService } from '@coin-market/data-access/transactions';
+import { CoinTransactionModalComponent } from '@coin-market/ui/modal';
+import { NbDialogService } from '@nebular/theme';
 import { of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
@@ -15,9 +17,10 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 })
 export class MarketComponent implements OnInit {
   constructor(
-    private readonly _cryptocurrencyService: CryptocurrencyService,
+    private readonly _nbDialogService: NbDialogService,
+    private readonly _tokenStorage: TokenStorageService,
     private readonly _transactionService: TransactionsService,
-    private readonly _tokenStorage: TokenStorageService
+    private readonly _cryptocurrencyService: CryptocurrencyService
   ) {}
 
   isLoading = true;
@@ -43,15 +46,21 @@ export class MarketComponent implements OnInit {
       .subscribe();
   }
 
-  buy(coinId: string): void {
-    this._transactionService
-      .saveTransaction({ cryptocurrency: coinId, amount: 200, price: 60, type: TransactionType.BUY }, this._tokenStorage.getId())
-      .subscribe();
+  buy(coin: Cryptocurrency): void {
+    this._nbDialogService
+      .open(CoinTransactionModalComponent, { context: { cryptocurrency: coin, title: 'Purchase: ' + coin.name } })
+      .onClose.subscribe(console.log);
+    // this._transactionService
+    //   .saveTransaction({ cryptocurrency: coid.id, amount: 200, price: 60, type: TransactionType.BUY }, this._tokenStorage.getId())
+    //   .subscribe();
   }
 
-  sell(coinId: string): void {
+  sell(coin: Cryptocurrency): void {
     this._transactionService
-      .saveTransaction({ cryptocurrency: coinId, amount: 200, price: 60, type: TransactionType.SELL }, this._tokenStorage.getId())
+      .saveTransaction(
+        { cryptocurrency: coin.id, amount: 200, price: 60, type: TransactionType.SELL },
+        this._tokenStorage.getId()
+      )
       .subscribe(console.log);
   }
 }

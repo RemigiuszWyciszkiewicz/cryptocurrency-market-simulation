@@ -3,7 +3,7 @@ export interface Cryptocurrency {
   symbol: string;
   name: string;
   image: string;
-  current_price: string;
-  market_cap_rank: string;
-  price_change_percentage_24h: string;
+  current_price: number;
+  market_cap_rank: number;
+  price_change_percentage_24h: number;
 }

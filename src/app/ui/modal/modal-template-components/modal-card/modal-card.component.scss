@@ -1,0 +1,27 @@
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include media-breakpoint-up(sm) {
+  .size-sm {
+    width: 90vw;
+  }
+  .size-md {
+    width: 50vw;
+  }
+  .size-lg {
+    width: 50vw;
+  }
+}
+
+.loading-container {
+  height: 25vh;
+}
+
+nb-card-header ::ng-deep {
+  border-bottom: none;
+}
+
+nb-card-footer ::ng-deep {
+  border-top: none;
+  padding: 0.5rem 1.25rem 1.25rem 1.25rem;
+}

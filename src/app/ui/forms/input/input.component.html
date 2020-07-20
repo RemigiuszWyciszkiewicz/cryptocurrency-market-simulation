@@ -25,7 +25,7 @@
 </ng-container>
 <ng-container>
   <coin-market-control-error-message
-    *ngIf="isMarkedAsInvalid"
+    *ngIf="isMarkedAsInvalid && showErrorStatement"
     [errors]="errors"
     [customErrors]="customErrors"
   ></coin-market-control-error-message>
