@@ -54,7 +54,7 @@ const save = async (req, res, next) => {
     return next();
   }
 
-  res.send(req.body);
+  res.send(transaction);
   return next();
 };
 
