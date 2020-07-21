@@ -1,12 +1,11 @@
 const { ErrorResponse } = require('../data-access');
 const User = require('../data-access/models').User;
-const assetsService = require('../services').assetsService;
+const userService = require('../services').userService;
+
 const getAll = async (req, res, next) => {
   const userId = req.params.userId;
   try {
-    const user = await User.findOne({
-      _id: userId,
-    });
+    const user = await userService.getUser(userId);
 
     res.send(user.assets);
 

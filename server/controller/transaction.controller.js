@@ -43,13 +43,16 @@ const save = async (req, res, next) => {
 
   transaction.value = req.body.value;
 
+  if (transaction.type === 'purchase') {
+    await handlePurchaseTransaction(userId, transaction);
+  }
+
+  if (transaction.type === 'sale') {
+    await handlePurchaseTransaction(userId, transaction);
+  }
+
   try {
     await saveTransaction(userId, transaction);
-    const result = await assetsService.checkIfAssetAlreadyExists(userId, transaction.cryptocurrency);
-
-    result.length
-      ? assetsService.updateAsset(userId, transaction)
-      : assetsService.addAssetToUser(userId, assetsService.mapTransactionToAsset(transaction.toObject()));
   } catch (error) {
     console.log(error);
     res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
@@ -59,6 +62,19 @@ const save = async (req, res, next) => {
   res.send(transaction);
   return next();
 };
+
+async function handlePurchaseTransaction(userId, transaction) {
+  const result = await assetsService.checkIfAssetAlreadyExists(userId, transaction.cryptocurrency);
+  if (result.length) {
+    await assetsService.updateAssetOnPurchase(userId, transaction);
+  } else {
+    await assetsService.addAssetToUser(userId, assetsService.mapTransactionToAsset(transaction.toObject()));
+  }
+}
+
+// async function handleSaleTransaction(userId, transaction) {
+//   await assetsService.
+// }
 
 async function saveTransaction(userId, transaction) {
   await User.findById(userId)

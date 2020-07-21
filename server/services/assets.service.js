@@ -1,4 +1,7 @@
+const { constants } = require('os');
+
 const User = require('../data-access/models').User;
+const userService = require('./user.service');
 
 const addAssetToUser = async (userId, asset) => {
   await User.findById(userId)
@@ -9,21 +12,31 @@ const addAssetToUser = async (userId, asset) => {
     });
 };
 
-const updateAsset = async (userId, transaction) => {
-  const user = await User.findOne({
-    _id: userId,
-  });
-
+const getAsset = async (user, cryptocurrencyId) => {
   //TODO find better way to extract asset from user.
   const index = user.assets.findIndex((asset) => {
-    return asset.cryptocurrency === transaction.cryptocurrency;
+    return asset.cryptocurrency === cryptocurrencyId;
   });
+  return user.assets[index];
+};
 
-  // recalculate asset after transaction
-  user.assets[index].amount = user.assets[index].amount + transaction.amount;
-  user.assets[index].purchaseCost = user.assets[index].purchaseCost + transaction.value;
-  user.assets[index].lastUpdate = new Date().toISOString();
+const updateAssetOnPurchase = async (userId, transaction) => {
+  const user = await userService.getUser(userId);
+  const asset = await getAsset(user, transaction.cryptocurrency);
 
+  asset.amount = asset.amount + transaction.amount;
+  asset.purchaseCost = asset.purchaseCost + transaction.value;
+  asset.lastUpdate = new Date().toISOString();
+
+  user.save();
+};
+
+const updateAssetOnSale = async (userId, transaction) => {
+  const user = await userService.getUser(userId);
+  const asset = await getAsset(user, transaction.cryptocurrency);
+
+  if (asset.amount < transaction.amount) {
+  }
   user.save();
 };
 
@@ -43,4 +56,4 @@ const mapTransactionToAsset = (transaction) => {
   };
 };
 
-module.exports = { addAssetToUser, checkIfAssetAlreadyExists, mapTransactionToAsset, updateAsset };
+module.exports = { addAssetToUser, checkIfAssetAlreadyExists, mapTransactionToAsset, updateAssetOnPurchase };
