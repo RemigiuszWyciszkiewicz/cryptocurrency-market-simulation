@@ -1,7 +1,7 @@
 export interface Transaction {
   _id: string;
   date: string;
-  amount: number;
+  quantity: number;
   price: number;
   cryptocurrency: string;
   type: TransactionType;

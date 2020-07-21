@@ -1,7 +1,7 @@
 <coin-market-modal-card [modalTitle]="transactionType | uppercase">
   <coin-market-modal-card-body>
     <div [formGroup]="formGroup" class="mb-3 input-container">
-      <coin-market-input type="number" formControlName="cryptoAmount"></coin-market-input>
+      <coin-market-input type="number" formControlName="cryptoquantity"></coin-market-input>
       <div>
         <span>CURRENT PRICE </span> <span>{{ cryptocurrency.current_price }} </span> <span>VALUE </span
         ><span>{{ transactionValue }} </span>

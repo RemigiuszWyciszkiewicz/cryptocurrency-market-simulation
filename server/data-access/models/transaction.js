@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const transactionSchema = new mongoose.Schema({
   __v: { type: Number, select: false },
   date: { type: String, required: true },
-  amount: { type: Number, required: true },
+  quantity: { type: Number, required: true },
   value: { type: Number },
   price: { type: Number, required: true },
   cryptocurrency: { type: String, enum: SUPPORTED_CRYPTOCURRENCIES, required: true },

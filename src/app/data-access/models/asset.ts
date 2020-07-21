@@ -1,7 +1,7 @@
 export interface Asset {
   _id: string;
   cryptocurrency: string;
-  amount: number;
+  quantity: number;
   lastUpdate: string;
   purchaseCost: number;
 }

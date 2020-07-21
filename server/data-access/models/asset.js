@@ -4,7 +4,7 @@ const SUPPORTED_CRYPTOCURRENCIES = require('../../cryptocurrency-clients').SUPPO
 const assetSchema = new mongoose.Schema({
   __v: { type: Number, select: false },
   cryptocurrency: { type: String, enum: SUPPORTED_CRYPTOCURRENCIES, required: true },
-  amount: { type: Number, required: true },
+  quantity: { type: Number, required: true },
   lastUpdate: { type: String, required: true },
   purchaseCost: { type: Number, required: true },
 });

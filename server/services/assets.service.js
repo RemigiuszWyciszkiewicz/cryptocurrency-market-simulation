@@ -24,8 +24,8 @@ const updateAssetOnPurchase = async (userId, transaction) => {
   const user = await userService.getUser(userId);
   const asset = await getAsset(user, transaction.cryptocurrency);
 
-  asset.amount = asset.amount + transaction.amount;
-  asset.purchaseCost = asset.purchaseCost + transaction.value;
+  asset.quantity += transaction.quantity;
+  asset.purchaseCost += transaction.value;
   asset.lastUpdate = new Date().toISOString();
 
   user.save();
@@ -35,8 +35,17 @@ const updateAssetOnSale = async (userId, transaction) => {
   const user = await userService.getUser(userId);
   const asset = await getAsset(user, transaction.cryptocurrency);
 
-  if (asset.amount < transaction.amount) {
+  if (asset.quantity < transaction.quantity) {
+    throw new Error('Asset quantity exceeded');
   }
+
+  const factor = 1 - transaction.quantity / asset.quantity;
+  console.log(factor);
+  asset.purchaseCost = factor * asset.purchaseCost;
+  asset.quantity -= transaction.quantity;
+
+  asset.lastUpdate = new Date().toISOString();
+
   user.save();
 };
 
@@ -50,10 +59,10 @@ const checkIfAssetAlreadyExists = async (userId, cryptocurrency) => {
 const mapTransactionToAsset = (transaction) => {
   return {
     cryptocurrency: transaction.cryptocurrency,
-    amount: transaction.amount,
+    quantity: transaction.quantity,
     lastUpdate: transaction.date,
     purchaseCost: transaction.value,
   };
 };
 
-module.exports = { addAssetToUser, checkIfAssetAlreadyExists, mapTransactionToAsset, updateAssetOnPurchase };
+module.exports = { addAssetToUser, checkIfAssetAlreadyExists, mapTransactionToAsset, updateAssetOnPurchase, updateAssetOnSale };

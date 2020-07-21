@@ -16,12 +16,12 @@ export class CoinTransactionModalComponent implements OnInit {
   @Input() transactionType: TransactionType;
   @Input() cryptocurrency: Cryptocurrency;
 
-  get cryptoAmountControl(): AbstractControl {
-    return this.formGroup.get('cryptoAmount');
+  get cryptoquantityControl(): AbstractControl {
+    return this.formGroup.get('cryptoquantity');
   }
 
   get transactionValue(): number {
-    return this.countTransactionValue(this.cryptoAmountControl.value);
+    return this.countTransactionValue(this.cryptoquantityControl.value);
   }
 
   showLimitExceededStatement$: Observable<boolean>;
@@ -31,17 +31,17 @@ export class CoinTransactionModalComponent implements OnInit {
   constructor(private readonly _formBuilder: FormBuilder, private readonly _ref: NbDialogRef<CoinTransactionModalComponent>) {}
 
   ngOnInit(): void {
-    this.formGroup = this._formBuilder.group({ cryptoAmount: ['', [Validators.min(0), Validators.max(this.quantityLimit)]] });
+    this.formGroup = this._formBuilder.group({ cryptoquantity: ['', [Validators.min(0), Validators.max(this.quantityLimit)]] });
 
-    this.showLimitExceededStatement$ = this.cryptoAmountControl.valueChanges.pipe(
+    this.showLimitExceededStatement$ = this.cryptoquantityControl.valueChanges.pipe(
       map(() => this.transactionValue > this.usdLimit)
     );
   }
 
   buy(): void {
-    if (this.cryptoAmountControl.valid) {
+    if (this.cryptoquantityControl.valid) {
       this._ref.close({
-        amount: Number(this.cryptoAmountControl.value),
+        quantity: Number(this.cryptoquantityControl.value),
         value: this.transactionValue,
         cryptocurrency: this.cryptocurrency.id,
         price: this.cryptocurrency.current_price,
@@ -51,14 +51,10 @@ export class CoinTransactionModalComponent implements OnInit {
   }
 
   countTransactionValue(value: number): number {
-    return Number(Number(this.cryptocurrency.current_price * +value).toFixed(2));
+    return this.cryptocurrency.current_price * Number(value);
   }
 
   cancel(): void {
     this._ref.close();
-  }
-
-  roundToX(num: number, X: number): number {
-    return +(Math.round(num + Number('e+' + X)) + 'e-' + X);
   }
 }

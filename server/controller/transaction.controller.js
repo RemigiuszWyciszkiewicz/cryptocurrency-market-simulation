@@ -27,7 +27,7 @@ const save = async (req, res, next) => {
 
   const transaction = new Transaction({
     date: new Date().toISOString(),
-    amount: req.body.amount,
+    quantity: req.body.quantity,
     price: req.body.price,
     cryptocurrency: req.body.cryptocurrency,
     type: req.body.type,
@@ -43,19 +43,18 @@ const save = async (req, res, next) => {
 
   transaction.value = req.body.value;
 
-  if (transaction.type === 'purchase') {
-    await handlePurchaseTransaction(userId, transaction);
-  }
-
-  if (transaction.type === 'sale') {
-    await handlePurchaseTransaction(userId, transaction);
-  }
-
   try {
+    if (transaction.type === 'purchase') {
+      await handlePurchaseTransaction(userId, transaction);
+    }
+
+    if (transaction.type === 'sale') {
+      await handleSaleTransaction(userId, transaction);
+    }
+
     await saveTransaction(userId, transaction);
   } catch (error) {
-    console.log(error);
-    res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
+    res.status(404).send(new ErrorResponse('ERROR ', error.message));
     return next();
   }
 
@@ -72,9 +71,9 @@ async function handlePurchaseTransaction(userId, transaction) {
   }
 }
 
-// async function handleSaleTransaction(userId, transaction) {
-//   await assetsService.
-// }
+async function handleSaleTransaction(userId, transaction) {
+  await assetsService.updateAssetOnSale(userId, transaction);
+}
 
 async function saveTransaction(userId, transaction) {
   await User.findById(userId)
@@ -84,10 +83,6 @@ async function saveTransaction(userId, transaction) {
       user.transactions.push(transaction);
       user.save();
     });
-}
-
-function roundToX(num, X) {
-  return +(Math.round(num + 'e+' + X) + 'e-' + X);
 }
 
 module.exports = { getAll, save };
