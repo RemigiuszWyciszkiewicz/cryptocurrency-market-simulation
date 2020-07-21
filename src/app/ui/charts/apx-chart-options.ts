@@ -5,8 +5,13 @@ import {
   ApexDataLabels,
   ApexFill,
   ApexGrid,
-  ApexMarkers,
+  ApexLegend,
+  ApexNonAxisChartSeries,
+  ApexPlotOptions,
+  ApexResponsive,
+  ApexStates,
   ApexStroke,
+  ApexTheme,
   ApexTitleSubtitle,
   ApexTooltip,
   ApexXAxis,
@@ -26,19 +31,23 @@ export enum ApxChartSeriesType {
 }
 
 export interface ApxChartOptions {
-  series: ApexAxisChartSeries;
-  annotations: ApexAnnotations;
   chart: ApexChart;
-  xaxis: ApexXAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  labels: string[];
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-  tooltip: ApexTooltip;
+  annotations: ApexAnnotations;
   colors: string[];
-  toolbar: any;
-  markers: ApexMarkers;
+  dataLabels: ApexDataLabels;
+  series: ApexAxisChartSeries | ApexNonAxisChartSeries;
+  stroke: ApexStroke;
+  labels: string[];
+  legend: ApexLegend;
   fill: ApexFill;
-  yaxis: ApexYAxis;
+  tooltip: ApexTooltip;
+  plotOptions: ApexPlotOptions;
+  responsive: ApexResponsive[];
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis | ApexYAxis[];
+  grid: ApexGrid;
+  states: ApexStates;
+  title: ApexTitleSubtitle;
+  subtitle: ApexTitleSubtitle;
+  theme: ApexTheme;
 }

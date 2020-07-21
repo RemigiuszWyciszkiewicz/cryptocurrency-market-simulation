@@ -11,6 +11,6 @@ export class CryptocurrencyService extends ApiService {
   }
 
   getAllCryptocurrencies(): Observable<Cryptocurrency[]> {
-    return this.getAll<Cryptocurrency>('all');
+    return this.getAll<Cryptocurrency>('list');
   }
 }

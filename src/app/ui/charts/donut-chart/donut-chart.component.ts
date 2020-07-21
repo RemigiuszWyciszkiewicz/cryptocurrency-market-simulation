@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ApxChartOptions } from '../apx-chart-options';
+
 @Component({
   selector: 'coin-market-donut-chart',
   templateUrl: './donut-chart.component.html',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class DonutChartComponent implements OnInit {
   constructor() {}
 
-  options = {
+  options: Partial<ApxChartOptions> = {
     chart: {
       type: 'donut',
 
@@ -16,29 +18,19 @@ export class DonutChartComponent implements OnInit {
       stackType: '100%',
       width: '100%',
     },
-    title: {
-      text: 'Portfolio',
-    },
     legend: {
       position: 'bottom',
-      horizontalAlign: 'left',
-      fontSize: '15px',
-      markers: {
-        height: 15,
-        width: 15,
-        radius: 100,
-      },
-      itemMargin: {
-        vertical: 2.5,
-      },
       formatter: (seriesName, opts) => {
         return `<span style="margin-right:10px;">${seriesName} <strong>${
           opts.w.globals.series[opts.seriesIndex]
         }</strong></span>`;
       },
     },
+    title: {
+      text: 'Portfolio',
+    },
 
-    series: [1, 1, 1],
+    series: [1, 2, 3],
 
     labels: ['Apple', 'Mango', 'Orange'],
   };
