@@ -1,7 +1,16 @@
 const { ErrorResponse } = require('../data-access');
-const { ModuleResolutionKind } = require('typescript');
+const User = require('../data-access/models').User;
 
 const getAll = async (req, res, next) => {
+  try {
+    const results = await User.find({
+      _id: req.params.userId,
+      assets: { $elemMatch: { cryptocurrency: req.body.cryptocurrency } },
+    }).exec();
+  } catch (error) {
+    res.status(404).send(error);
+  }
+
   res.send('GET ALL');
 };
 
