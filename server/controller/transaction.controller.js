@@ -1,6 +1,6 @@
 const { User, Transaction } = require('../data-access/models');
 const { ErrorResponse } = require('../data-access');
-
+const assetsService = require('../services').assetsService;
 const getAll = async (req, res, next) => {
   let user;
 
@@ -23,6 +23,8 @@ const getAll = async (req, res, next) => {
 };
 
 const save = async (req, res, next) => {
+  const userId = req.params.userId;
+
   const transaction = new Transaction({
     date: new Date().toISOString(),
     amount: req.body.amount,
@@ -39,17 +41,17 @@ const save = async (req, res, next) => {
     return next();
   }
 
-  transaction.value = roundToX(transaction.price * transaction.amount, 2);
+  transaction.value = req.body.value;
 
   try {
-    User.findById(req.params.userId)
-      .exec()
-      .then(async (user) => {
-        await transaction.save();
-        user.transactions.push(transaction);
-        user.save();
-      });
+    await saveTransaction(userId, transaction);
+    const result = await assetsService.checkIfAssetAlreadyExists(userId, transaction.cryptocurrency);
+
+    result.length
+      ? assetsService.updateAsset(userId, transaction)
+      : assetsService.addAssetToUser(userId, assetsService.mapTransactionToAsset(transaction.toObject()));
   } catch (error) {
+    console.log(error);
     res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
     return next();
   }
@@ -57,6 +59,16 @@ const save = async (req, res, next) => {
   res.send(transaction);
   return next();
 };
+
+async function saveTransaction(userId, transaction) {
+  await User.findById(userId)
+    .exec()
+    .then(async (user) => {
+      await transaction.save();
+      user.transactions.push(transaction);
+      user.save();
+    });
+}
 
 function roundToX(num, X) {
   return +(Math.round(num + 'e+' + X) + 'e-' + X);

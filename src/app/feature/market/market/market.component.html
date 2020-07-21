@@ -1,4 +1,4 @@
-<coin-market-page-loader [isLoading]="isLoading" [error]="cryptoFetchError">
+<coin-market-page-loader [isLoading]="isLoading" [error]="serverError">
   <ng-template aumsDigitalPageContentTpl>
     <table class="table">
       <thead>
@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let coin of cryptocurrencies$">
+        <tr *ngFor="let coin of cryptocurrencies">
           <th scope="row">{{ coin.market_cap_rank }}</th>
           <td>{{ coin.current_price }}</td>
           <td>{{ coin.name }}</td>

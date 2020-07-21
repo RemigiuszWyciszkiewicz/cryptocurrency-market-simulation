@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cryptocurrency, TransactionType } from '@coin-market/data-access/models';
 import { NbDialogRef } from '@nebular/theme';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-coin-transaction-modal',
@@ -10,6 +12,8 @@ import { NbDialogRef } from '@nebular/theme';
 })
 export class CoinTransactionModalComponent implements OnInit {
   @Input() title = 'Transaction';
+  @Input() usdLimit: number;
+  @Input() quantityLimit: number;
   @Input() cryptocurrency: Cryptocurrency;
 
   get cryptoAmountControl(): AbstractControl {
@@ -17,18 +21,27 @@ export class CoinTransactionModalComponent implements OnInit {
   }
 
   get transactionValue(): number {
-    return Number(Number(this.cryptocurrency.current_price * +this.cryptoAmountControl.value).toFixed(2));
+    return this.countTransactionValue(this.cryptoAmountControl.value);
   }
 
+  showLimitExceededStatement$: Observable<boolean>;
+
   formGroup: FormGroup;
-  constructor(private readonly _formBuilder: FormBuilder, private readonly _ref: NbDialogRef<CoinTransactionModalComponent>) {
-    this.formGroup = this._formBuilder.group({ cryptoAmount: ['', [Validators.min(0)]] });
+
+  constructor(private readonly _formBuilder: FormBuilder, private readonly _ref: NbDialogRef<CoinTransactionModalComponent>) {}
+
+  ngOnInit(): void {
+    this.formGroup = this._formBuilder.group({ cryptoAmount: ['', [Validators.min(0), Validators.max(this.quantityLimit)]] });
+
+    this.showLimitExceededStatement$ = this.cryptoAmountControl.valueChanges.pipe(
+      map(() => this.transactionValue > this.usdLimit)
+    );
   }
 
   buy(): void {
     if (this.cryptoAmountControl.valid) {
       this._ref.close({
-        amount: this.cryptoAmountControl.value,
+        amount: Number(this.cryptoAmountControl.value),
         value: this.transactionValue,
         cryptocurrency: this.cryptocurrency.id,
         price: this.cryptocurrency.current_price,
@@ -37,10 +50,13 @@ export class CoinTransactionModalComponent implements OnInit {
     }
   }
 
+  countTransactionValue(value: number): number {
+    return Number(Number(this.cryptocurrency.current_price * +value).toFixed(2));
+  }
+
   cancel(): void {
     this._ref.close();
   }
-  ngOnInit(): void {}
 
   roundToX(num: number, X: number): number {
     return +(Math.round(num + Number('e+' + X)) + 'e-' + X);

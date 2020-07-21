@@ -1,21 +1,20 @@
 const { ErrorResponse } = require('../data-access');
 const User = require('../data-access/models').User;
-
+const assetsService = require('../services').assetsService;
 const getAll = async (req, res, next) => {
+  const userId = req.params.userId;
   try {
-    const results = await User.find({
-      _id: req.params.userId,
-      assets: { $elemMatch: { cryptocurrency: req.body.cryptocurrency } },
-    }).exec();
+    const user = await User.findOne({
+      _id: userId,
+    });
+
+    res.send(user.assets);
+
+    next();
   } catch (error) {
-    res.status(404).send(error);
+    res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
+    return next();
   }
-
-  res.send('GET ALL');
 };
 
-const save = async (req, res, next) => {
-  res.send('saved');
-};
-
-module.exports = { getAll, save };
+module.exports = { getAll };

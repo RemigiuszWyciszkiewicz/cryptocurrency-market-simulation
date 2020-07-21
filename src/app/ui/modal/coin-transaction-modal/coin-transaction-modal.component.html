@@ -6,6 +6,7 @@
         <span>CURRENT PRICE </span> <span>{{ cryptocurrency.current_price }} </span> <span>VALUE </span
         ><span>{{ transactionValue }} </span>
       </div>
+      <div class="color-danger" *ngIf="showLimitExceededStatement$ | async">You have exceeded the limit: $ {{ usdLimit }}</div>
     </div>
     <coin-market-button (click)="buy()" text="Buy"></coin-market-button>
     <coin-market-button (click)="cancel()" class="ml-2" text="Cancel"></coin-market-button>

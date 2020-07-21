@@ -6,7 +6,7 @@ const assetSchema = new mongoose.Schema({
   cryptocurrency: { type: String, enum: SUPPORTED_CRYPTOCURRENCIES, required: true },
   amount: { type: Number, required: true },
   lastUpdate: { type: String, required: true },
-  purchaseCost: { type: String, required: true },
+  purchaseCost: { type: Number, required: true },
 });
 
 const Asset = mongoose.model('assets', assetSchema);
