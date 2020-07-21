@@ -10,7 +10,7 @@ const transactionSchema = new mongoose.Schema({
   value: { type: Number },
   price: { type: Number, required: true },
   cryptocurrency: { type: String, enum: SUPPORTED_CRYPTOCURRENCIES, required: true },
-  type: { type: String, enum: ['sell', 'buy'], required: true },
+  type: { type: String, enum: ['sale', 'purchase'], required: true },
   user: { type: Schema.ObjectId, ref: 'users' },
 });
 

@@ -11,9 +11,9 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./coin-transaction-modal.component.scss'],
 })
 export class CoinTransactionModalComponent implements OnInit {
-  @Input() title = 'Transaction';
   @Input() usdLimit: number;
   @Input() quantityLimit: number;
+  @Input() transactionType: TransactionType;
   @Input() cryptocurrency: Cryptocurrency;
 
   get cryptoAmountControl(): AbstractControl {
@@ -45,7 +45,7 @@ export class CoinTransactionModalComponent implements OnInit {
         value: this.transactionValue,
         cryptocurrency: this.cryptocurrency.id,
         price: this.cryptocurrency.current_price,
-        type: TransactionType.BUY,
+        type: TransactionType.PURCHASE,
       });
     }
   }

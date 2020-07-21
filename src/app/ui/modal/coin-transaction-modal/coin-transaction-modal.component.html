@@ -1,4 +1,4 @@
-<coin-market-modal-card [modalTitle]="title">
+<coin-market-modal-card [modalTitle]="transactionType | uppercase">
   <coin-market-modal-card-body>
     <div [formGroup]="formGroup" class="mb-3 input-container">
       <coin-market-input type="number" formControlName="cryptoAmount"></coin-market-input>

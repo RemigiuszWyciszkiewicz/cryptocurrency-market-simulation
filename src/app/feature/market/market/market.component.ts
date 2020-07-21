@@ -41,7 +41,9 @@ export class MarketComponent implements OnInit {
 
   buy(coin: Cryptocurrency): void {
     this._nbDialogService
-      .open(CoinTransactionModalComponent, { context: { cryptocurrency: coin, title: 'Purchase', usdLimit: 10000 } })
+      .open(CoinTransactionModalComponent, {
+        context: { cryptocurrency: coin, transactionType: TransactionType.PURCHASE, usdLimit: 10000 },
+      })
       .onClose.pipe(
         filter(Boolean),
         switchMap((value) => {
@@ -59,12 +61,24 @@ export class MarketComponent implements OnInit {
   }
 
   sell(coin: Cryptocurrency): void {
-    this._transactionService
-      .saveTransaction(
-        { cryptocurrency: coin.id, amount: 200, price: 60, type: TransactionType.SELL },
-        this._tokenStorage.getId()
+    this._nbDialogService
+      .open(CoinTransactionModalComponent, {
+        context: { cryptocurrency: coin, transactionType: TransactionType.SALE, quantityLimit: this.assets[coin.symbol].amount },
+      })
+      .onClose.pipe(
+        filter(Boolean),
+        switchMap((value) => {
+          return this._transactionService.saveTransaction(value, this._tokenStorage.getId());
+        })
       )
-      .subscribe(console.log);
+      .subscribe(
+        () => {
+          this._toastrService.success('Transaction completed');
+        },
+        (error: HttpErrorResponse) => {
+          this._toastrService.error('ERROR: ' + error.error.message);
+        }
+      );
   }
 
   fetchAllCryptocurrencies(): void {
