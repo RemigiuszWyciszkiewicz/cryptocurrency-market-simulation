@@ -83,7 +83,7 @@ export class MarketComponent implements OnInit {
 
   fetchAllCryptocurrencies(): void {
     this._cryptocurrencyService
-      .getAllCryptocurrencies()
+      .getCryptocurrenciesList()
       .pipe(
         tap((value: Cryptocurrency[]) => {
           this.cryptocurrencies = value;

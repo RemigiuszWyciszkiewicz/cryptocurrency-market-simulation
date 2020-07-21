@@ -1,8 +1,10 @@
 const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
-
+const cryptocurrenciesService = require('../services').cryptocurennciesService;
 const getAll = async (res, req) => {
+  let data;
   try {
-    const data = await cryptoApi.getAll();
+    data = await cryptocurrenciesService.getAllCryptocurrencies();
+
     if (data.data) {
       res.res.send(data.data);
     }

@@ -10,9 +10,10 @@ import { ToastrModule } from '@coin-market/ui/toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ActionListWidgetComponent } from './action-list-widget/action-list-widget.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ActionListWidgetComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

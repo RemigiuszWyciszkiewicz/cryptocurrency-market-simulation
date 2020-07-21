@@ -1,19 +1,23 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { EndpointUrlBuilder } from './api-url-builder';
 
+export interface RequestParams {
+  [key: string]: any;
+}
+
 export interface RestService {
   post<T>(item: Partial<T> | FormData, contentType: string, endpoint: string): Observable<T>;
-  get<T>(id: string, endpoint: string): Observable<T>;
+  get<T>(id: string, endpoint: string, params: HttpParams): Observable<T>;
   put<T>(id: string, item: T, endpoint: string): Observable<T>;
   delete<T>(id: string, endpoint: string): Observable<T>;
   getAll<T>(endpoint: string): Observable<T[]>;
 }
 
 export abstract class ApiService implements RestService {
-  protected _apiServiceUrl = 'https://coin-market-symulation.herokuapp.com/api';
+  protected _apiServiceUrl = 'http://localhost:4100/api';
   protected _httpClient: HttpClient;
   protected _route: string;
 
@@ -32,8 +36,8 @@ export abstract class ApiService implements RestService {
     });
   }
 
-  get<T>(id: string, endpoint: string): Observable<T> {
-    return this._httpClient.get<T>(`${this.generateEndpointUrl(endpoint)}/${id}`);
+  get<T>(id: string, endpoint: string, params?: HttpParams): Observable<T> {
+    return this._httpClient.get<T>(`${this.generateEndpointUrl(endpoint, params)}/${id}`, { params });
   }
 
   put<T>(id: string, item: Partial<T>, endpoint: string): Observable<T> {
@@ -44,11 +48,11 @@ export abstract class ApiService implements RestService {
     return this._httpClient.delete<T>(`${this.generateEndpointUrl(endpoint)}/${id}`);
   }
 
-  getAll<T>(endpoint: string): Observable<T[]> {
-    return this._httpClient.get<T[]>(`${this.generateEndpointUrl(endpoint)}`);
+  getAll<T>(endpoint: string, params?: HttpParams): Observable<T[]> {
+    return this._httpClient.get<T[]>(`${this.generateEndpointUrl(endpoint)}`, { params });
   }
 
-  protected generateEndpointUrl(endpoint?: string): string {
+  protected generateEndpointUrl(endpoint?: string, params?: HttpParams): string {
     return new EndpointUrlBuilder().addApiUrl(this._apiServiceUrl).addRoute(this._route).addEndpoint(endpoint).getUrl();
   }
 }

@@ -1,13 +1,13 @@
 const { ErrorResponse } = require('../data-access');
-const User = require('../data-access/models').User;
-const userService = require('../services').userService;
+
+const assetsService = require('../services').assetsService;
 
 const getAll = async (req, res, next) => {
   const userId = req.params.userId;
-  try {
-    const user = await userService.getUser(userId);
 
-    res.send(user.assets);
+  try {
+    const assets = await assetsService.getAllAssets(userId);
+    res.send(assets);
 
     next();
   } catch (error) {

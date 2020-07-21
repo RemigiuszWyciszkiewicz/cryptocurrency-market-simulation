@@ -1,4 +1,4 @@
 <div class="row">
   <div class="col-8"></div>
-  <div class="col-4"><coin-market-donut-chart></coin-market-donut-chart></div>
+  <div class="col-4"><coin-market-donut-chart *ngIf="donutChartData" [data]="donutChartData"></coin-market-donut-chart></div>
 </div>

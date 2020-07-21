@@ -10,7 +10,7 @@ export class CryptocurrencyService extends ApiService {
     super(injector, 'cryptocurrencies');
   }
 
-  getAllCryptocurrencies(): Observable<Cryptocurrency[]> {
+  getCryptocurrenciesList(): Observable<Cryptocurrency[]> {
     return this.getAll<Cryptocurrency>('list');
   }
 }

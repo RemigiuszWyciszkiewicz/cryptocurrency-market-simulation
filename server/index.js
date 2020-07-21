@@ -19,6 +19,7 @@ app.use(cors());
 
 app.use('/api/cryptocurrencies', passport.authenticate('jwt', { session: false }), routes.cryptocurrenciesRouter);
 app.use('/api/assets', passport.authenticate('jwt', { session: false }), routes.assetsRouter);
+app.use('/api/charts', passport.authenticate('jwt', { session: false }), routes.chartsRouter);
 app.use('/api/transactions', passport.authenticate('jwt', { session: false }), routes.transactionsRouter);
 app.use('/api/user', routes.authorizationRouter);
 app.use(

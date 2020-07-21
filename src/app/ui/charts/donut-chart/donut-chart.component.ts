@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from '@coin-market/ui/toastr';
 
 import { ApxChartOptions } from '../apx-chart-options';
+
+export interface DonutChartData {
+  labels: string[];
+  values: number[];
+}
 
 @Component({
   selector: 'coin-market-donut-chart',
@@ -8,31 +14,35 @@ import { ApxChartOptions } from '../apx-chart-options';
   styleUrls: ['./donut-chart.component.scss'],
 })
 export class DonutChartComponent implements OnInit {
-  constructor() {}
+  constructor(private readonly _toastrService: ToastrService) {}
+
+  @Input() set data(data: DonutChartData) {
+    this.options.labels = data.labels;
+    this.options.series = data.values;
+  }
 
   options: Partial<ApxChartOptions> = {
     chart: {
       type: 'donut',
-
       stacked: true,
-      stackType: '100%',
+      // stackType: '100%',
       width: '100%',
     },
     legend: {
       position: 'bottom',
       formatter: (seriesName, opts) => {
-        return `<span style="margin-right:10px;">${seriesName} <strong>${
-          opts.w.globals.series[opts.seriesIndex]
-        }</strong></span>`;
+        return `<span style="margin-right:10px;">${seriesName} <strong>${Number(opts.w.globals.series[opts.seriesIndex]).toFixed(
+          2
+        )}</strong></span>`;
       },
     },
     title: {
       text: 'Portfolio',
+      align: 'center',
+      offsetY: -5,
     },
-
-    series: [1, 2, 3],
-
-    labels: ['Apple', 'Mango', 'Orange'],
+    series: [],
+    labels: [],
   };
 
   ngOnInit(): void {}
