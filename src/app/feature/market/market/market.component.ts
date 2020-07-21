@@ -63,7 +63,7 @@ export class MarketComponent implements OnInit {
   sell(coin: Cryptocurrency): void {
     this._nbDialogService
       .open(CoinTransactionModalComponent, {
-        context: { cryptocurrency: coin, transactionType: TransactionType.SALE, quantityLimit: this.assets[coin.symbol].amount },
+        context: { cryptocurrency: coin, transactionType: TransactionType.SALE, quantityLimit: this.assets[coin.id].amount },
       })
       .onClose.pipe(
         filter(Boolean),
