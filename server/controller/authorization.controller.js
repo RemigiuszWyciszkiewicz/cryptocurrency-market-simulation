@@ -1,6 +1,7 @@
 const passport = require('../auth').passport;
 const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../data-access').ErrorResponse;
+const User = require('../data-access/models').User;
 
 const passportAuthenticateLogin = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
@@ -17,7 +18,7 @@ const passportAuthenticateLogin = async (req, res, next) => {
 
         const token = jwt.sign({ user: body }, 'top_secret');
 
-        return res.json({ token, ...user.toObject() });
+        return res.json({ token, ...getFixedUser(user) });
       });
     } catch (error) {
       return next(error);
@@ -45,8 +46,25 @@ const passportAuthenticateSignUp = async (req, res, next) => {
 };
 
 const tokenValidation = async (req, res, next) => {
-  res.send({ isJwtValid: true });
+  const userId = req.params.userId;
+
+  try {
+    const user = await User.findById(userId);
+
+    res.send(getFixedUser(user));
+    return next();
+  } catch (error) {
+    res.status(404).send(new ErrorResponse('tokenValidityError', error.message));
+  }
 };
+
+function getFixedUser(user) {
+  const userFixed = user.toObject();
+  delete userFixed.password;
+  delete userFixed.assets;
+  delete userFixed.transactions;
+  return userFixed;
+}
 
 module.exports = {
   passportAuthenticateLogin,

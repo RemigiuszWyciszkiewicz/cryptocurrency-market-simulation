@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, TokenStorageService } from '@coin-market/core/authorization';
 import { ErrorResponses } from '@coin-market/data-access/api';
 import { LoginResponse, User } from '@coin-market/data-access/models';
+import { UserStore } from '@coin-market/data-access/user';
 import { UserFormBuilder } from '@coin-market/ui/forms';
 import { ToastrService } from '@coin-market/ui/toastr';
 
@@ -18,14 +19,15 @@ export class StartPageComponent implements OnInit {
     private readonly _router: Router,
     private readonly _toastr: ToastrService,
     private readonly _authService: AuthService,
+    private readonly _userStore: UserStore,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _userFormBuilder: UserFormBuilder,
+
     private readonly _tokenStorageService: TokenStorageService
   ) {}
 
   loginFormGroup: FormGroup;
   registerFormGroup: FormGroup;
-
   isLoginFormVisible = true;
 
   ngOnInit(): void {
@@ -86,5 +88,8 @@ export class StartPageComponent implements OnInit {
     this._authService.setUserAuthorizationStatus(true);
     this._router.navigate(['/pages'], { relativeTo: this._activatedRoute });
     this._toastr.success('Succesful login.');
+
+    const user = response as User;
+    this._userStore.update({ user });
   }
 }

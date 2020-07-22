@@ -25,7 +25,7 @@ app.use('/api/user', routes.authorizationRouter);
 app.use(
   '/api/user',
   passport.authenticate('jwt', { session: false }),
-  router.post('/tokenValidation', authorizationController.tokenValidation)
+  router.post('/tokenValidation/:userId', authorizationController.tokenValidation)
 );
 app.use('/api/news', routes.authorizationRouter);
 

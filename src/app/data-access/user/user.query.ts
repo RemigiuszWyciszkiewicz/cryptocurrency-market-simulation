@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
-import { User } from '../models';
-import { ProfileState, ProfileStore } from './user.store';
+import { LoginResponse } from '../models';
+import { UserState, UserStore } from './user.store';
 
 @Injectable({ providedIn: 'root' })
-export class ProfileQuery extends Query<ProfileState> {
-  constructor(protected store: ProfileStore) {
+export class UserQuery extends Query<UserState> {
+  constructor(protected store: UserStore) {
     super(store);
   }
 
-  selectProfile(): Observable<Partial<User>> {
-    return this.select('profile');
+  selectUser(): Observable<Partial<LoginResponse>> {
+    return this.select('user');
   }
 }

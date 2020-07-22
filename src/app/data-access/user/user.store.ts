@@ -3,8 +3,8 @@ import { Store, StoreConfig } from '@datorama/akita';
 
 import { User } from '../models';
 
-export interface ProfileState {
-  profile: User | null;
+export interface UserState {
+  user: Partial<User> | null;
 }
 
 @Injectable({
@@ -16,17 +16,17 @@ export interface ProfileState {
     ttl: 3600000,
   },
 })
-export class ProfileStore extends Store<ProfileState> {
+export class UserStore extends Store<UserState> {
   constructor() {
     super({
-      profile: null,
+      user: null,
     });
   }
 
-  updateProfile(profile: Partial<User>): void {
+  updateUser(user: Partial<User>): void {
     this.update((currentState) => ({
       ...currentState,
-      profile: { ...currentState.profile, profile },
+      user: { ...currentState.user, user },
     }));
   }
 }

@@ -7,6 +7,8 @@ import { AuthorizationModule, httpInterceptorProviders } from '@coin-market/core
 import { LayoutModule } from '@coin-market/ui/layout';
 import { MenuModule } from '@coin-market/ui/menu';
 import { ToastrModule } from '@coin-market/ui/toastr';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +23,7 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     ToastrModule,
     AuthorizationModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
   ],
   providers: [LayoutModule.providers, MenuModule.providers, httpInterceptorProviders],
   bootstrap: [AppComponent],
