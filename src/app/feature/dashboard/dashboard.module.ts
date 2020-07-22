@@ -6,13 +6,15 @@ import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
 import { TransactionsModule as TransactionsModuleDataAccess } from '@coin-market/data-access/transactions';
 import { ChartsModule } from '@coin-market/ui/charts';
 import { LoaderModule } from '@coin-market/ui/loader';
+import { NbCardModule } from '@nebular/theme';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PortfolioSummaryComponent } from './dashboard/portfolio-summary/portfolio-summary.component';
 import { TransactionsListWidgetComponent } from './dashboard/transactions-list-widget/transactions-list-widget.component';
 
 @NgModule({
-  declarations: [DashboardComponent, TransactionsListWidgetComponent],
+  declarations: [DashboardComponent, TransactionsListWidgetComponent, PortfolioSummaryComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -22,6 +24,7 @@ import { TransactionsListWidgetComponent } from './dashboard/transactions-list-w
     ChartsModuleDataAccess,
     TransactionsModuleDataAccess,
     LoaderModule,
+    NbCardModule,
   ],
 })
 export class DashboardModule {}

@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from '@coin-market/core/authorization';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { Asset, AssetDictionary, TransactionType } from '@coin-market/data-access/models';
@@ -24,7 +23,6 @@ export class MarketComponent implements OnInit {
     private readonly _userQuery: UserQuery,
     private readonly _toastrService: ToastrService,
     private readonly _nbDialogService: NbDialogService,
-    private readonly _tokenStorage: TokenStorageService,
     private readonly _transactionService: TransactionsService,
 
     private readonly _cryptocurrencyService: CryptocurrencyService
@@ -44,7 +42,7 @@ export class MarketComponent implements OnInit {
   buy(coin: Cryptocurrency): void {
     this._nbDialogService
       .open(CoinTransactionModalComponent, {
-        context: { cryptocurrency: coin, transactionType: TransactionType.PURCHASE, usdLimit: 10000 },
+        context: { cryptocurrency: coin, transactionType: TransactionType.PURCHASE, usdLimit: this._userQuery.getUSD() },
       })
       .onClose.pipe(
         filter(Boolean),
@@ -60,6 +58,7 @@ export class MarketComponent implements OnInit {
           this._toastrService.error('ERROR: ' + error.error.message);
         }
       );
+    console.log(this._userQuery.getHasCache());
   }
 
   sell(coin: Cryptocurrency): void {

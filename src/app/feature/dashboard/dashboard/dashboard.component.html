@@ -1,5 +1,7 @@
 <div class="row">
-  <div class="col-8"></div>
+  <div class="col-8">
+    <coin-market-portfolio-summary [data]="portfolioSummary"></coin-market-portfolio-summary>
+  </div>
   <div class="col-4">
     <coin-market-donut-chart *ngIf="donutChartData" [data]="donutChartData"></coin-market-donut-chart>
     <div class="transaction-list-widget-container">

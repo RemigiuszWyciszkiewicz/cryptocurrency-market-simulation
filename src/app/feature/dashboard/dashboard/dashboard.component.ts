@@ -4,12 +4,12 @@ import { TokenStorageService } from '@coin-market/core/authorization';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
-import { Transaction } from '@coin-market/data-access/models';
+import { PortfolioSummary, Transaction } from '@coin-market/data-access/models';
 import { TransactionsService } from '@coin-market/data-access/transactions';
 import { UserQuery } from '@coin-market/data-access/user';
 import { DonutChartData } from '@coin-market/ui/charts/donut-chart/donut-chart.component';
-import { of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-dashboard',
@@ -21,28 +21,41 @@ export class DashboardComponent implements OnInit {
     private readonly _tokenStorage: TokenStorageService,
     private readonly _cryptocurrencyService: CryptocurrencyService,
     private readonly _transactionsService: TransactionsService,
+
     private readonly _chartsService: ChartsService,
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery
   ) {}
 
   donutChartData: DonutChartData;
+  portfolioSummary: PortfolioSummary;
   transactions: Transaction[];
+
   transactionWidgetLoading = false;
   transactionWidgetError: HttpErrorResponse;
 
   ngOnInit(): void {
     this.getDonutChartData();
     this.getTransactionsListWidgetData();
+    this.getPortfolioSummary();
   }
 
   getDonutChartData(): void {
-    this._chartsService
-      .getDonutChartData(this._userQuery.getId())
+    // this._chartsService
+    //   .getDonutChartData(this._userQuery.getId())
+    //   .pipe(
+    //     tap((value: DonutChartData) => {
+    //       this.donutChartData = value;
+    //       console.log(this.donutChartData);
+    //     })
+    //   )
+    //   .subscribe();
+
+    combineLatest([this._chartsService.getDonutChartData(this._userQuery.getId()), this._userQuery.selectUSD()])
       .pipe(
+        map((value) => ({ labels: [...value[0].labels, 'USD'], values: [...value[0].values, value[1]] })),
         tap((value: DonutChartData) => {
           this.donutChartData = value;
-          console.log(this.donutChartData);
         })
       )
       .subscribe();
@@ -55,7 +68,6 @@ export class DashboardComponent implements OnInit {
         tap(
           (value: Transaction[]) => {
             this.transactions = value;
-            console.log(this.transactions);
           },
           catchError((error: HttpErrorResponse) => {
             this.transactionWidgetError = error;
@@ -64,5 +76,11 @@ export class DashboardComponent implements OnInit {
         )
       )
       .subscribe();
+  }
+
+  getPortfolioSummary(): void {
+    this._assetsService.getPortforioSummary(this._userQuery.getId()).subscribe((value: PortfolioSummary) => {
+      this.portfolioSummary = value;
+    });
   }
 }

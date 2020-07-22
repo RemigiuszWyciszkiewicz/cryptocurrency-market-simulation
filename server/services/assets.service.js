@@ -1,5 +1,7 @@
 const User = require('../data-access/models').User;
 const userService = require('./user.service');
+const cryptoService = require('./cryptocurrencies.service');
+const { async } = require('rxjs/internal/scheduler/async');
 
 const addAssetToUser = async (userId, asset) => {
   await User.findById(userId)
@@ -12,6 +14,7 @@ const addAssetToUser = async (userId, asset) => {
 
 const getAllAssets = async (userId) => {
   const user = await userService.getUser(userId);
+
   return user.assets;
 };
 
@@ -43,7 +46,7 @@ const updateAssetOnSale = async (userId, transaction) => {
   }
 
   const factor = 1 - transaction.quantity / asset.quantity;
-  console.log(factor);
+
   asset.purchaseCost = factor * asset.purchaseCost;
   asset.quantity -= transaction.quantity;
 
@@ -68,6 +71,26 @@ const mapTransactionToAsset = (transaction) => {
   };
 };
 
+const getOwnedAssetsValueMap = async (userId) => {
+  const assets = await getAllAssets(userId);
+
+  const ownedCryptoMap = assets.reduce((prev, curr) => {
+    return { ...prev, [curr.cryptocurrency]: curr.quantity };
+  }, {});
+
+  const data = await cryptoService.getAllCryptocurrencies(Object.keys(ownedCryptoMap));
+  return data.data.reduce((prev, curr) => {
+    return { ...prev, [curr.id]: curr.current_price * ownedCryptoMap[curr.id] };
+  }, {});
+};
+
+const getAssetsPurchaseCostMap = async (userId) => {
+  const assets = await getAllAssets(userId);
+  return assets.reduce((prev, curr) => {
+    return { ...prev, [curr.cryptocurrency]: curr.purchaseCost };
+  }, {});
+};
+
 module.exports = {
   getAllAssets,
   addAssetToUser,
@@ -75,4 +98,6 @@ module.exports = {
   mapTransactionToAsset,
   updateAssetOnPurchase,
   updateAssetOnSale,
+  getOwnedAssetsValueMap,
+  getAssetsPurchaseCostMap,
 };

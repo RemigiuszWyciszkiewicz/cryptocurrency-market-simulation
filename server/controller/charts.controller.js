@@ -1,23 +1,24 @@
 const { ErrorResponse } = require('../data-access');
+const { reduce } = require('../cryptocurrency-clients/supported_cryptocurrencies');
 const User = require('../data-access/models').User;
-const cryptoService = require('../services').cryptocurennciesService;
+const userService = require('../services').userService;
 const cryptoController = require('../controller').cryptoController;
 const assetsService = require('../services').assetsService;
 
 const getDonutData = async (req, res, next) => {
   try {
-    const assets = await assetsService.getAllAssets(req.params.userId);
-    const assetsQuantityMap = assets.reduce((prev, curr) => {
-      return { ...prev, [curr.cryptocurrency]: curr.quantity };
-    }, {});
-    const data = await cryptoService.getAllCryptocurrencies(Object.keys(assetsQuantityMap));
+    let userId;
 
-    const result = data.data.reduce(
-      (prev, curr) => {
-        return { labels: [...prev.labels, curr.id], values: [...prev.values, assetsQuantityMap[curr.id] * curr.current_price] };
-      },
-      { labels: [], values: [] }
-    );
+    if (req.params && req.params.userId) {
+      userId = req.params.userId;
+    } else {
+      res.status(404).send(new ErrorResponse('userIdError', 'UserId has not been specified'));
+      return next();
+    }
+
+    const cryptoValueMap = await assetsService.getOwnedAssetsValueMap(userId);
+
+    const result = { labels: Object.keys(cryptoValueMap), values: Object.values(cryptoValueMap) };
 
     res.send(result);
     return next();

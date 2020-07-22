@@ -24,9 +24,9 @@ passport.use(
           return done(null, false, { nameDuplication: 'User with given name already exists.' });
         } else {
           req.body.password = await bcrypt.hash(password, 10);
-          await User.create({ email, ...req.body, usd: 20000 });
+          await User.create({ email, ...req.body, usd: 50000, lastLogin: new Date().toISOString() });
 
-          return done(null, { email, ...req.body });
+          return done(null, { email, ...req.body, lastLogin: new Date().toISOString(), usd: 50000 });
         }
       } catch (error) {
         return done(error);

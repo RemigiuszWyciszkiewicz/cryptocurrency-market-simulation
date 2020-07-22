@@ -15,6 +15,14 @@ export class UserQuery extends Query<UserState> {
     return this.select('user');
   }
 
+  selectUSD(): Observable<number> {
+    return this.select((state) => state.user.usd);
+  }
+
+  getUSD(): number {
+    return this.getValue().user.usd;
+  }
+
   getId(): ID {
     return this.getValue().user._id;
   }

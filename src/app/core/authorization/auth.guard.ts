@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivateChild {
     private readonly _tokenStorageService: TokenStorageService
   ) {}
   canActivateChild(): Observable<boolean> {
+    this._userStore.setHasCache(true);
     if (this._authService.getUserAuthorizationStatus() && this._tokenStorageService.getToken()) {
       return of(true);
     }
