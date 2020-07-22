@@ -6,6 +6,7 @@ import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { Asset, AssetDictionary, TransactionType } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
 import { TransactionsService } from '@coin-market/data-access/transactions';
+import { UserQuery } from '@coin-market/data-access/user';
 import { CoinTransactionModalComponent } from '@coin-market/ui/modal';
 import { ToastrService } from '@coin-market/ui/toastr';
 import { NbDialogService } from '@nebular/theme';
@@ -20,6 +21,7 @@ import { catchError, filter, finalize, switchMap, tap } from 'rxjs/operators';
 export class MarketComponent implements OnInit {
   constructor(
     private readonly _assetsService: AssetsService,
+    private readonly _userQuery: UserQuery,
     private readonly _toastrService: ToastrService,
     private readonly _nbDialogService: NbDialogService,
     private readonly _tokenStorage: TokenStorageService,
@@ -47,7 +49,7 @@ export class MarketComponent implements OnInit {
       .onClose.pipe(
         filter(Boolean),
         switchMap((value) => {
-          return this._transactionService.saveTransaction(value, this._tokenStorage.getId());
+          return this._transactionService.saveTransaction(value, this._userQuery.getId());
         })
       )
       .subscribe(
@@ -68,7 +70,7 @@ export class MarketComponent implements OnInit {
       .onClose.pipe(
         filter(Boolean),
         switchMap((value) => {
-          return this._transactionService.saveTransaction(value, this._tokenStorage.getId());
+          return this._transactionService.saveTransaction(value, this._userQuery.getId());
         })
       )
       .subscribe(
@@ -102,7 +104,7 @@ export class MarketComponent implements OnInit {
 
   fetchAllAssets(): void {
     this._assetsService
-      .getAllAssets(this._tokenStorage.getId())
+      .getAllAssets(this._userQuery.getId())
       .pipe(
         tap((value: Asset[]) => {
           this.assets = this.mapAssetsToDictionary(value);

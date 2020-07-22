@@ -1,4 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
+import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../api/api-service';
@@ -10,7 +11,7 @@ export class AssetsService extends ApiService {
     super(injector, 'assets');
   }
 
-  getAllAssets(userId: string): Observable<Asset[]> {
-    return this.getAll<Asset>(userId);
+  getAllAssets(userId: ID): Observable<Asset[]> {
+    return this.getAll<Asset>(String(userId));
   }
 }

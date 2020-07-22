@@ -1,5 +1,7 @@
+import { ID } from '@datorama/akita';
+
 export interface Transaction {
-  _id: string;
+  _id: ID;
   date: string;
   quantity: number;
   price: number;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Query } from '@datorama/akita';
+import { ID, Query } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
 import { LoginResponse } from '../models';
@@ -13,5 +13,9 @@ export class UserQuery extends Query<UserState> {
 
   selectUser(): Observable<Partial<LoginResponse>> {
     return this.select('user');
+  }
+
+  getId(): ID {
+    return this.getValue().user._id;
   }
 }

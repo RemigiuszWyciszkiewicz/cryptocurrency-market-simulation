@@ -1,5 +1,7 @@
+import { ID } from '@datorama/akita';
+
 export interface Cryptocurrency {
-  id: string;
+  id: ID;
   symbol: string;
   name: string;
   image: string;

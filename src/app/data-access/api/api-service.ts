@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
+import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
 import { EndpointUrlBuilder } from './api-url-builder';
@@ -10,9 +11,9 @@ export interface RequestParams {
 
 export interface RestService {
   post<T>(item: Partial<T> | FormData, contentType: string, endpoint: string): Observable<T>;
-  get<T>(id: string, endpoint: string, params: HttpParams): Observable<T>;
-  put<T>(id: string, item: T, endpoint: string): Observable<T>;
-  delete<T>(id: string, endpoint: string): Observable<T>;
+  get<T>(id: ID, endpoint: string, params: HttpParams): Observable<T>;
+  put<T>(id: ID, item: T, endpoint: string): Observable<T>;
+  delete<T>(id: ID, endpoint: string): Observable<T>;
   getAll<T>(endpoint: string): Observable<T[]>;
 }
 
@@ -36,15 +37,15 @@ export abstract class ApiService implements RestService {
     });
   }
 
-  get<T>(id: string, endpoint: string, params?: HttpParams): Observable<T> {
+  get<T>(id: ID, endpoint: string, params?: HttpParams): Observable<T> {
     return this._httpClient.get<T>(`${this.generateEndpointUrl(endpoint, params)}/${id}`, { params });
   }
 
-  put<T>(id: string, item: Partial<T>, endpoint: string): Observable<T> {
+  put<T>(id: ID, item: Partial<T>, endpoint: string): Observable<T> {
     return this._httpClient.put<T>(`${this.generateEndpointUrl(endpoint)}/${id}`, item);
   }
 
-  delete<T>(id: string, endpoint: string): Observable<T> {
+  delete<T>(id: ID, endpoint: string): Observable<T> {
     return this._httpClient.delete<T>(`${this.generateEndpointUrl(endpoint)}/${id}`);
   }
 

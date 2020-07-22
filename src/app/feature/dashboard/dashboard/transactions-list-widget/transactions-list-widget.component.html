@@ -13,9 +13,9 @@
       <tbody>
         <tr *ngFor="let coin of data">
           <th scope="row">{{ coin.quantity }}</th>
-          <td>{{ coin.cryptocurrency }}</td>
-          <td>{{ coin.price }}</td>
-          <td>{{ coin.type }}</td>
+          <td>{{ coin.cryptocurrency | titlecase }}</td>
+          <td>{{ coin.price | number }}</td>
+          <td>{{ coin.type | titlecase }}</td>
           <td>{{ coin.value | number }}</td>
         </tr>
       </tbody>

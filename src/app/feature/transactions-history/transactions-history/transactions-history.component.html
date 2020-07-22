@@ -14,11 +14,11 @@
       <tbody>
         <tr *ngFor="let coin of transaction">
           <th scope="row">{{ coin.quantity }}</th>
-          <td>{{ coin.cryptocurrency }}</td>
+          <td>{{ coin.cryptocurrency | titlecase }}</td>
           <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
           <td>{{ coin.price }}</td>
-          <td>{{ coin.type }}</td>
-          <td>{{ coin.value }}</td>
+          <td>{{ coin.type | titlecase }}</td>
+          <td>{{ coin.value | number }}</td>
         </tr>
       </tbody>
     </table>

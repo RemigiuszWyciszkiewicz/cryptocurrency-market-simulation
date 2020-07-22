@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { DonutChartData } from '@coin-market/ui/charts/donut-chart/donut-chart.component';
+import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../api/api-service';
@@ -10,7 +11,7 @@ export class ChartsService extends ApiService {
     super(injector, 'charts');
   }
 
-  getDonutChartData(userId: string): Observable<DonutChartData> {
+  getDonutChartData(userId: ID): Observable<DonutChartData> {
     return this.get<DonutChartData>(userId, 'donut');
   }
 }

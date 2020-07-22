@@ -1,5 +1,7 @@
+import { ID } from '@datorama/akita';
+
 export interface Asset {
-  _id: string;
+  _id: ID;
   cryptocurrency: string;
   quantity: number;
   lastUpdate: string;
