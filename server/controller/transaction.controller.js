@@ -1,24 +1,23 @@
 const { User, Transaction } = require('../data-access/models');
 const { ErrorResponse } = require('../data-access');
 const assetsService = require('../services').assetsService;
-const getAll = async (req, res, next) => {
-  let user;
+const transactionService = require('../services').transactionService;
+
+const getList = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  const limit = req.query && req.query.limit ? req.query.limit : 100;
+  let transactions;
 
   try {
-    user = await User.findById(req.params.userId).populate('transactions').exec();
+    transactions = await transactionService.getTransactions(userId, limit);
   } catch (error) {
     res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
 
     return next();
   }
 
-  if (!user) {
-    res.status(404).send(new ErrorResponse('notFound', 'User with given id does not exist.'));
-
-    return next();
-  }
-
-  res.send(user.transactions);
+  res.send(transactions.transactions);
   return next();
 };
 
@@ -85,4 +84,4 @@ async function saveTransaction(userId, transaction) {
     });
 }
 
-module.exports = { getAll, save };
+module.exports = { getList, save };

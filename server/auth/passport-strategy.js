@@ -24,7 +24,7 @@ passport.use(
           return done(null, false, { nameDuplication: 'User with given name already exists.' });
         } else {
           req.body.password = await bcrypt.hash(password, 10);
-          await User.create({ email, ...req.body });
+          await User.create({ email, ...req.body, usd: 20000 });
 
           return done(null, { email, ...req.body });
         }
@@ -44,7 +44,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await User.findOne({ email });
+        const user = await User.findOneAndUpdate({ email }, { lastLogin: new Date().toISOString() }, { new: true });
 
         if (!user) {
           return done(null, false, { message: 'User not found' });

@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,8 +11,10 @@ export class TransactionsService extends ApiService {
     super(injector, 'transactions');
   }
 
-  getAllTransactions(userId: string): Observable<Transaction[]> {
-    return this.getAll<Transaction>(userId);
+  getTransactions(userId: string, limit: number): Observable<Transaction[]> {
+    const params = new HttpParams().set('limit', String(limit));
+
+    return this.getAll<Transaction>(userId, params);
   }
 
   saveTransaction(transaction: Partial<Transaction>, userId: string): Observable<Transaction> {

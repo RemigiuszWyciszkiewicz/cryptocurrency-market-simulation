@@ -1,0 +1,27 @@
+<coin-market-page-loader [isLoading]="loading" [error]="error">
+  <ng-template aumsDigitalPageContentTpl>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">quantity</th>
+          <th scope="col">cryptocurrency</th>
+          <th scope="col">price</th>
+          <th scope="col">type</th>
+          <th scope="col">value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let coin of data">
+          <th scope="row">{{ coin.quantity }}</th>
+          <td>{{ coin.cryptocurrency }}</td>
+          <td>{{ coin.price }}</td>
+          <td>{{ coin.type }}</td>
+          <td>{{ coin.value | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="redirect-to-full-list" (click)="redirectToFullTransactionList()">
+      See full transaction list.
+    </div>
+  </ng-template>
+</coin-market-page-loader>

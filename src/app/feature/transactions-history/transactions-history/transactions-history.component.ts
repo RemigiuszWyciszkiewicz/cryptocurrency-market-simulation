@@ -23,15 +23,15 @@ export class TransactionsHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this._transactionService
-      .getAllTransactions(this._tokenStorageService.getId())
+      .getTransactions(this._tokenStorageService.getId(), 15)
       .pipe(
-        tap((value) => {
+        tap((value: Transaction[]) => {
           this.transaction = value;
         }),
         finalize(() => {
           this.isLoading = false;
         }),
-        catchError((error) => {
+        catchError((error: HttpErrorResponse) => {
           this.getTransactionsError = error;
           return of(error);
         })
