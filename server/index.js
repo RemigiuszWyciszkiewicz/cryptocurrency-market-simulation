@@ -21,6 +21,7 @@ app.use('/api/cryptocurrencies', passport.authenticate('jwt', { session: false }
 app.use('/api/assets', passport.authenticate('jwt', { session: false }), routes.assetsRouter);
 app.use('/api/charts', passport.authenticate('jwt', { session: false }), routes.chartsRouter);
 app.use('/api/transactions', passport.authenticate('jwt', { session: false }), routes.transactionsRouter);
+app.use('/api/ranking', passport.authenticate('jwt', { session: false }), routes.rankingRouter);
 app.use('/api/user', routes.authorizationRouter);
 app.use(
   '/api/user',

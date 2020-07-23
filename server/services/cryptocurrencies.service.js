@@ -6,4 +6,11 @@ const getAllCryptocurrencies = async (symbols) => {
   return await cryptoApi.getAll(symbols);
 };
 
-module.exports = { getAllCryptocurrencies };
+const getCryptocurrenciesPriceMap = async (symbols) => {
+  const result = await getAllCryptocurrencies(symbols);
+  return result.data.reduce((prev, curr) => {
+    return { ...prev, [curr.id]: curr.current_price };
+  }, {});
+};
+
+module.exports = { getAllCryptocurrencies, getCryptocurrenciesPriceMap };

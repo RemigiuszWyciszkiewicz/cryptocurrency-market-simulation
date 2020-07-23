@@ -3,6 +3,7 @@ const authorizationRouter = require('./authorization.route');
 const transactionsRouter = require('./transactions.route');
 const assetsRouter = require('./assets.route');
 const chartsRouter = require('./charts.router');
+const rankingRouter = require('./ranking.router');
 
 module.exports = {
   cryptocurrenciesRouter: cryptocurrenciesRouter,
@@ -10,4 +11,5 @@ module.exports = {
   transactionsRouter: transactionsRouter,
   assetsRouter: assetsRouter,
   chartsRouter: chartsRouter,
+  rankingRouter: rankingRouter,
 };
