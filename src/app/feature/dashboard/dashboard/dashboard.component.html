@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-8">
     <coin-market-portfolio-summary [data]="portfolioSummary"></coin-market-portfolio-summary>
+    <coin-market-asset-item *ngFor="let asset of assetSummary" [data]="asset"></coin-market-asset-item>
   </div>
   <div class="col-4">
     <coin-market-donut-chart *ngIf="donutChartData" [data]="donutChartData"></coin-market-donut-chart>

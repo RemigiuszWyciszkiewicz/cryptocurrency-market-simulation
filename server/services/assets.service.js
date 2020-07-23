@@ -7,6 +7,7 @@ const addAssetToUser = async (userId, asset) => {
   await User.findById(userId)
     .exec()
     .then((user) => {
+      user.usd -= asset.purchaseCost;
       user.assets.push({ ...asset });
       user.save();
     });
@@ -30,6 +31,7 @@ const updateAssetOnPurchase = async (userId, transaction) => {
   const user = await userService.getUser(userId);
   const asset = await getAsset(user, transaction.cryptocurrency);
 
+  user.usd -= transaction.value;
   asset.quantity += transaction.quantity;
   asset.purchaseCost += transaction.value;
   asset.lastUpdate = new Date().toISOString();
@@ -44,6 +46,8 @@ const updateAssetOnSale = async (userId, transaction) => {
   if (asset.quantity < transaction.quantity) {
     throw new Error('Asset quantity exceeded');
   }
+
+  user.usd += transaction.value;
 
   const factor = 1 - transaction.quantity / asset.quantity;
 
@@ -71,12 +75,16 @@ const mapTransactionToAsset = (transaction) => {
   };
 };
 
-const getOwnedAssetsValueMap = async (userId) => {
+const getAssetsQuantityMap = async (userId) => {
   const assets = await getAllAssets(userId);
 
-  const ownedCryptoMap = assets.reduce((prev, curr) => {
+  return assets.reduce((prev, curr) => {
     return { ...prev, [curr.cryptocurrency]: curr.quantity };
   }, {});
+};
+
+const getOwnedAssetsValueMap = async (userId, icon) => {
+  const ownedCryptoMap = await getAssetsQuantityMap(userId);
 
   const data = await cryptoService.getAllCryptocurrencies(Object.keys(ownedCryptoMap));
   return data.data.reduce((prev, curr) => {
@@ -100,4 +108,5 @@ module.exports = {
   updateAssetOnSale,
   getOwnedAssetsValueMap,
   getAssetsPurchaseCostMap,
+  getAssetsQuantityMap,
 };

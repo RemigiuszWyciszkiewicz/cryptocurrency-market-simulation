@@ -44,14 +44,14 @@ const save = async (req, res, next) => {
 
   try {
     if (transaction.type === 'purchase') {
-      await handlePurchaseTransaction(userId, transaction);
+      await transactionService.handlePurchaseTransaction(userId, transaction);
     }
 
     if (transaction.type === 'sale') {
-      await handleSaleTransaction(userId, transaction);
+      await transactionService.handleSaleTransaction(userId, transaction);
     }
 
-    await saveTransaction(userId, transaction);
+    await transactionService.saveTransaction(userId, transaction);
   } catch (error) {
     res.status(404).send(new ErrorResponse('ERROR ', error.message));
     return next();
@@ -60,28 +60,5 @@ const save = async (req, res, next) => {
   res.send(transaction);
   return next();
 };
-
-async function handlePurchaseTransaction(userId, transaction) {
-  const result = await assetsService.checkIfAssetAlreadyExists(userId, transaction.cryptocurrency);
-  if (result.length) {
-    await assetsService.updateAssetOnPurchase(userId, transaction);
-  } else {
-    await assetsService.addAssetToUser(userId, assetsService.mapTransactionToAsset(transaction.toObject()));
-  }
-}
-
-async function handleSaleTransaction(userId, transaction) {
-  await assetsService.updateAssetOnSale(userId, transaction);
-}
-
-async function saveTransaction(userId, transaction) {
-  await User.findById(userId)
-    .exec()
-    .then(async (user) => {
-      await transaction.save();
-      user.transactions.push(transaction);
-      user.save();
-    });
-}
 
 module.exports = { getList, save };

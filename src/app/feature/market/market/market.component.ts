@@ -2,10 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
-import { Asset, AssetDictionary, TransactionType } from '@coin-market/data-access/models';
+import { Asset, AssetDictionary, Transaction, TransactionType } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
 import { TransactionsService } from '@coin-market/data-access/transactions';
-import { UserQuery } from '@coin-market/data-access/user';
+import { UserQuery, UserStore } from '@coin-market/data-access/user';
 import { CoinTransactionModalComponent } from '@coin-market/ui/modal';
 import { ToastrService } from '@coin-market/ui/toastr';
 import { NbDialogService } from '@nebular/theme';
@@ -21,6 +21,7 @@ export class MarketComponent implements OnInit {
   constructor(
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery,
+    private readonly _userStore: UserStore,
     private readonly _toastrService: ToastrService,
     private readonly _nbDialogService: NbDialogService,
     private readonly _transactionService: TransactionsService,
@@ -51,8 +52,9 @@ export class MarketComponent implements OnInit {
         })
       )
       .subscribe(
-        () => {
+        (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
+          this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd - transaction.value } }));
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);
@@ -73,8 +75,9 @@ export class MarketComponent implements OnInit {
         })
       )
       .subscribe(
-        () => {
+        (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
+          this._userStore.update((state) => ({ user: { usd: state.user.usd + transaction.value } }));
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);

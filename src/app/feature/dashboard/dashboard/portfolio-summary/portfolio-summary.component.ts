@@ -10,10 +10,7 @@ export class PortfolioSummaryComponent implements OnInit {
   @Input() data: PortfolioSummary;
 
   get profitPercentage(): number {
-    if (this.data.totalPortfolioValue < 50000) {
-      return 1 - (this.data.totalPortfolioValue / 50000) * 100;
-    }
-    return (this.data.totalPortfolioValue / 50000) * 100;
+    return ((this.data.totalPortfolioValue - 50000) / 50000) * 100;
   }
 
   constructor() {}

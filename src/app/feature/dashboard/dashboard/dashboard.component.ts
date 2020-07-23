@@ -4,7 +4,7 @@ import { TokenStorageService } from '@coin-market/core/authorization';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
-import { PortfolioSummary, Transaction } from '@coin-market/data-access/models';
+import { AssetSummary, PortfolioSummary, Transaction } from '@coin-market/data-access/models';
 import { TransactionsService } from '@coin-market/data-access/transactions';
 import { UserQuery } from '@coin-market/data-access/user';
 import { DonutChartData } from '@coin-market/ui/charts/donut-chart/donut-chart.component';
@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   donutChartData: DonutChartData;
   portfolioSummary: PortfolioSummary;
   transactions: Transaction[];
+  assetSummary: AssetSummary[];
 
   transactionWidgetLoading = false;
   transactionWidgetError: HttpErrorResponse;
@@ -38,6 +39,7 @@ export class DashboardComponent implements OnInit {
     this.getDonutChartData();
     this.getTransactionsListWidgetData();
     this.getPortfolioSummary();
+    this.getAssetsSummary();
   }
 
   getDonutChartData(): void {
@@ -81,6 +83,12 @@ export class DashboardComponent implements OnInit {
   getPortfolioSummary(): void {
     this._assetsService.getPortforioSummary(this._userQuery.getId()).subscribe((value: PortfolioSummary) => {
       this.portfolioSummary = value;
+    });
+  }
+
+  getAssetsSummary(): void {
+    this._assetsService.getAssetsSummary(this._userQuery.getId()).subscribe((value: AssetSummary[]) => {
+      this.assetSummary = value;
     });
   }
 }

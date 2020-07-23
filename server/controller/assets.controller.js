@@ -1,5 +1,6 @@
 const { ErrorResponse } = require('../data-access');
 const { async } = require('rxjs/internal/scheduler/async');
+const { idText } = require('typescript');
 
 const assetsService = require('../services').assetsService;
 const userService = require('../services').userService;
@@ -50,4 +51,25 @@ const getPortfolioSummaryData = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, getPortfolioSummaryData };
+const getAssetsDetails = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const assetPurchaseConst = await assetsService.getAssetsPurchaseCostMap(userId);
+    const assetsValue = await assetsService.getOwnedAssetsValueMap(userId);
+    const assetsQuantity = await assetsService.getAssetsQuantityMap(userId);
+    const result = Object.keys(assetsValue).reduce((prev, curr) => {
+      return [
+        ...prev,
+        { id: curr, value: assetsValue[curr], quantity: assetsQuantity[curr], purchaseCost: assetPurchaseConst[curr] },
+      ];
+    }, []);
+
+    res.send(result);
+    return next();
+  } catch (error) {
+    res.status(404).send(new ErrorResponse('canNotFetchAssets', 'Durning fetching user assets error has occured'));
+    return next();
+  }
+};
+
+module.exports = { getAll, getPortfolioSummaryData, getAssetsDetails };

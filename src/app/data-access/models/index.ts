@@ -4,3 +4,4 @@ export * from './transaction';
 export * from './cryptocurrency';
 export * from './asset';
 export * from './portfolio-summary';
+export * from './asset-summary';

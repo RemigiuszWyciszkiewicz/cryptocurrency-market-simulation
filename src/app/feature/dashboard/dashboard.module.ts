@@ -9,12 +9,13 @@ import { LoaderModule } from '@coin-market/ui/loader';
 import { NbCardModule } from '@nebular/theme';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { AssetItemComponent } from './dashboard/asset-item/asset-item.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PortfolioSummaryComponent } from './dashboard/portfolio-summary/portfolio-summary.component';
 import { TransactionsListWidgetComponent } from './dashboard/transactions-list-widget/transactions-list-widget.component';
 
 @NgModule({
-  declarations: [DashboardComponent, TransactionsListWidgetComponent, PortfolioSummaryComponent],
+  declarations: [DashboardComponent, TransactionsListWidgetComponent, PortfolioSummaryComponent, AssetItemComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

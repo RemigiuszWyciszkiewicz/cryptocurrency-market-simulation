@@ -3,7 +3,7 @@ import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../api/api-service';
-import { Asset, PortfolioSummary } from '../models';
+import { Asset, AssetSummary, PortfolioSummary } from '../models';
 
 @Injectable()
 export class AssetsService extends ApiService {
@@ -16,6 +16,10 @@ export class AssetsService extends ApiService {
   }
 
   getPortforioSummary(userId: ID): Observable<PortfolioSummary> {
-    return this.get<PortfolioSummary>(userId, 'portforioSummaryData');
+    return this.get<PortfolioSummary>(userId, 'portforioSummary');
+  }
+
+  getAssetsSummary(userId: ID): Observable<AssetSummary[]> {
+    return this.getAll<AssetSummary>('assetsSummary/' + userId);
   }
 }

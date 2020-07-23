@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="d-flex justify-content-around">
+    <div>
+      <span class="label-11">Name:</span> <span class="label-usd"> {{ data.id }}</span>
+    </div>
+    <div>
+      <span class="label-11">Quantity:</span> <span class="label-usd"> {{ data.quantity }}</span>
+    </div>
+    <div>
+      <span class="label-11">Value:</span> <span class="label-usd"> {{ data.value }}</span>
+    </div>
+    <div>
+      <span class="label-11">Profit:</span> <span class="label-usd"> {{ assetProfitPercentage | number: '1.0-0' }}</span>
+    </div>
+  </div>
+</div>

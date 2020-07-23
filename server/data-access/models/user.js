@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   country: { type: String, required: true },
-  usd: { type: Number, required: true },
+  usd: { type: Number, required: true, min: 0 },
   lastLogin: { type: String, required: true },
   transactions: [{ type: Schema.Types.ObjectId, ref: 'transactions' }],
   assets: [assetSchema],
