@@ -1,9 +1,13 @@
 const Ranking = require('../data-access/models').Ranking;
 const User = require('../data-access/models').User;
 const cryptoService = require('../services/cryptocurrencies.service');
+const assetsService = require('../services/assets.service');
+var { sortBy } = require('lodash');
 
-const getRanking = async () => {
+async function createRanking() {
+  await Ranking.remove({}).exec();
   const cryptocurrencies = await cryptoService.getCryptocurrenciesPriceMap();
+
   const users = await User.find(
     {},
     {
@@ -13,9 +17,31 @@ const getRanking = async () => {
     }
   ).exec();
 
-  users.map((value) => {});
+  let result = [];
+  for (const user of users) {
+    const summary = await assetsService.assetSummaryv2(user._id, cryptocurrencies);
+    summary.change = ((summary.totalPortfolioValue - 50000) / 50000) * 100;
+    delete summary.totalAssetsPurchaseCost;
+    delete summary.USD;
+    result.push({ ...user.toObject(), ...summary });
+  }
 
-  return cryptocurrencies;
-};
+  let ranking = sortBy(result, ['totalPortfolioValue']).reverse();
 
-module.exports = { getRanking };
+  Ranking.create(ranking, {}, (err, res) => {
+    if (err) {
+      console.log(err);
+    }
+    if (res) {
+      console.log('Ranking updated');
+    }
+  });
+}
+
+function startGenerateRanking(interval) {
+  createRanking();
+
+  setInterval(createRanking, interval);
+}
+
+module.exports.startGenerateRanking = startGenerateRanking;

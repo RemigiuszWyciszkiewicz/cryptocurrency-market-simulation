@@ -5,3 +5,4 @@ export * from './cryptocurrency';
 export * from './asset';
 export * from './portfolio-summary';
 export * from './asset-summary';
+export * from './ranking';

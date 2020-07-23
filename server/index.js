@@ -8,6 +8,7 @@ const passport = require('./auth').passport;
 const { Router } = require('express');
 const authorizationController = require('./controller').authorizationController;
 const router = Router();
+const { startGenerateRanking } = require('./services').rankingService;
 
 let PORT = process.env.PORT || 4100;
 
@@ -41,6 +42,8 @@ app.get('api/test', (req, res) => {
 app.all('*', function (req, res) {
   res.status(200).sendFile(`/`, { root: _app_folder });
 });
+
+startGenerateRanking(3600000);
 
 // app.use(function (err, req, res, next) {
 //   res.status(err.status || 500);

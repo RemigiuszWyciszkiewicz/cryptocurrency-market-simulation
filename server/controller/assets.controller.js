@@ -1,6 +1,7 @@
 const { ErrorResponse } = require('../data-access');
 const { async } = require('rxjs/internal/scheduler/async');
 const { idText } = require('typescript');
+const { cryptocurennciesService } = require('../services');
 
 const assetsService = require('../services').assetsService;
 const userService = require('../services').userService;
@@ -32,19 +33,10 @@ const getPortfolioSummaryData = async (req, res, next) => {
   }
 
   try {
-    const crypto = await assetsService.getOwnedAssetsValueMap(userId);
-    const userUSD = await userService.getUserUSD(userId);
-    const assetPurchaseConst = await assetsService.getAssetsPurchaseCostMap(userId);
+    const cryptoMap = await cryptocurennciesService.getCryptocurrenciesPriceMap();
+    const daaaa = await assetsService.assetSummaryv2(userId, cryptoMap);
 
-    summarydata.USD = userUSD.usd;
-    summarydata.totalAssetsPurchaseCost = Object.values(assetPurchaseConst).reduce((prev, curr) => {
-      return prev + curr;
-    }, 0);
-    summarydata.totalPortfolioValue = Object.values(crypto).reduce((prev, curr) => {
-      return prev + curr;
-    }, userUSD.usd);
-
-    res.send(summarydata);
+    res.send(daaaa);
   } catch (error) {
     console.log(error);
     res.status(404).send(new ErrorResponse('canNotFetchUserAssets', 'Durning fetching user assets error has occured'));
@@ -54,8 +46,9 @@ const getPortfolioSummaryData = async (req, res, next) => {
 const getAssetsDetails = async (req, res, next) => {
   try {
     const userId = req.params.userId;
+    const cryptoMap = await cryptocurennciesService.getCryptocurrenciesPriceMap();
     const assetPurchaseConst = await assetsService.getAssetsPurchaseCostMap(userId);
-    const assetsValue = await assetsService.getOwnedAssetsValueMap(userId);
+    const assetsValue = await assetsService.getOwnedAssetsValueMap(userId, cryptoMap);
     const assetsQuantity = await assetsService.getAssetsQuantityMap(userId);
     const result = Object.keys(assetsValue).reduce((prev, curr) => {
       return [

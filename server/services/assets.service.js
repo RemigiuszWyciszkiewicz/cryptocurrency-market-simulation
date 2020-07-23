@@ -83,12 +83,11 @@ const getAssetsQuantityMap = async (userId) => {
   }, {});
 };
 
-const getOwnedAssetsValueMap = async (userId, icon) => {
+const getOwnedAssetsValueMap = async (userId, cryptoValueMap) => {
   const ownedCryptoMap = await getAssetsQuantityMap(userId);
 
-  const data = await cryptoService.getAllCryptocurrencies(Object.keys(ownedCryptoMap));
-  return data.data.reduce((prev, curr) => {
-    return { ...prev, [curr.id]: curr.current_price * ownedCryptoMap[curr.id] };
+  return Object.keys(ownedCryptoMap).reduce((prev, curr) => {
+    return { ...prev, [curr]: cryptoValueMap[curr] * ownedCryptoMap[curr] };
   }, {});
 };
 
@@ -97,6 +96,23 @@ const getAssetsPurchaseCostMap = async (userId) => {
   return assets.reduce((prev, curr) => {
     return { ...prev, [curr.cryptocurrency]: curr.purchaseCost };
   }, {});
+};
+
+const assetSummaryv2 = async (userId, cryptoValueMap) => {
+  let summarydata = {};
+  const crypto = await getOwnedAssetsValueMap(userId, cryptoValueMap);
+
+  const userUSD = await userService.getUserUSD(userId);
+  const assetPurchaseConst = await getAssetsPurchaseCostMap(userId);
+
+  summarydata.USD = userUSD.usd;
+  summarydata.totalAssetsPurchaseCost = Object.values(assetPurchaseConst).reduce((prev, curr) => {
+    return prev + curr;
+  }, 0);
+  summarydata.totalPortfolioValue = Object.values(crypto).reduce((prev, curr) => {
+    return prev + curr;
+  }, userUSD.usd);
+  return summarydata;
 };
 
 module.exports = {
@@ -109,4 +125,5 @@ module.exports = {
   getOwnedAssetsValueMap,
   getAssetsPurchaseCostMap,
   getAssetsQuantityMap,
+  assetSummaryv2,
 };

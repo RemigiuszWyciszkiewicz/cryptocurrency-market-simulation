@@ -1,9 +1,12 @@
 const rankingService = require('../services').rankingService;
-
+const Ranking = require('../data-access/models').Ranking;
 const getRanking = async (req, res, next) => {
-  const result = await rankingService.getRanking();
-  console.log(result);
-  res.send(result);
+  try {
+    const ranking = await Ranking.find({}).exec();
+    res.send(ranking);
+  } catch (error) {
+    res.status(404).send('can not fetch ranking');
+  }
 };
 
 module.exports = { getRanking };

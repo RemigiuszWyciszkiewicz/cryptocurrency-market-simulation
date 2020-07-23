@@ -1,0 +1,30 @@
+<nb-actions [size]="size" [fullWidth]="fullWidth">
+  <nb-action class="p-0" *ngFor="let action of aumsDigitalActions">
+    <nb-action
+      *ngIf="!action.title"
+      [badgePosition]="action.badgePosition"
+      [badgeStatus]="action.badgeStatus"
+      [badgeText]="action.badgeText"
+      [href]="action.href"
+      [icon]="action.icon"
+      [link]="action.link"
+      [disabled]="action.disabled"
+    >
+      <ng-content select="aums-digital-action"> </ng-content>
+    </nb-action>
+    <nb-action
+      *ngIf="!!action.title"
+      [badgePosition]="action.badgePosition"
+      [badgeStatus]="action.badgeStatus"
+      [badgeText]="action.badgeText"
+      [href]="action.href"
+      [icon]="action.icon"
+      [link]="action.link"
+      [disabled]="action.disabled"
+      [nbTooltip]="action.title"
+      [nbTooltipPlacement]="action.titlePosition"
+    >
+      <ng-content select="aums-digital-action"> </ng-content>
+    </nb-action>
+  </nb-action>
+</nb-actions>

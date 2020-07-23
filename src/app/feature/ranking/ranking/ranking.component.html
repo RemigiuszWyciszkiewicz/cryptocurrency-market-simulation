@@ -1,1 +1,16 @@
-<p>ranking works!</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">name</th>
+      <th scope="col">totalPortfolioValue</th>
+      <th scope="col">change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rankItem of ranking">
+      <th scope="row">{{ rankItem.name }}</th>
+      <td>{{ rankItem.totalPortfolioValue | number: '1.0-1' }}</td>
+      <td>{{ rankItem.change | number: '1.0-0' }} %</td>
+    </tr>
+  </tbody>
+</table>
