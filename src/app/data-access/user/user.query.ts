@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ID, Query } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
-import { LoginResponse } from '../models';
+import { User } from '../models';
 import { UserState, UserStore } from './user.store';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +11,7 @@ export class UserQuery extends Query<UserState> {
     super(store);
   }
 
-  selectUser(): Observable<Partial<LoginResponse>> {
+  selectUser(): Observable<Partial<User>> {
     return this.select('user');
   }
 

@@ -3,6 +3,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th scope="col"></th>
           <th scope="col">market_cap_rank</th>
           <th scope="col">current_price</th>
           <th scope="col">name</th>
@@ -13,7 +14,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let coin of cryptocurrencies">
-          <th scope="row">{{ coin.market_cap_rank }}</th>
+          <td><img src="https://s2.coinmarketcap.com/static/img/coins/32x32/1.png" /></td>
+          <td>
+            <a (click)="redirectToDetails(coin)">{{ coin.market_cap_rank }}</a>
+          </td>
           <td>{{ coin.current_price }}</td>
           <td>{{ coin.name }}</td>
           <td>{{ coin.symbol }}</td>

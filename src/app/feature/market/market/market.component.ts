@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { Asset, AssetDictionary, Transaction, TransactionType } from '@coin-market/data-access/models';
@@ -21,8 +22,10 @@ export class MarketComponent implements OnInit {
   constructor(
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery,
+    private readonly _router: Router,
     private readonly _userStore: UserStore,
     private readonly _toastrService: ToastrService,
+    private readonly _activatedRoute: ActivatedRoute,
     private readonly _nbDialogService: NbDialogService,
     private readonly _transactionService: TransactionsService,
 
@@ -124,5 +127,9 @@ export class MarketComponent implements OnInit {
     return assets.reduce((pr, cr) => {
       return { ...pr, [cr.cryptocurrency]: cr };
     }, {});
+  }
+
+  redirectToDetails(coin: Cryptocurrency): void {
+    this._router.navigate([coin.id], { relativeTo: this._activatedRoute });
   }
 }
