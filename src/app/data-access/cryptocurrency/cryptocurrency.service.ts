@@ -3,6 +3,7 @@ import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../api/api-service';
+import { CryptocurrencyDetails } from '../models';
 import { Cryptocurrency } from '../models/cryptocurrency';
 
 @Injectable()
@@ -15,7 +16,7 @@ export class CryptocurrencyService extends ApiService {
     return this.getAll<Cryptocurrency>('list');
   }
 
-  getCryptocurrencyDetails(id: ID): Observable<Cryptocurrency> {
-    return this.get<Cryptocurrency>(id, 'details');
+  getCryptocurrencyDetails(id: ID): Observable<CryptocurrencyDetails> {
+    return this.get<CryptocurrencyDetails>(id, 'details');
   }
 }

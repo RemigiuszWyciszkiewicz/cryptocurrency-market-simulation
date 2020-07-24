@@ -1,5 +1,28 @@
 <nb-card class="w-100">
   <nb-card-body>
-    Bitcon
+    <div class="row">
+      <div class="col-4"><img *ngIf="data.image" [src]="data.image" width="90" /> {{ data.name }} ({{ data.symbol }})</div>
+      <div class="col-4">
+        {{ data.current_price }}
+        {{ data.market_cap_rank }}
+        {{ data.market_cap }}
+      </div>
+      <div class="col-4">
+        {{ data.price_change_percentage_24h | number: '1.0-0' }} % {{ data.price_change_percentage_30d | number: '1.0-0' }} %
+        {{ data.price_change_percentage_7d | number: '1.0-0' }} %
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <div #description></div>
+      </div>
+      <div class="col-4">
+        {{ data.links.blockchain_site }}
+        {{ data.links.github }}
+        {{ data.links.homepage }}
+        {{ data.links.official_forum_url }}
+        {{ data.links.subreddit_url }}
+      </div>
+    </div>
   </nb-card-body>
 </nb-card>

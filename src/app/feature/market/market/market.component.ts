@@ -80,7 +80,7 @@ export class MarketComponent implements OnInit {
       .subscribe(
         (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
-          this._userStore.update((state) => ({ user: { usd: state.user.usd + transaction.value } }));
+          this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd + transaction.value } }));
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);

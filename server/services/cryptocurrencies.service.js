@@ -1,8 +1,6 @@
-const { async } = require('rxjs/internal/scheduler/async');
-const assetsService = require('../services/assets.service');
 const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
 const CRYPTO_ICONS = require('../cryptocurrency-clients/').CRYPTO_ICONS;
-const { head } = require('lodash');
+
 const getAllCryptocurrencies = async (symbols) => {
   const cryptoListApiResponse = await cryptoApi.getAll(symbols);
   const cryptoList = cryptoListApiResponse.data;

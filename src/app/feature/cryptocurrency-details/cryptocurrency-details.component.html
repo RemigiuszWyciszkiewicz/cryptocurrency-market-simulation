@@ -1,5 +1,9 @@
 <div class="row">
-  <div class="col-12"><coin-market-cryptocurrency-details-current-data></coin-market-cryptocurrency-details-current-data></div>
+  <div class="col-12">
+    <coin-market-cryptocurrency-details-current-data
+      [data]="cryptocurrencyDetails"
+    ></coin-market-cryptocurrency-details-current-data>
+  </div>
 </div>
 <div class="row">
   <div class="col-8"><coin-market-cryptocurrency-details-chart></coin-market-cryptocurrency-details-chart></div>

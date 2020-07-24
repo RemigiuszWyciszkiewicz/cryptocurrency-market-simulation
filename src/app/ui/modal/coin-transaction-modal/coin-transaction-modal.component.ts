@@ -49,7 +49,7 @@ export class CoinTransactionModalComponent implements OnInit {
         value: this.transactionValue,
         cryptocurrency: this.cryptocurrency.id,
         price: this.cryptocurrency.current_price,
-        type: TransactionType.PURCHASE,
+        type: this.transactionType,
       });
     }
   }
