@@ -34,10 +34,6 @@ app.use('/api/news', routes.authorizationRouter);
 // ---- SERVE STATIC FILES ---- //
 app.get('*.*', express.static(_app_folder, { maxAge: '1y' }));
 
-app.get('api/test', (req, res) => {
-  res.send('HELLO WORLD');
-});
-
 // ---- SERVE APLICATION PATHS ---- //
 app.all('*', function (req, res) {
   res.status(200).sendFile(`/`, { root: _app_folder });

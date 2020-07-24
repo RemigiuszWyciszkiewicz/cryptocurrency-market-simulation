@@ -5,12 +5,26 @@ const getAll = async (res, req) => {
   try {
     data = await cryptocurrenciesService.getAllCryptocurrencies();
 
-    if (data.data) {
-      res.res.send(data.data);
+    if (data) {
+      res.res.send(data);
     }
   } catch (error) {
     res.res.send('Can not fetch coins list.');
   }
 };
 
-module.exports = { getAll };
+const getDetails = async (res, req, next) => {
+  const id = req.req.params.id;
+
+  let crytpcurrencyDetails;
+  try {
+    crytpcurrencyDetails = await cryptocurrenciesService.getCryptocurrencyDetails(id);
+
+    res.res.send(crytpcurrencyDetails);
+  } catch (error) {
+    res.res.send('Can not fetch coins details.');
+    console.log(error);
+  }
+};
+
+module.exports = { getAll, getDetails };

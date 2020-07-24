@@ -11,11 +11,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./coin-transaction-modal.component.scss'],
 })
 export class CoinTransactionModalComponent implements OnInit {
-  @Input() usdLimit: number;
-  @Input() quantityLimit: number;
-  @Input() transactionType: TransactionType;
-  @Input() cryptocurrency: Cryptocurrency;
-
   get cryptoquantityControl(): AbstractControl {
     return this.formGroup.get('cryptoquantity');
   }
@@ -23,6 +18,15 @@ export class CoinTransactionModalComponent implements OnInit {
   get transactionValue(): number {
     return this.countTransactionValue(this.cryptoquantityControl.value);
   }
+
+  get buttonText(): string {
+    return `${this.transactionType === TransactionType.PURCHASE ? 'BUY' : 'SELL'} ${this.cryptocurrency.name} `;
+  }
+
+  @Input() usdLimit: number;
+  @Input() quantityLimit: number;
+  @Input() transactionType: TransactionType;
+  @Input() cryptocurrency: Cryptocurrency;
 
   showLimitExceededStatement$: Observable<boolean>;
 

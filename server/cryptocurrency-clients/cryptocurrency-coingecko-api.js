@@ -10,8 +10,10 @@ let getAll = async (cryptocurrencies = SUPPORTED_CRYPTOCURRENCIES) => {
   });
 };
 
-let getDetails = () => {
-  return 'test';
+let getDetails = async (symbol) => {
+  return await axios.get('https://api.coingecko.com/api/v3/coins/' + symbol, {
+    params: { developer_data: false, tickers: false },
+  });
 };
 
 module.exports.getAll = getAll;

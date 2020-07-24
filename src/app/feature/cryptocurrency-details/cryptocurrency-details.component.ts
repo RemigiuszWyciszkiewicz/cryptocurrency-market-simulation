@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 
 @Component({
   selector: 'coin-market-cryptocurrency-details',
@@ -6,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cryptocurrency-details.component.scss'],
 })
 export class CryptocurrencyDetailsComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private readonly _cryprocurrenciesService: CryptocurrencyService,
+    private readonly _activatedRoute: ActivatedRoute
+  ) {}
+
+  get id() {
+    return this._activatedRoute.snapshot.params.id;
+  }
 
   ngOnInit(): void {
-    console.log('sub module');
+    this._cryprocurrenciesService.getCryptocurrencyDetails(this.id).subscribe((value) => {
+      console.log(value['description'].en);
+    });
   }
 }
