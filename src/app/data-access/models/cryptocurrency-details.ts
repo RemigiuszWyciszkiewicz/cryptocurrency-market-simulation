@@ -1,12 +1,7 @@
-export interface CryptocurrencyDetails {
-  id: string;
-  symbol: string;
-  name: string;
+import { Cryptocurrency } from './cryptocurrency';
+
+export interface CryptocurrencyDetails extends Cryptocurrency {
   description: string;
-  image: string;
-  market_cap_rank: string;
-  current_price: string;
-  price_change_24h: string;
   price_change_percentage_7d: string;
   price_change_percentage_30d: string;
   last_updated: string;
