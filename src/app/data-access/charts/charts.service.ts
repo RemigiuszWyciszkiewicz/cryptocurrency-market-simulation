@@ -5,6 +5,12 @@ import { Observable } from 'rxjs';
 
 import { ApiService } from '../api/api-service';
 
+export interface CryptocurrencyDetailsLinearChartData {
+  market_caps: number[][];
+  prices: number[][];
+  total_volumes: number[][];
+}
+
 @Injectable()
 export class ChartsService extends ApiService {
   constructor(injector: Injector) {
@@ -13,5 +19,9 @@ export class ChartsService extends ApiService {
 
   getDonutChartData(userId: ID): Observable<DonutChartData> {
     return this.get<DonutChartData>(userId, 'donut');
+  }
+
+  getLinearChartData(cryptoId: ID): Observable<CryptocurrencyDetailsLinearChartData> {
+    return this.get<CryptocurrencyDetailsLinearChartData>(cryptoId, 'linear/cryptocurrency-details');
   }
 }

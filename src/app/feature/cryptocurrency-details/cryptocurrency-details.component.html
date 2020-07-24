@@ -6,6 +6,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-8"><coin-market-cryptocurrency-details-chart></coin-market-cryptocurrency-details-chart></div>
+  <div class="col-8">
+    <coin-market-cryptocurrency-details-chart
+      *ngIf="!linearChartLoading"
+      [data]="cryptocurrencyDetailsLinearChartData"
+    ></coin-market-cryptocurrency-details-chart>
+  </div>
   <div class="col-4"><coin-market-cryptocurrency-details-news></coin-market-cryptocurrency-details-news></div>
 </div>

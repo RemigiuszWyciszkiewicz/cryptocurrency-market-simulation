@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'coin-market-cryptocurrency-details-chart',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cryptocurrency-details-chart.component.scss'],
 })
 export class CryptocurrencyDetailsChartComponent implements OnInit {
-  constructor() {}
+  @Input() data: number[][];
 
   ngOnInit(): void {}
 }

@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ChartsModule as ChartsModuleDataAccess } from '@coin-market/data-access/charts';
 import { CryptocurrencyModule as CryptocurrencyDetailsModuleDataAccess } from '@coin-market/data-access/cryptocurrency';
+import { ChartsModule } from '@coin-market/ui/charts';
 import { NbCardModule } from '@nebular/theme';
 
 import { CryptocurrencyDetailsChartComponent } from './cryptocurrency-details-chart/cryptocurrency-details-chart.component';
@@ -22,6 +24,8 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     NbCardModule,
+    ChartsModuleDataAccess,
+    ChartsModule,
     CryptocurrencyDetailsModuleDataAccess,
     RouterModule.forChild([{ path: '', component: CryptocurrencyDetailsComponent }]),
   ],

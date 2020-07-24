@@ -1,3 +1,5 @@
+const { coingeckoApi } = require('../cryptocurrency-clients');
+
 const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
 const CRYPTO_ICONS = require('../cryptocurrency-clients/').CRYPTO_ICONS;
 
@@ -56,4 +58,8 @@ function getFirstElementOrEmptyString(array) {
   }
 }
 
-module.exports = { getAllCryptocurrencies, getCryptocurrenciesPriceMap, getCryptocurrencyDetails };
+module.exports = {
+  getAllCryptocurrencies,
+  getCryptocurrenciesPriceMap,
+  getCryptocurrencyDetails,
+};

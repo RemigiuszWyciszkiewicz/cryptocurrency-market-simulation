@@ -29,6 +29,7 @@ export class DonutChartComponent implements OnInit {
       width: '100%',
     },
     legend: {
+      onItemHover: { highlightDataSeries: true },
       position: 'bottom',
       formatter: (seriesName, opts) => {
         return `<span style="margin-right:10px;">${seriesName} <strong>${Number(opts.w.globals.series[opts.seriesIndex]).toFixed(
@@ -43,6 +44,13 @@ export class DonutChartComponent implements OnInit {
     },
     series: [],
     labels: [],
+    tooltip: {
+      y: {
+        formatter(val) {
+          return val.toFixed(2);
+        },
+      },
+    },
   };
 
   ngOnInit(): void {}

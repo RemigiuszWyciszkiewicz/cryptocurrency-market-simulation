@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChartsService, CryptocurrencyDetailsLinearChartData } from '@coin-market/data-access/charts/charts.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { CryptocurrencyDetails } from '@coin-market/data-access/models';
+import { ID } from '@datorama/akita';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-cryptocurrency-details',
@@ -9,20 +12,43 @@ import { CryptocurrencyDetails } from '@coin-market/data-access/models';
   styleUrls: ['./cryptocurrency-details.component.scss'],
 })
 export class CryptocurrencyDetailsComponent implements OnInit {
+  get id(): ID {
+    return this._activatedRoute.snapshot.params.id;
+  }
+
   cryptocurrencyDetails: CryptocurrencyDetails;
+  cryptocurrencyDetailsLinearChartData: number[][];
+  linearChartLoading = true;
 
   constructor(
     private readonly _cryprocurrenciesService: CryptocurrencyService,
-    private readonly _activatedRoute: ActivatedRoute
-  ) {}
 
-  get id() {
-    return this._activatedRoute.snapshot.params.id;
-  }
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _chartsService: ChartsService
+  ) {}
 
   ngOnInit(): void {
     this._cryprocurrenciesService.getCryptocurrencyDetails(this.id).subscribe((value: CryptocurrencyDetails) => {
       this.cryptocurrencyDetails = value;
     });
+
+    this._chartsService
+      .getLinearChartData(this.id)
+      .pipe(map(this.compressArray))
+      .subscribe((value) => {
+        this.cryptocurrencyDetailsLinearChartData = value.prices;
+        this.linearChartLoading = false;
+      });
+  }
+
+  compressArray(array: CryptocurrencyDetailsLinearChartData): CryptocurrencyDetailsLinearChartData {
+    const prices = array.prices;
+    const arr = [];
+    const delta = 12;
+    for (let i = 0; i < prices.length; i += delta) {
+      arr.push(prices[i]);
+    }
+    array.prices = arr;
+    return array;
   }
 }
