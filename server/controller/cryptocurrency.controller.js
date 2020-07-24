@@ -1,4 +1,4 @@
-const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
+const cryptocompareApi = require('../cryptocurrency-clients').cryptocompareApi;
 const cryptocurrenciesService = require('../services').cryptocurennciesService;
 const getAll = async (res, req) => {
   let data;
@@ -13,7 +13,7 @@ const getAll = async (res, req) => {
   }
 };
 
-const getDetails = async (res, req, next) => {
+const getDetails = async (res, req) => {
   const id = req.req.params.id;
 
   let crytpcurrencyDetails;
@@ -27,4 +27,16 @@ const getDetails = async (res, req, next) => {
   }
 };
 
-module.exports = { getAll, getDetails };
+const getNews = async (res, req) => {
+  const id = req.req.params.id;
+
+  try {
+    const results = await cryptocompareApi.getNews(id);
+    res.res.send(results.data);
+  } catch (error) {
+    res.res.send('Can not fetch news list.');
+    console.log(error);
+  }
+};
+
+module.exports = { getAll, getDetails, getNews };

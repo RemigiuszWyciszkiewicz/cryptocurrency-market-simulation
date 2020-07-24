@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { ApxChartOptions } from '../apx-chart-options';
 
@@ -6,6 +6,7 @@ import { ApxChartOptions } from '../apx-chart-options';
   selector: 'coin-market-linear-chart',
   templateUrl: './linear-chart.component.html',
   styleUrls: ['./linear-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LinearChartComponent {
   constructor() {}

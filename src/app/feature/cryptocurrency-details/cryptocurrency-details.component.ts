@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartsService, CryptocurrencyDetailsLinearChartData } from '@coin-market/data-access/charts/charts.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
-import { CryptocurrencyDetails } from '@coin-market/data-access/models';
+import { CryptocurrencyDetails, News } from '@coin-market/data-access/models';
 import { ID } from '@datorama/akita';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-cryptocurrency-details',
@@ -17,6 +17,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
   }
 
   cryptocurrencyDetails: CryptocurrencyDetails;
+  news: News[];
   cryptocurrencyDetailsLinearChartData: number[][];
   linearChartLoading = true;
 
@@ -28,6 +29,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getNews();
     this._cryprocurrenciesService.getCryptocurrencyDetails(this.id).subscribe((value: CryptocurrencyDetails) => {
       this.cryptocurrencyDetails = value;
     });
@@ -39,6 +41,17 @@ export class CryptocurrencyDetailsComponent implements OnInit {
         this.cryptocurrencyDetailsLinearChartData = value.prices;
         this.linearChartLoading = false;
       });
+  }
+
+  getNews(): void {
+    this._cryprocurrenciesService
+      .getCryptocurrencyNews(this.id)
+      .pipe(
+        tap((values: News[]) => {
+          this.news = values;
+        })
+      )
+      .subscribe();
   }
 
   compressArray(array: CryptocurrencyDetailsLinearChartData): CryptocurrencyDetailsLinearChartData {

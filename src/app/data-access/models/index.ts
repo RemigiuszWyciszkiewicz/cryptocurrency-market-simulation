@@ -7,3 +7,4 @@ export * from './portfolio-summary';
 export * from './asset-summary';
 export * from './ranking';
 export * from './cryptocurrency-details';
+export * from './news';
