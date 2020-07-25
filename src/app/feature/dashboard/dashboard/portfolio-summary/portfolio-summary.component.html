@@ -1,25 +1,20 @@
-<nb-card class="container">
-  <nb-card-header> Summary</nb-card-header>
-  <nb-card-body>
-    <div class="row" *ngIf="data">
-      <div class="col-4">
-        <span class="label-11">Total portfolio value: </span>
-        <span class="label-usd"> {{ data.totalPortfolioValue | number: '1.0-2' }}</span>
-      </div>
-      <div class="col-4">
-        <span class="label-11">Profit:</span>
-        <span
-          [ngClass]="{
-            'value-profit-danger': profitPercentage < 0,
-            'value-profit-success': profitPercentage >= 0
-          }"
-        >
-          {{ profitPercentage | number: '1.0-0' }}%</span
-        >
-      </div>
-      <div class="col-4">
-        <span class="label-usd">USD:</span> <span class="value-usd">{{ data.USD }}</span>
-      </div>
-    </div>
-  </nb-card-body>
-</nb-card>
+<div class="row" *ngIf="data">
+  <div class="col-4">
+    <span class="label-11">Total portfolio value: </span>
+    <span class="label-usd"> {{ data.totalPortfolioValue | number: '1.0-2' }}</span>
+  </div>
+  <div class="col-4">
+    <span class="label-11">Profit:</span>
+    <span
+      [ngClass]="{
+        'value-profit-danger': profitPercentage < 0,
+        'value-profit-success': profitPercentage >= 0
+      }"
+    >
+      {{ profitPercentage | number: '1.0-0' }}%</span
+    >
+  </div>
+  <div class="col-4">
+    <span class="label-usd">USD:</span> <span class="value-usd">{{ data.USD }}</span>
+  </div>
+</div>

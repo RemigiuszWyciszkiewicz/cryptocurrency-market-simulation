@@ -1,26 +1,30 @@
-<coin-market-page-loader [isLoading]="isLoading" [error]="getTransactionsError">
+<coin-market-page-loader [isLoading]="loading$ | async" [error]="getTransactionsError">
   <ng-template aumsDigitalPageContentTpl>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">quantity</th>
-          <th scope="col">cryptocurrency</th>
-          <th scope="col">date</th>
-          <th scope="col">price</th>
-          <th scope="col">type</th>
-          <th scope="col">value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let coin of transaction">
-          <th scope="row">{{ coin.quantity }}</th>
-          <td>{{ coin.cryptocurrency | titlecase }}</td>
-          <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
-          <td>{{ coin.price }}</td>
-          <td>{{ coin.type | titlecase }}</td>
-          <td>{{ coin.value | number }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <coin-market-card>
+      <coin-market-card-body>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">quantity</th>
+              <th scope="col">cryptocurrency</th>
+              <th scope="col">date</th>
+              <th scope="col">price</th>
+              <th scope="col">type</th>
+              <th scope="col">value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let coin of transactions$ | async">
+              <th scope="row">{{ coin.quantity }}</th>
+              <td>{{ coin.cryptocurrency | titlecase }}</td>
+              <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
+              <td>{{ coin.price }}</td>
+              <td>{{ coin.type | titlecase }}</td>
+              <td>{{ coin.value | number }}</td>
+            </tr>
+          </tbody>
+        </table></coin-market-card-body
+      >
+    </coin-market-card>
   </ng-template>
 </coin-market-page-loader>

@@ -1,30 +1,34 @@
-<coin-market-page-loader [isLoading]="isLoading" [error]="serverError">
+<coin-market-page-loader [isLoading]="isLoading | async" [error]="serverError">
   <ng-template aumsDigitalPageContentTpl>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">market_cap_rank</th>
+    <coin-market-card>
+      <coin-market-card-body>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">market_cap_rank</th>
 
-          <th scope="col">current_price</th>
-          <th scope="col">name</th>
-          <th scope="col">symbol</th>
-          <th scope="col">price_change_percenstage_24h</th>
-          <th scope="col">#</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let coin of cryptocurrencies">
-          <td width="4">
-            <a (click)="redirectToDetails(coin)">{{ coin.market_cap_rank }}</a>
-          </td>
+              <th scope="col">current_price</th>
+              <th scope="col">name</th>
+              <th scope="col">symbol</th>
+              <th scope="col">price_change_percenstage_24h</th>
+              <th scope="col">#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let coin of cryptocurrencies$ | async">
+              <td width="4">
+                <a (click)="redirectToDetails(coin)">{{ coin.market_cap_rank }}</a>
+              </td>
 
-          <td>{{ coin.current_price }}</td>
-          <td><img [src]="coin.image" class="mr-2" width="16" />{{ coin.name }}</td>
-          <td>{{ coin.symbol }}</td>
-          <td>{{ coin.price_change_percentage_24h }}</td>
-          <td><a (click)="buy(coin)">Buy</a><a *ngIf="assets[coin.id]" (click)="sell(coin)">Sell</a></td>
-        </tr>
-      </tbody>
-    </table>
+              <td>{{ coin.current_price }}</td>
+              <td><img [src]="coin.image" class="mr-2" width="16" />{{ coin.name }}</td>
+              <td>{{ coin.symbol }}</td>
+              <td>{{ coin.price_change_percentage_24h }}</td>
+              <td><a (click)="buy(coin)">Buy</a><a *ngIf="assets[coin.id]" (click)="sell(coin)">Sell</a></td>
+            </tr>
+          </tbody>
+        </table></coin-market-card-body
+      >
+    </coin-market-card>
   </ng-template>
 </coin-market-page-loader>

@@ -1,9 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from '@coin-market/core/authorization';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
-import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { AssetSummary, PortfolioSummary, Transaction } from '@coin-market/data-access/models';
 import { TransactionsService } from '@coin-market/data-access/transactions';
 import { UserQuery } from '@coin-market/data-access/user';
@@ -18,10 +16,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
   constructor(
-    private readonly _tokenStorage: TokenStorageService,
-    private readonly _cryptocurrencyService: CryptocurrencyService,
     private readonly _transactionsService: TransactionsService,
-
     private readonly _chartsService: ChartsService,
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery
@@ -43,16 +38,6 @@ export class DashboardComponent implements OnInit {
   }
 
   getDonutChartData(): void {
-    // this._chartsService
-    //   .getDonutChartData(this._userQuery.getId())
-    //   .pipe(
-    //     tap((value: DonutChartData) => {
-    //       this.donutChartData = value;
-    //       console.log(this.donutChartData);
-    //     })
-    //   )
-    //   .subscribe();
-
     combineLatest([this._chartsService.getDonutChartData(this._userQuery.getId()), this._userQuery.selectUSD()])
       .pipe(
         map((value) => ({ labels: [...value[0].labels, 'USD'], values: [...value[0].values, value[1]] })),

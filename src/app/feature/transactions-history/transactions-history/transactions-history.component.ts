@@ -1,11 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from '@coin-market/core/authorization';
 import { Transaction } from '@coin-market/data-access/models';
-import { TransactionsService } from '@coin-market/data-access/transactions';
+import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery } from '@coin-market/data-access/user';
-import { of } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-transactions-history',
@@ -13,26 +12,33 @@ import { catchError, finalize, tap } from 'rxjs/operators';
   styleUrls: ['./transactions-history.component.scss'],
 })
 export class TransactionsHistoryComponent implements OnInit {
-  transaction: Transaction[];
-  isLoading = true;
+  transactions$: Observable<Transaction[]> = this._transactionQuery.selectAll();
+  loading$: Observable<boolean>;
+
   getTransactionsError: HttpErrorResponse;
 
   constructor(
     private readonly _transactionService: TransactionsService,
-    private readonly _tokenStorageService: TokenStorageService,
-    private readonly _userQuery: UserQuery
+
+    private readonly _userQuery: UserQuery,
+    private readonly _transactionStore: TransactionStore,
+    private readonly _transactionQuery: TransactionsQuery
   ) {}
 
   ngOnInit(): void {
+    if (!this._transactionQuery.hasEntity()) {
+      this.fetchTransactions();
+    }
+  }
+
+  fetchTransactions(): void {
     this._transactionService
       .getTransactions(this._userQuery.getId(), 15)
       .pipe(
         tap((value: Transaction[]) => {
-          this.transaction = value;
+          this._transactionStore.set(value);
         }),
-        finalize(() => {
-          this.isLoading = false;
-        }),
+
         catchError((error: HttpErrorResponse) => {
           this.getTransactionsError = error;
           return of(error);

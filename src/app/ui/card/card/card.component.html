@@ -1,4 +1,10 @@
-<nb-card [nbSpinner]="loading" [nbSpinnerStatus]="spinnerStatus" [nbSpinnerMessage]="spinnerMessage" nbSpinnerSize="large">
+<nb-card
+  [nbSpinner]="loading"
+  [nbSpinnerStatus]="spinnerStatus"
+  [nbSpinnerMessage]="spinnerMessage"
+  nbSpinnerSize="giant"
+  nbSpinnerStatus="success"
+>
   <nb-card-header [class.loading-status]="loading">
     <ng-content select="coin-market-card-header"></ng-content>
   </nb-card-header>

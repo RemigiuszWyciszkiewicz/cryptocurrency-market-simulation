@@ -20,7 +20,11 @@ const CRYPTOCOMPARE_ID_MAP = {
 };
 
 const getNews = async (id) => {
-  return await axios.get('https://min-api.cryptocompare.com/data/v2/news/?categories=' + CRYPTOCOMPARE_ID_MAP[id]);
+  return await axios.get('https://min-api.cryptocompare.com/data/v2/news/?categories=' + CRYPTOCOMPARE_ID_MAP[id], {
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  });
 };
 
 module.exports.getNews = getNews;

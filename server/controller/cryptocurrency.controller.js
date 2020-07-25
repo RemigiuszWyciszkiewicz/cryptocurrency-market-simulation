@@ -32,7 +32,7 @@ const getNews = async (res, req) => {
 
   try {
     const results = await cryptocompareApi.getNews(id);
-    res.res.send(results.data);
+    res.res.send(results.data.Data);
   } catch (error) {
     res.res.send('Can not fetch news list.');
     console.log(error);

@@ -1,7 +1,7 @@
 <coin-market-card>
   <coin-market-card-body>
     <div class="row">
-      <div class="col-4"><img *ngIf="data.image" [src]="data.image" width="90" /> {{ data.name }} ({{ data.symbol }})</div>
+      <div class="col-4"><img src="{{ data?.image }}" />{{ data.name }} ({{ data.symbol }})</div>
       <div class="col-4">
         {{ data.current_price }}
         {{ data.market_cap_rank }}
