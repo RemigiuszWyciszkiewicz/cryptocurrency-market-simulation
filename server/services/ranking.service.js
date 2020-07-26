@@ -19,7 +19,7 @@ async function createRanking() {
 
   let result = [];
   for (const user of users) {
-    const summary = await assetsService.assetSummaryv2(user._id, cryptocurrencies);
+    const summary = await assetsService.getAssetSummary(user._id, cryptocurrencies);
     summary.change = ((summary.totalPortfolioValue - 50000) / 50000) * 100;
     delete summary.totalAssetsPurchaseCost;
     delete summary.USD;

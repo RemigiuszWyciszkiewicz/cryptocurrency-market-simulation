@@ -9,7 +9,7 @@ import {
 } from '@coin-market/data-access/cryptocurrency';
 import { Asset, AssetDictionary, Transaction, TransactionType } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
-import { TransactionsService } from '@coin-market/data-access/transactions';
+import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery, UserStore } from '@coin-market/data-access/user';
 import { CoinTransactionModalComponent } from '@coin-market/ui/modal';
 import { ToastrService } from '@coin-market/ui/toastr';
@@ -32,6 +32,8 @@ export class MarketComponent implements OnInit {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _nbDialogService: NbDialogService,
     private readonly _transactionService: TransactionsService,
+    private readonly _transactionStore: TransactionStore,
+    private readonly _transactionsQuery: TransactionsQuery,
     private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
     private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
     private readonly _cryptocurrencyService: CryptocurrencyService
@@ -45,6 +47,7 @@ export class MarketComponent implements OnInit {
   assets: AssetDictionary;
 
   ngOnInit(): void {
+    console.log(this._cryptocurrenciesQuery.hasEntity());
     if (!this._cryptocurrenciesQuery.hasEntity()) {
       this.fetchAllCryptocurrencies();
     }
@@ -67,6 +70,8 @@ export class MarketComponent implements OnInit {
         (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
           this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd - transaction.value } }));
+          this._transactionsQuery.hasEntity() ? this._transactionStore.add(transaction) : null;
+          this.assets[transaction.cryptocurrency].quantity += transaction.quantity;
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);
@@ -75,7 +80,6 @@ export class MarketComponent implements OnInit {
   }
 
   sell(coin: Cryptocurrency): void {
-    this._cryptocurrenciesStore.reset();
     this._nbDialogService
       .open(CoinTransactionModalComponent, {
         context: { cryptocurrency: coin, transactionType: TransactionType.SALE, quantityLimit: this.assets[coin.id].quantity },
@@ -90,6 +94,7 @@ export class MarketComponent implements OnInit {
         (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
           this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd + transaction.value } }));
+          this.assets[transaction.cryptocurrency].quantity -= transaction.quantity;
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);

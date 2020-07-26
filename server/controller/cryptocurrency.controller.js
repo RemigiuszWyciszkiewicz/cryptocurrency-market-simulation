@@ -9,6 +9,7 @@ const getAll = async (res, req) => {
       res.res.send(data);
     }
   } catch (error) {
+    console.log(error);
     res.res.send('Can not fetch coins list.');
   }
 };

@@ -21,10 +21,13 @@
               </td>
 
               <td>{{ coin.current_price }}</td>
-              <td><img [src]="coin.image" class="mr-2" width="16" />{{ coin.name }}</td>
+              <td><img [src]="coin.image" alt="coin_icon" class="mr-2" width="16" />{{ coin.name }}</td>
               <td>{{ coin.symbol }}</td>
               <td>{{ coin.price_change_percentage_24h }}</td>
-              <td><a (click)="buy(coin)">Buy</a><a *ngIf="assets[coin.id]" (click)="sell(coin)">Sell</a></td>
+              <td>
+                <a (click)="buy(coin)">Buy</a>
+                <a *ngIf="assets[coin.id] && assets[coin.id].quantity > 0" (click)="sell(coin)">Sell</a>
+              </td>
             </tr>
           </tbody>
         </table></coin-market-card-body

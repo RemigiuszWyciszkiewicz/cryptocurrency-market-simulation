@@ -1,13 +1,14 @@
 <nb-layout>
   <nb-layout-header>
     <ng-content select="coin-market-header"></ng-content>
+    <button (click)="toggleSidebar()">test</button>
   </nb-layout-header>
-  <nb-sidebar class="menu-sidebar" tag="extended">
+  <nb-sidebar class="menu-sidebar" tag="extended" responsive compactedBreakpoints="['xs', 'is', 'md']">
     <nb-sidebar-header>
       Sidebar header
     </nb-sidebar-header>
-
-    <ng-content select="coin-market-side-menu"></ng-content>
+    <coin-market-side-menu></coin-market-side-menu>
+    <coin-market-compact-side-menu class="compact-menu"></coin-market-compact-side-menu>
   </nb-sidebar>
 
   <nb-layout-column>

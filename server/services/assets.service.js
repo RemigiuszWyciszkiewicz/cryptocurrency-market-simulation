@@ -2,6 +2,7 @@ const User = require('../data-access/models').User;
 const userService = require('./user.service');
 const cryptoService = require('./cryptocurrencies.service');
 const { async } = require('rxjs/internal/scheduler/async');
+const { Asset } = require('../data-access/models/asset');
 
 const addAssetToUser = async (userId, asset) => {
   await User.findById(userId)
@@ -49,6 +50,9 @@ const updateAssetOnSale = async (userId, transaction) => {
   }
 
   user.usd += transaction.value;
+  if (asset.quantity - transaction.quantity === 0) {
+    user.assets.id(asset._id).remove();
+  }
 
   const factor = 1 - transaction.quantity / asset.quantity;
 
@@ -99,7 +103,7 @@ const getAssetsPurchaseCostMap = async (userId) => {
   }, {});
 };
 
-const assetSummaryv2 = async (userId, cryptoValueMap) => {
+const getAssetSummary = async (userId, cryptoValueMap) => {
   let summarydata = {};
   const crypto = await getOwnedAssetsValueMap(userId, cryptoValueMap);
 
@@ -126,5 +130,5 @@ module.exports = {
   getOwnedAssetsValueMap,
   getAssetsPurchaseCostMap,
   getAssetsQuantityMap,
-  assetSummaryv2,
+  getAssetSummary,
 };

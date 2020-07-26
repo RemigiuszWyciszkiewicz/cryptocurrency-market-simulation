@@ -16,6 +16,7 @@ const getAll = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
+    console.log(error);
     return next();
   }
 };
@@ -34,7 +35,7 @@ const getPortfolioSummaryData = async (req, res, next) => {
 
   try {
     const cryptoMap = await cryptocurennciesService.getCryptocurrenciesPriceMap();
-    const daaaa = await assetsService.assetSummaryv2(userId, cryptoMap);
+    const daaaa = await assetsService.getAssetSummary(userId, cryptoMap);
 
     res.send(daaaa);
   } catch (error) {
@@ -60,6 +61,7 @@ const getAssetsDetails = async (req, res, next) => {
     res.send(result);
     return next();
   } catch (error) {
+    console.log(error);
     res.status(404).send(new ErrorResponse('canNotFetchAssets', 'Durning fetching user assets error has occured'));
     return next();
   }
