@@ -1,0 +1,32 @@
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 1rem;
+  left: 5px;
+}
+
+.icon-container {
+  background-color: #db8b00;
+  height: 3rem;
+  margin: 0.5rem 0;
+  width: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 0.3rem;
+  transition: background-color 0.15s ease-in;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: rgb(255, 255, 255);
+
+  &:hover {
+    background-color: rgb(251, 255, 12);
+    box-shadow: 0 3px 6px 0 2px 10px 0 #d0d0d0;
+  }
+}
+
+.icon {
+  margin-left: 6px;
+}

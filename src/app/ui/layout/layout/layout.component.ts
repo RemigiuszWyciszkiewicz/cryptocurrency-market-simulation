@@ -1,8 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbSidebarService } from '@nebular/theme';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { distinct } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 export enum Breakpoints {
   MAX_WIDTH_992_PX = '(max-width: 992px)',
@@ -17,7 +16,7 @@ export enum Breakpoints {
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
+  // private subscription: Subscription;
 
   sideMenuExpansion = new BehaviorSubject(true);
 
@@ -28,7 +27,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 
   toggleSidebar(): void {
@@ -37,29 +36,29 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.sidebarService.compact('extended');
   }
 
-  listenOnScreenResize(): void {
-    this.subscription = this.breakpointObserver
-      .observe([...Object.values(Breakpoints)])
-      .pipe(distinct())
-      .subscribe((result) => {
-        if (result.breakpoints[Breakpoints.MIN_WIDTH_992_PX]) {
-          setTimeout(() => {
-            this.sidebarService.expand('extended');
-          }, 0);
-          this.sideMenuExpansion.next(true);
-        }
-        if (result.breakpoints[Breakpoints.MAX_WIDTH_575_PX]) {
-          setTimeout(() => {
-            this.sidebarService.collapse('extended');
-          }, 0);
-        }
-        if (result.breakpoints[Breakpoints.MIN_WIDTH_575_PX] && !result.breakpoints[Breakpoints.MIN_WIDTH_992_PX]) {
-          setTimeout(() => {
-            this.sidebarService.compact('extended');
-          }, 0);
+  // listenOnScreenResize(): void {
+  //   this.subscription = this.breakpointObserver
+  //     .observe([...Object.values(Breakpoints)])
+  //     .pipe(distinct())
+  //     .subscribe((result) => {
+  //       if (result.breakpoints[Breakpoints.MIN_WIDTH_992_PX]) {
+  //         setTimeout(() => {
+  //           this.sidebarService.expand('extended');
+  //         }, 0);
+  //         this.sideMenuExpansion.next(true);
+  //       }
+  //       if (result.breakpoints[Breakpoints.MAX_WIDTH_575_PX]) {
+  //         setTimeout(() => {
+  //           this.sidebarService.collapse('extended');
+  //         }, 0);
+  //       }
+  //       if (result.breakpoints[Breakpoints.MIN_WIDTH_575_PX] && !result.breakpoints[Breakpoints.MIN_WIDTH_992_PX]) {
+  //         setTimeout(() => {
+  //           this.sidebarService.compact('extended');
+  //         }, 0);
 
-          this.sideMenuExpansion.next(false);
-        }
-      });
-  }
+  //         this.sideMenuExpansion.next(false);
+  //       }
+  //     });
+  // }
 }

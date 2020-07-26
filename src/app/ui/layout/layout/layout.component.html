@@ -3,11 +3,11 @@
     <ng-content select="coin-market-header"></ng-content>
     <button (click)="toggleSidebar()">test</button>
   </nb-layout-header>
-  <nb-sidebar class="menu-sidebar" tag="extended" responsive compactedBreakpoints="['xs', 'is', 'md']">
-    <nb-sidebar-header>
+  <nb-sidebar class="menu-sidebar" tag="extended" responsive compactedBreakpoints="['xs', 'is', 'sm', 'md']">
+    <nb-sidebar-header class="expanded-menu">
       Sidebar header
     </nb-sidebar-header>
-    <coin-market-side-menu></coin-market-side-menu>
+    <coin-market-side-menu class="expanded-menu"></coin-market-side-menu>
     <coin-market-compact-side-menu class="compact-menu"></coin-market-compact-side-menu>
   </nb-sidebar>
 
