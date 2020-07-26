@@ -47,7 +47,7 @@ export class MarketComponent implements OnInit {
   assets: AssetDictionary;
 
   ngOnInit(): void {
-    console.log(this._cryptocurrenciesQuery.hasEntity());
+    console.log('does has entity ', this._cryptocurrenciesQuery.hasEntity());
     if (!this._cryptocurrenciesQuery.hasEntity()) {
       this.fetchAllCryptocurrencies();
     }

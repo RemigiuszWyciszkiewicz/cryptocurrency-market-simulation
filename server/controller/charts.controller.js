@@ -25,7 +25,7 @@ const getCryptocurrencyLinearChartData = async (req, res, next) => {
 
   try {
     const data = await chartsService.getCryptocurrencyLinearChartData(id);
-    res.send(data);
+    res.send(data.prices);
   } catch (error) {
     console.log(error);
     res.send(new ErrorResponse('linearChartDataServerError', 'Can not fetch data for linear chart'));

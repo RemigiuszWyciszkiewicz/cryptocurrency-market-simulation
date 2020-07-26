@@ -9,4 +9,5 @@ export interface Cryptocurrency {
   market_cap_rank: number;
   market_cap: number;
   price_change_percentage_24h: number;
+  sparkLineData: number[][];
 }

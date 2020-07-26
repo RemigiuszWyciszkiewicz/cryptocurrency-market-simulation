@@ -37,9 +37,9 @@ export type ChartOptions = {
   styleUrls: ['./sparkline-chart.component.scss'],
 })
 export class SparklineChartComponent implements OnInit {
-  exampleData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];
-
-  @Input() set data(value) {}
+  @Input() set data(value) {
+    this.chartLineSparkline1Options.series[0].data.push(...value);
+  }
 
   public commonLineSparklineOptions: Partial<ChartOptions> = {
     chart: {
@@ -61,6 +61,9 @@ export class SparklineChartComponent implements OnInit {
         show: false,
       },
       y: {
+        formatter(value) {
+          return value.toFixed(2);
+        },
         title: {
           formatter(seriesName) {
             return '';
@@ -77,7 +80,7 @@ export class SparklineChartComponent implements OnInit {
     series: [
       {
         name: 'chart-line-sparkline',
-        data: [...this.exampleData],
+        data: [],
       },
     ],
   };

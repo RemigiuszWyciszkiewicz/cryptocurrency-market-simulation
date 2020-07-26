@@ -3,18 +3,23 @@ const { coingeckoApi } = require('../cryptocurrency-clients');
 const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
 const CRYPTO_ICONS = require('../cryptocurrency-clients/').CRYPTO_ICONS;
 
-const getAllCryptocurrencies = async (symbols) => {
+const getAllCryptocurrencies = async (sparkline, symbols) => {
   const cryptoListApiResponse = await cryptoApi.getAll(symbols);
   const cryptoList = cryptoListApiResponse.data;
-  cryptoList.forEach((value) => {
-    value.image = CRYPTO_ICONS[value.id];
-  });
+
+  for (const crypto of cryptoList) {
+    crypto.image = CRYPTO_ICONS[crypto.id];
+    if (sparkline) {
+      const results = await cryptoApi.getLineChartData(crypto.id, 1);
+      crypto.sparkLineData = compressArray(results.data.prices);
+    }
+  }
 
   return cryptoList;
 };
 
 const getCryptocurrenciesPriceMap = async (symbols) => {
-  const result = await getAllCryptocurrencies(symbols);
+  const result = await getAllCryptocurrencies(false, symbols);
   return result.reduce((prev, curr) => {
     return { ...prev, [curr.id]: curr.current_price };
   }, {});
@@ -49,6 +54,16 @@ const getCryptocurrencyDetails = async (symbol) => {
     },
   };
 };
+
+function compressArray(array) {
+  const arr = [];
+  const delta = 18;
+  for (let i = 0; i < array.length; i += delta) {
+    arr.push(array[i]);
+  }
+  array = arr;
+  return array;
+}
 
 function getFirstElementOrEmptyString(array) {
   if (array.length) {

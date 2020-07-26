@@ -4,6 +4,11 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, TokenStorageService } from '@coin-market/core/authorization';
 import { ErrorResponses } from '@coin-market/data-access/api';
+import {
+  CryptocurrenciesQuery,
+  CryptocurrenciesStore,
+  CryptocurrencyService
+} from '@coin-market/data-access/cryptocurrency';
 import { LoginResponse, User } from '@coin-market/data-access/models';
 import { UserStore } from '@coin-market/data-access/user';
 import { UserFormBuilder } from '@coin-market/ui/forms';
@@ -22,7 +27,9 @@ export class StartPageComponent implements OnInit {
     private readonly _userStore: UserStore,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _userFormBuilder: UserFormBuilder,
-
+    private readonly _cryptocurrenciesService: CryptocurrencyService,
+    private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
+    private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
     private readonly _tokenStorageService: TokenStorageService
   ) {}
 
@@ -32,6 +39,9 @@ export class StartPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.createFormGroups();
+    if (!this._cryptocurrenciesQuery.hasEntity()) {
+      this.fetchCryptocurrencies();
+    }
   }
 
   changeForm(): void {
@@ -91,5 +101,11 @@ export class StartPageComponent implements OnInit {
 
     const user = response as User;
     this._userStore.update({ user });
+  }
+
+  fetchCryptocurrencies(): void {
+    this._cryptocurrenciesService.getCryptocurrenciesList().subscribe((value) => {
+      this._cryptocurrenciesStore.add(value);
+    });
   }
 }

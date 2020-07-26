@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChartsService, CryptocurrencyDetailsLinearChartData } from '@coin-market/data-access/charts/charts.service';
+import { ChartsService } from '@coin-market/data-access/charts/charts.service';
 import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
 import { CryptocurrencyDetails, News } from '@coin-market/data-access/models';
 import { ID } from '@datorama/akita';
@@ -38,7 +38,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
       .getLinearChartData(this.id)
       .pipe(map(this.compressArray))
       .subscribe((value) => {
-        this.cryptocurrencyDetailsLinearChartData = value.prices;
+        this.cryptocurrencyDetailsLinearChartData = value;
         this.linearChartLoading = false;
       });
   }
@@ -54,14 +54,13 @@ export class CryptocurrencyDetailsComponent implements OnInit {
       .subscribe(console.log);
   }
 
-  compressArray(array: CryptocurrencyDetailsLinearChartData): CryptocurrencyDetailsLinearChartData {
-    const prices = array.prices;
+  compressArray(array: any): any {
     const arr = [];
     const delta = 12;
-    for (let i = 0; i < prices.length; i += delta) {
-      arr.push(prices[i]);
+    for (let i = 0; i < array.length; i += delta) {
+      arr.push(array[i]);
     }
-    array.prices = arr;
+    array = arr;
     return array;
   }
 }

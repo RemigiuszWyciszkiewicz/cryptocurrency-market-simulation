@@ -16,9 +16,9 @@ const getDetails = async (symbol) => {
   });
 };
 
-const getLineChartData = async (symbol) => {
+const getLineChartData = async (symbol, days) => {
   return await axios.get(`https://api.coingecko.com/api/v3/coins/${symbol}/market_chart`, {
-    params: { vs_currency: 'usd', days: 30 },
+    params: { vs_currency: 'usd', days: days },
   });
 };
 

@@ -1,19 +1,40 @@
-<div class="row">
-  <div class="col-6 p-5">
-    <coin-market-login-form
-      *ngIf="isLoginFormVisible; else registerForm"
-      [formGroup]="loginFormGroup"
-      (loginFormSubmit)="signIn($event)"
-    >
-    </coin-market-login-form>
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <div class="col-4 p-5">
+      <coin-market-login-form
+        *ngIf="isLoginFormVisible; else registerForm"
+        [formGroup]="loginFormGroup"
+        (loginFormSubmit)="signIn($event)"
+      >
+      </coin-market-login-form>
 
-    <ng-template #registerForm>
-      <coin-market-register-form
-        (registerFormSubmit)="createAccount($event)"
-        [formGroup]="registerFormGroup"
-      ></coin-market-register-form>
-    </ng-template>
-    <coin-market-button class="d-inline" text="Create an account" (clickEvent)="changeForm()"> </coin-market-button>
+      <ng-template #registerForm>
+        <coin-market-register-form (registerFormSubmit)="createAccount($event)" [formGroup]="registerFormGroup">
+        </coin-market-register-form>
+      </ng-template>
+      <coin-market-button class="d-inline" text="Create an account" (clickEvent)="changeForm()"> </coin-market-button>
+    </div>
+
+    <div class="col-8 information-section">
+      <div class="background">
+        <div class="header-section">
+          COIN MARKET SIMULATOR
+        </div>
+        <div class="statements-section">
+          <div class="statemen">
+            - FREE simulated trading game
+          </div>
+          <div class="statemen">
+            - Learn with no risk
+          </div>
+          <div class="statemen">
+            - FREE simulated trading game
+          </div>
+          <div class="statemen">
+            - FREE simulated trading game
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-6 bg-info h-100">bacground</div>
 </div>

@@ -3,7 +3,7 @@ const cryptocurrenciesService = require('../services').cryptocurennciesService;
 const getAll = async (res, req) => {
   let data;
   try {
-    data = await cryptocurrenciesService.getAllCryptocurrencies();
+    data = await cryptocurrenciesService.getAllCryptocurrencies(true);
 
     if (data) {
       res.res.send(data);
