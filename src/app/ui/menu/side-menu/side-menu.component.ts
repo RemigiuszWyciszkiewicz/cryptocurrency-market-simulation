@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuItem } from '@nebular/theme';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'coin-market-side-menu',
@@ -10,23 +10,32 @@ export class SideMenuComponent implements OnInit {
   items: NbMenuItem[] = [
     {
       title: 'Dashboard',
-      link: './',
+      link: '/pages/dashboard',
       home: true,
+      pathMatch: 'full',
     },
     {
       title: 'Market',
-      link: './market',
+      link: '/pages/market',
+      pathMatch: 'full',
     },
     {
       title: 'Rankings',
-      link: './ranking',
+      link: '/pages/ranking',
+      pathMatch: 'full',
     },
     {
       title: 'Transactions history',
-      link: './transactions-history',
+      link: '/pages/transactions-history',
+      pathMatch: 'full',
     },
   ];
-  constructor() {}
 
-  ngOnInit(): void {}
+  constructor(private readonly _sideMenuService: NbMenuService) {}
+
+  ngOnInit(): void {
+    this._sideMenuService.onItemClick().subscribe((value) => {});
+    this._sideMenuService.getSelectedItem().subscribe(console.log);
+    // this._sideMenuService.onItemHover().subscribe(console.log);
+  }
 }

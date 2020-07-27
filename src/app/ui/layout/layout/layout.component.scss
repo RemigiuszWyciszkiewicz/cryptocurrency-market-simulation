@@ -1,3 +1,5 @@
+@import 'src/app/utils/styles/variables.scss';
+
 @media (min-width: 992px) {
   .compact-menu {
     visibility: hidden;
@@ -7,4 +9,8 @@
   .expanded-menu {
     visibility: hidden;
   }
+}
+
+.header {
+  background-color: $color-primary;
 }

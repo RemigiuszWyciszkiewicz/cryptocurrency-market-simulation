@@ -1,12 +1,11 @@
 <div [formGroup]="formGroup">
   <coin-market-input label="Email" placeholder="Email" formControlName="email"></coin-market-input>
   <coin-market-input label="Password" placeholder="Password" formControlName="password"></coin-market-input>
-  <coin-market-input
-    label="Password confirmation"
-    placeholder="Password confirmation"
-    formControlName="passwordConfirmation"
-  ></coin-market-input>
+  <coin-market-input label="Password confirmation" placeholder="Password confirmation" formControlName="passwordConfirmation">
+  </coin-market-input>
   <coin-market-input label="Name" placeholder="Name" formControlName="name"></coin-market-input>
-  <coin-market-input label="Country" placeholder="Country" formControlName="country"></coin-market-input>
-  <coin-market-button (clickEvent)="createUser()" text="Submit"> </coin-market-button>
+  <div class="mt-3 d-flex justify-content-between">
+    <coin-market-button (clickEvent)="createUser()" text="Create an account"> </coin-market-button>
+    <coin-market-button (clickEvent)="showLoginForm.emit()" text="Login"> </coin-market-button>
+  </div>
 </div>

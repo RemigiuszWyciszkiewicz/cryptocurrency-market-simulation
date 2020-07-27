@@ -1,37 +1,95 @@
 <div class="container-fluid h-100">
   <div class="row h-100">
-    <div class="col-4 p-5">
-      <coin-market-login-form
-        *ngIf="isLoginFormVisible; else registerForm"
-        [formGroup]="loginFormGroup"
-        (loginFormSubmit)="signIn($event)"
-      >
-      </coin-market-login-form>
+    <div class="col-lg-3 col-sm-12 col-md-12 order-lg-1 col-md-2 order-sm-2">
+      <div class="form p-4">
+        <coin-market-login-form
+          *ngIf="isLoginFormVisible; else registerForm"
+          [formGroup]="loginFormGroup"
+          (loginFormSubmit)="signIn($event)"
+        >
+        </coin-market-login-form>
 
-      <ng-template #registerForm>
-        <coin-market-register-form (registerFormSubmit)="createAccount($event)" [formGroup]="registerFormGroup">
-        </coin-market-register-form>
-      </ng-template>
-      <coin-market-button class="d-inline" text="Create an account" (clickEvent)="changeForm()"> </coin-market-button>
+        <ng-template #registerForm>
+          <coin-market-register-form
+            (registerFormSubmit)="createAccount($event)"
+            (showLoginForm)="changeForm()"
+            [formGroup]="registerFormGroup"
+          >
+          </coin-market-register-form>
+        </ng-template>
+      </div>
+
+      <div class="create-account-info" *ngIf="isLoginFormVisible">
+        <div class="create-account-info-label">
+          No account yet?
+        </div>
+        <coin-market-button styleElement="link" class="d-inline" text="Create new account" (clickEvent)="changeForm()">
+        </coin-market-button>
+      </div>
     </div>
 
-    <div class="col-8 information-section">
+    <div class="col-lg-9 col-sm-12 information-section order-lg-2 order-sm-1 order-md-1">
       <div class="background">
         <div class="header-section">
-          COIN MARKET SIMULATOR
+          <div class="header-section-1">
+            CRYPTOCURRENCY
+          </div>
+          <div class="header-section-2">
+            MARKET SIMULATION
+          </div>
         </div>
-        <div class="statements-section">
-          <div class="statemen">
-            - FREE simulated trading game
+        <div class="statements-section d-flex">
+          <div class="label-text m-3">
+            <div class="label">
+              FUN
+            </div>
+            <div class="text">15 most popular crypto exchanges to play with.</div>
           </div>
-          <div class="statemen">
-            - Learn with no risk
+
+          <div class="label-text m-3">
+            <div class="label">
+              EDUCATIONAL
+            </div>
+            <div class="text">Test your strategies on live market experience.</div>
           </div>
-          <div class="statemen">
-            - FREE simulated trading game
+
+          <div class="label-text m-3">
+            <div class="label">
+              COMPETITION
+            </div>
+            <div class="text">You can compete with other traders.</div>
           </div>
-          <div class="statemen">
-            - FREE simulated trading game
+
+          <div class="label-text m-3">
+            <div class="label">
+              NO RISK
+            </div>
+            <div class="text">No investment required, you can test your strategies for free.</div>
+          </div>
+
+          <div class="label-text m-3">
+            <div class="label">
+              EASY
+            </div>
+            <div class="text">
+              Whether you are a new or experienced cryptocurrency trader, the CRYPTOCURRENCY MARKET simulated exchange is simple
+              to use.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="supported-coin-section">
+            <div class="supported-coin-section-label text-center mt-1">
+              Suppported coins
+            </div>
+
+            <div class="supported-coin-section-list">
+              <div class="supported-coin-section-list-item" *ngFor="let items of cryptocurrenciesIconsMap$ | async">
+                <img [src]="items.icon" alt="coin" />
+                {{ items.name }}
+              </div>
+            </div>
           </div>
         </div>
       </div>

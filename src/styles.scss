@@ -1,8 +1,9 @@
-@import '~ngx-toastr/toastr';
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~ngx-toastr/toastr-bs4-alert';
+@import 'src/app/utils/styles/variables.scss';
+
+$primary: $color-primary;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
 //@import '@fortawesome/fontawesome-free/css/all.css';
 
 $roboto-font-path: '~roboto-fontface/fonts';
@@ -19,31 +20,3 @@ html {
 body {
   height: 100%;
 }
-
-.toast-container {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-
-  .toast-success {
-    background-color: #ffc107;
-  }
-}
-
-// @import 'src/app/utils/bootstrap.variables.scss';
-
-// @import 'node_modules/bootstrap/scss/bootstrap';
-// @import '~bootstrap/scss/bootstrap';
-// $theme-colors: (
-//   'primary': #00e065,
-//   'danger': #ff4136,
-// );
-// $brand-primary: red;
-// $primary: #00e065;
-// $body-bg: #000;
-// $body-color: #111;
-// .btn-primary {
-//   color: #fff;
-//   background-color: #b8b8b8;
-//   border-color: #929496;
-// }

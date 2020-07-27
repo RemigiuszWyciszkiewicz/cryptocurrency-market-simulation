@@ -1,0 +1,32 @@
+@import 'src/app/utils/styles/variables.scss';
+
+nb-menu ::ng-deep {
+  .active {
+    background-color: $color-primary !important;
+    border-radius: 3%;
+    .menu-title {
+      color: white;
+    }
+  }
+  .menu-item {
+    border-radius: 3%;
+    width: 95%;
+    margin: 0 auto;
+    &:hover {
+      transition: 0.2s;
+      background-color: lighten($color-primary, 15%);
+      color: white;
+    }
+  }
+
+  .menu-title {
+    &:hover {
+      color: white;
+    }
+  }
+
+  .menu-item:has(a) {
+    color: red !important;
+    background-color: red !important;
+  }
+}

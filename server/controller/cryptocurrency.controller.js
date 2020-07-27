@@ -40,4 +40,16 @@ const getNews = async (res, req) => {
   }
 };
 
-module.exports = { getAll, getDetails, getNews };
+const getIconsList = async (res, req) => {
+  let crytpcurrencyIcons;
+  try {
+    crytpcurrencyIcons = await cryptocurrenciesService.getCryptocurrenciesIconsMap();
+
+    res.res.send(crytpcurrencyIcons);
+  } catch (error) {
+    res.res.send('Can not fetch icons.');
+    console.log(error);
+  }
+};
+
+module.exports = { getAll, getDetails, getNews, getIconsList };

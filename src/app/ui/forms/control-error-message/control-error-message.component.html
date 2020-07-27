@@ -22,6 +22,7 @@
     <ng-container *ngSwitchCase="'min'"><span>Minimum value is </span>{{ errors['min']['min'] }}</ng-container>
     <ng-container *ngSwitchCase="'max'"><span>Maximum value is </span>{{ errors['max']['max'] }}</ng-container>
     <ng-container *ngSwitchCase="'notUnique'">Value can not duplicate.</ng-container>
+    <ng-container *ngSwitchCase="'passwordConfirmation'">Passwords are not identical</ng-container>
     <ng-container *ngSwitchCase="'lettersOnly'">Digits are not allowed.</ng-container>
     <ng-container *ngSwitchCase="'integerNumber'">Value has to be integer number.</ng-container>
     <ng-container *ngSwitchDefault>

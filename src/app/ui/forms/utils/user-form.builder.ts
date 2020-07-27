@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { passwordConfirmationValidator } from '@coin-market/utils/validators';
 
 import { BaseFormBuilder } from './base-form.builder';
 
@@ -18,13 +19,16 @@ export class UserFormBuilder extends BaseFormBuilder {
   }
 
   createRegisterForm(): BaseFormBuilder {
-    this._form = this._formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4)]],
-      password: ['', [Validators.required]],
-      passwordConfirmation: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      country: ['', Validators.required],
-    });
+    this._form = this._formBuilder.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(4)]],
+        password: ['', [Validators.required]],
+        passwordConfirmation: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        country: ['', Validators.required],
+      },
+      { validator: passwordConfirmationValidator('password', 'passwordConfirmation') }
+    );
     return this;
   }
 }

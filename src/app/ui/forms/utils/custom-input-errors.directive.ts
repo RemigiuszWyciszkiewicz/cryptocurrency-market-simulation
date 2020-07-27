@@ -1,7 +1,7 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[aumsDigitalCustomInputErrors]'
+  selector: '[coinMarketCustomInputErrors]',
 })
 export class CustomInputErrorsDirective {
   @Input() type: string;

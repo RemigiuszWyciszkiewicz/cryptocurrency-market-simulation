@@ -21,12 +21,11 @@
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
               "node_modules/apexcharts/dist/apexcharts.min.js",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -87,12 +86,11 @@
             "karmaConfig": "karma.conf.js",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
               "node_modules/apexcharts/dist/apexcharts.min.js",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "src/styles.scss"
             ],
             "scripts": []
           }

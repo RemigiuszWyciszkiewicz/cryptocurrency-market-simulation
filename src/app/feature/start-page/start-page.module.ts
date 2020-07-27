@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
 import { FormsModule, UserFormBuilder } from '@coin-market/ui/forms';
 
 import { StartPageRoutingModule } from './start-page-routing.module';
@@ -10,7 +9,7 @@ import { StartPageComponent } from './start-page/start-page.component';
 
 @NgModule({
   declarations: [StartPageComponent, LoginFormComponent, RegisterFormComponent],
-  imports: [CommonModule, StartPageRoutingModule, FormsModule, CryptocurrencyModule],
+  imports: [CommonModule, StartPageRoutingModule, FormsModule],
   providers: [UserFormBuilder],
 })
 export class StartPageModule {}

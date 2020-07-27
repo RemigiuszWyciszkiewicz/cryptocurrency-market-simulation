@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class RegisterFormComponent implements OnDestroy {
   @Output() registerFormSubmit = new EventEmitter();
+  @Output() showLoginForm = new EventEmitter();
   @Input() formGroup: FormGroup;
 
   createUser(): void {

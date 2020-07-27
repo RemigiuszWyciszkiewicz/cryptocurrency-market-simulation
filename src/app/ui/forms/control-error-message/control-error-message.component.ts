@@ -14,6 +14,7 @@ export class ControlErrorMessageComponent {
   standardErrorsOrder: string[] = ['required', 'email', 'minlength', 'maxlength', 'min', 'max'];
 
   getErrorName(): string {
+    console.log(this.customErrors);
     return this.standardErrorsOrder.find(this.hasError.bind(this)) || this.getFirstNonStandardErrorName();
   }
 

@@ -13,6 +13,8 @@ import { LoginResponse, User } from '@coin-market/data-access/models';
 import { UserStore } from '@coin-market/data-access/user';
 import { UserFormBuilder } from '@coin-market/ui/forms';
 import { ToastrService } from '@coin-market/ui/toastr';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-start-page',
@@ -37,11 +39,11 @@ export class StartPageComponent implements OnInit {
   registerFormGroup: FormGroup;
   isLoginFormVisible = true;
 
+  cryptocurrenciesIconsMap$: Observable<{ name: string; icon: string }[]>;
+
   ngOnInit(): void {
     this.createFormGroups();
-    if (!this._cryptocurrenciesQuery.hasEntity()) {
-      this.fetchCryptocurrencies();
-    }
+    this.cryptocurrenciesIconsMap$ = this._cryptocurrenciesService.getCryptocurrencyIcons().pipe(tap(console.log));
   }
 
   changeForm(): void {
@@ -101,11 +103,5 @@ export class StartPageComponent implements OnInit {
 
     const user = response as User;
     this._userStore.update({ user });
-  }
-
-  fetchCryptocurrencies(): void {
-    this._cryptocurrenciesService.getCryptocurrenciesList().subscribe((value) => {
-      this._cryptocurrenciesStore.add(value);
-    });
   }
 }
