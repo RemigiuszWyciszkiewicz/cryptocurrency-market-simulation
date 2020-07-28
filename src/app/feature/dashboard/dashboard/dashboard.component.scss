@@ -6,6 +6,18 @@
   height: 10rem;
 }
 
-.asset-item-card {
-  height: 10rem;
+.asset-item-card ::ng-deep {
+  nb-card {
+    //background-color: #ff95002e;
+    margin-bottom: 0.9rem;
+  }
+}
+
+.asset-item-card ::ng-deep {
+  // &:nth-child(2) {
+  //   // visibility: hidden;
+  // }
+  nb-card {
+    background-color: #ff95002e !important;
+  }
 }
