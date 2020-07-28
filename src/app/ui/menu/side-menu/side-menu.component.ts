@@ -50,9 +50,5 @@ export class SideMenuComponent implements OnInit {
 
   constructor(private readonly _sideMenuService: NbMenuService) {}
 
-  ngOnInit(): void {
-    this._sideMenuService.onItemClick().subscribe((value) => {});
-    this._sideMenuService.getSelectedItem().subscribe(console.log);
-    // this._sideMenuService.onItemHover().subscribe(console.log);
-  }
+  ngOnInit(): void {}
 }

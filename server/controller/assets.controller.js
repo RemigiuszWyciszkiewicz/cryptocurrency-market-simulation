@@ -2,7 +2,7 @@ const { ErrorResponse } = require('../data-access');
 const { async } = require('rxjs/internal/scheduler/async');
 const { idText } = require('typescript');
 const { cryptocurennciesService } = require('../services');
-
+const { CRYPTO_ICONS } = require('../cryptocurrency-clients');
 const assetsService = require('../services').assetsService;
 const userService = require('../services').userService;
 
@@ -54,10 +54,16 @@ const getAssetsDetails = async (req, res, next) => {
     const result = Object.keys(assetsValue).reduce((prev, curr) => {
       return [
         ...prev,
-        { id: curr, value: assetsValue[curr], quantity: assetsQuantity[curr], purchaseCost: assetPurchaseConst[curr] },
+        {
+          id: curr,
+          value: assetsValue[curr],
+          quantity: assetsQuantity[curr],
+          purchaseCost: assetPurchaseConst[curr],
+          icon: CRYPTO_ICONS[curr],
+        },
       ];
     }, []);
-
+    console.log('resullt', result);
     res.send(result);
     return next();
   } catch (error) {

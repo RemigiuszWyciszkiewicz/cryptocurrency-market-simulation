@@ -131,7 +131,7 @@ export class MarketComponent implements OnInit {
           return of(error);
         })
       )
-      .subscribe(console.log);
+      .subscribe();
   }
 
   mapAssetsToDictionary(assets: Asset[]): AssetDictionary {
