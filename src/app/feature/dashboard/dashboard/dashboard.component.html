@@ -1,10 +1,19 @@
 <div class="row">
   <div class="col-lg-8 col-sm-12">
-    <coin-market-card>
-      <coin-market-card-body>
-        <coin-market-portfolio-summary [data]="portfolioSummary"></coin-market-portfolio-summary>
-      </coin-market-card-body>
-    </coin-market-card>
+    <div class="row">
+      <div class="col-lg-6">
+        <coin-market-card>
+          <coin-market-card-body>
+            <coin-market-portfolio-summary class="portfolio-summary" [data]="portfolioSummary"></coin-market-portfolio-summary>
+          </coin-market-card-body>
+        </coin-market-card>
+      </div>
+      <div class="col-lg-6">
+        <coin-market-card>
+          <coin-market-card-body><coin-market-user-rank-widget></coin-market-user-rank-widget> </coin-market-card-body>
+        </coin-market-card>
+      </div>
+    </div>
 
     <coin-market-card
       ><coin-market-card-body>

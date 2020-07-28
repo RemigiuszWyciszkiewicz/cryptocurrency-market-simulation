@@ -13,9 +13,16 @@ import { AssetItemComponent } from './dashboard/asset-item/asset-item.component'
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PortfolioSummaryComponent } from './dashboard/portfolio-summary/portfolio-summary.component';
 import { TransactionsListWidgetComponent } from './dashboard/transactions-list-widget/transactions-list-widget.component';
+import { UserRankWidgetComponent } from './dashboard/user-rank-widget/user-rank-widget.component';
 
 @NgModule({
-  declarations: [DashboardComponent, TransactionsListWidgetComponent, PortfolioSummaryComponent, AssetItemComponent],
+  declarations: [
+    DashboardComponent,
+    UserRankWidgetComponent,
+    TransactionsListWidgetComponent,
+    PortfolioSummaryComponent,
+    AssetItemComponent,
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,

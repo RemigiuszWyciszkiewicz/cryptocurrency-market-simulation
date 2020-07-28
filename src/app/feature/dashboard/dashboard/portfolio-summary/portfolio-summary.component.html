@@ -1,21 +1,25 @@
-<div class="row" *ngIf="data">
-  <div class="col-4">
-    <i class="fas fa-hand-holding-usd"></i>
-    <span class="label-11">Total portfolio value: </span>
-    <span class="label-usd"> {{ data.totalPortfolioValue | number: '1.0-2' }}</span>
-  </div>
-  <div class="col-4">
-    <span class="label-11">Profit:</span>
-    <span
-      [ngClass]="{
-        'value-profit-danger': profitPercentage < 0,
-        'value-profit-success': profitPercentage >= 0
-      }"
-    >
-      {{ profitPercentage | number: '1.0-0' }}%</span
-    >
-  </div>
-  <div class="col-4">
-    <span class="label-usd">USD:</span> <span class="value-usd">{{ data.USD }}</span>
+<div class="data-container d-flex justify-content-between align-items-center" *ngIf="data">
+  <div class="icon"><i class="fas fa-hand-holding-usd"></i></div>
+  <div class="data d-flex">
+    <div class="data-usd">
+      <div class="label">USD</div>
+      <div class="value">
+        {{ data.USD | number: '1.0-2' }}
+      </div>
+    </div>
+    <div class="data-total">
+      <div class="label">Portfolio value</div>
+      <div class="value-contianer">
+        <span
+          class="percentage-value"
+          [ngClass]="{
+            'value-profit-danger': profitPercentage < 0,
+            'value-profit-success': profitPercentage >= 0
+          }"
+          >( <span *ngIf="profitPercentage >= 0">+</span>{{ profitPercentage | number: '1.0-0' }}%)
+        </span>
+        <span class="value"> {{ data.totalPortfolioValue | number: '1.0-2' }}</span>
+      </div>
+    </div>
   </div>
 </div>
