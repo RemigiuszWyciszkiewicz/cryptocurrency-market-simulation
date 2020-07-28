@@ -3,26 +3,34 @@
 nb-menu ::ng-deep {
   .active {
     background-color: $color-primary !important;
-    border-radius: 3%;
+    border-radius: 4% !important;
     .menu-title {
       color: white;
     }
+    .menu-icon {
+      color: white !important;
+    }
   }
   .menu-item {
-    border-radius: 3%;
     width: 95%;
     margin: 0 auto;
+
     &:hover {
       transition: 0.2s;
+      border-radius: 4% !important;
       background-color: lighten($color-primary, 15%);
       color: white;
       .menu-title {
         color: white;
       }
+      .menu-icon {
+        color: white !important;
+      }
     }
   }
 
   .menu-title {
+    font-family: 'Roboto';
     &:hover {
       color: white;
     }

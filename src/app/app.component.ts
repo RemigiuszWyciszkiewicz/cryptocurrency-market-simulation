@@ -5,7 +5,7 @@ import {
   CryptocurrencyService
 } from '@coin-market/data-access/cryptocurrency';
 import { UserMenuOption } from '@coin-market/ui/header';
-import { NbMenuBag, NbMenuService } from '@nebular/theme';
+import { NbIconLibraries, NbMenuBag, NbMenuService } from '@nebular/theme';
 import { filter } from 'rxjs/operators';
 
 import { AuthService } from './core/authorization';
@@ -22,8 +22,11 @@ export class AppComponent implements OnInit {
     private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
     private readonly _nbMenuService: NbMenuService,
     private readonly _authService: AuthService,
-    private readonly _userStore: UserStore
-  ) {}
+    private readonly _userStore: UserStore,
+    private iconLibraries: NbIconLibraries
+  ) {
+    this.iconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa', packClass: 'fa' });
+  }
 
   ngOnInit(): void {
     if (!this._cryptocurrenciesQuery.hasEntity()) {
