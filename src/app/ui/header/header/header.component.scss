@@ -26,3 +26,16 @@
 
   display: flex;
 }
+
+.header-menu-bars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+  padding-right: 1.2rem;
+  border-right: 1px solid white;
+  border-right-color: rgba(255, 255, 255, 0.2) !important;
+  margin-right: 1.1rem;
+}

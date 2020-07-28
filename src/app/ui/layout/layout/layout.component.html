@@ -1,11 +1,11 @@
 <nb-layout>
   <nb-layout-header class="header">
-    <ng-content select="coin-market-header"></ng-content>
+    <coin-market-header (menuExpand)="onMenuExpand()"></coin-market-header>
   </nb-layout-header>
   <nb-sidebar class="menu-sidebar" tag="extended" responsive compactedBreakpoints="['xs', 'is', 'sm', 'md']">
-    <nb-sidebar-header class="expanded-menu">
+    <!-- <nb-sidebar-header class="expanded-menu">
       Sidebar header
-    </nb-sidebar-header>
+    </nb-sidebar-header> -->
     <coin-market-side-menu class="expanded-menu"></coin-market-side-menu>
     <coin-market-compact-side-menu class="compact-menu"></coin-market-compact-side-menu>
   </nb-sidebar>

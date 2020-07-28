@@ -16,6 +16,9 @@ nb-menu ::ng-deep {
       transition: 0.2s;
       background-color: lighten($color-primary, 15%);
       color: white;
+      .menu-title {
+        color: white;
+      }
     }
   }
 
@@ -24,9 +27,7 @@ nb-menu ::ng-deep {
       color: white;
     }
   }
-
-  .menu-item:has(a) {
-    color: red !important;
-    background-color: red !important;
-  }
+}
+.menu-container {
+  padding: 1.3rem;
 }

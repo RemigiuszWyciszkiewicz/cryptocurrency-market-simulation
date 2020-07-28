@@ -2,15 +2,21 @@
 
 @media (min-width: 992px) {
   .compact-menu {
-    visibility: hidden;
+    display: none;
   }
 }
 @media (max-width: 992px) {
   .expanded-menu {
-    visibility: hidden;
+    display: none;
   }
 }
 
 .header {
   background-color: $color-primary;
+}
+
+nb-sidebar ::ng-deep {
+  .scrollable {
+    padding: 0;
+  }
 }
