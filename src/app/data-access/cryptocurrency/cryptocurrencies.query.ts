@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QueryEntity } from '@datorama/akita';
+import { ID, QueryEntity } from '@datorama/akita';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -12,9 +12,11 @@ export class CryptocurrenciesQuery extends QueryEntity<CryptocurrenciesState> {
     super(store);
   }
 
-  getCryptocurrenciesIconsMap(): Observable<{ name: string; icon: string }[]> {
+  getCryptocurrenciesIconsList(): Observable<{ id: ID; name: string; icon: string }[]> {
     return this.selectAll().pipe(
-      map((values: Cryptocurrency[]) => values.map((value: Cryptocurrency) => ({ name: value.name, icon: value.image })))
+      map((values: Cryptocurrency[]) =>
+        values.map((value: Cryptocurrency) => ({ id: value.id, name: value.name, icon: value.image }))
+      )
     );
   }
 }

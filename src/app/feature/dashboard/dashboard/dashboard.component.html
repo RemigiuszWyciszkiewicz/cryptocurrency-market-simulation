@@ -15,10 +15,11 @@
       </div>
     </div>
 
-    <coin-market-card
-      ><coin-market-card-body>
-        <coin-market-asset-item *ngFor="let asset of assetSummary" [data]="asset"></coin-market-asset-item></coin-market-card-body
-    ></coin-market-card>
+    <coin-market-card *ngFor="let asset of assetSummary">
+      <coin-market-card-body>
+        <coin-market-asset-item [data]="asset"></coin-market-asset-item>
+      </coin-market-card-body>
+    </coin-market-card>
   </div>
   <div class="col-lg-4 col-sm-12">
     <coin-market-card>

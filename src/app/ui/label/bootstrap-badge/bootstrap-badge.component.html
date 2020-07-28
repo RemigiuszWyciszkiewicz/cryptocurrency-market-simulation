@@ -1,0 +1,13 @@
+<ng-template #badgeContent>
+  <ng-content></ng-content>
+</ng-template>
+
+<a *ngIf="linkOn; else badgeStandard" class="badge badge-{{ variation }}" [class.badge-pill]="pillTypeOn" [routerLink]="linkUrl">
+  <ng-container *ngTemplateOutlet="badgeContent"></ng-container>
+</a>
+
+<ng-template #badgeStandard>
+  <span class="badge badge-{{ variation }}" [class.badge-pill]="pillTypeOn">
+    <ng-container *ngTemplateOutlet="badgeContent"></ng-container>
+  </span>
+</ng-template>

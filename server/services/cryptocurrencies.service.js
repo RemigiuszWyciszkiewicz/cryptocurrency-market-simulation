@@ -25,7 +25,7 @@ const getCryptocurrenciesPriceMap = async (symbols) => {
   }, {});
 };
 
-const getCryptocurrenciesIconsMap = async () => {
+const getCryptocurrenciesIconsList = async () => {
   const result = await getAllCryptocurrencies(false);
   const cryptocurrencyIconsMap = [];
   for (const crypto of result) {
@@ -86,6 +86,6 @@ function getFirstElementOrEmptyString(array) {
 module.exports = {
   getAllCryptocurrencies,
   getCryptocurrenciesPriceMap,
-  getCryptocurrenciesIconsMap,
+  getCryptocurrenciesIconsList,
   getCryptocurrencyDetails,
 };

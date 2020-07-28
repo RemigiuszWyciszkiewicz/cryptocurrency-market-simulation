@@ -43,7 +43,7 @@ const getNews = async (res, req) => {
 const getIconsList = async (res, req) => {
   let crytpcurrencyIcons;
   try {
-    crytpcurrencyIcons = await cryptocurrenciesService.getCryptocurrenciesIconsMap();
+    crytpcurrencyIcons = await cryptocurrenciesService.getCryptocurrenciesIconsList();
 
     res.res.send(crytpcurrencyIcons);
   } catch (error) {
