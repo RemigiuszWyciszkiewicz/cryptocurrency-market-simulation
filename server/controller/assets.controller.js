@@ -1,10 +1,7 @@
 const { ErrorResponse } = require('../data-access');
-const { async } = require('rxjs/internal/scheduler/async');
-const { idText } = require('typescript');
 const { cryptocurennciesService } = require('../services');
 const { CRYPTO_ICONS } = require('../cryptocurrency-clients');
 const assetsService = require('../services').assetsService;
-const userService = require('../services').userService;
 
 const getAll = async (req, res, next) => {
   const userId = req.params.userId;
@@ -35,9 +32,9 @@ const getPortfolioSummaryData = async (req, res, next) => {
 
   try {
     const cryptoMap = await cryptocurennciesService.getCryptocurrenciesPriceMap();
-    const daaaa = await assetsService.getAssetSummary(userId, cryptoMap);
+    const assetsSummary = await assetsService.getAssetSummary(userId, cryptoMap);
 
-    res.send(daaaa);
+    res.send(assetsSummary);
   } catch (error) {
     console.log(error);
     res.status(404).send(new ErrorResponse('canNotFetchUserAssets', 'Durning fetching user assets error has occured'));
@@ -63,7 +60,7 @@ const getAssetsDetails = async (req, res, next) => {
         },
       ];
     }, []);
-    console.log('resullt', result);
+
     res.send(result);
     return next();
   } catch (error) {

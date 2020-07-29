@@ -72,7 +72,6 @@ export class DashboardComponent implements OnInit {
   }
 
   getAssetsSummary(): void {
-    console.log('FETCH ASSETS');
     this._assetsService.getAssetsSummary(this._userQuery.getId()).subscribe((value: AssetSummary[]) => {
       this.assetSummary = value;
     });

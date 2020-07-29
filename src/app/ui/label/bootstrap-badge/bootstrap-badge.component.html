@@ -2,12 +2,6 @@
   <ng-content></ng-content>
 </ng-template>
 
-<a *ngIf="linkOn; else badgeStandard" class="badge badge-{{ variation }}" [class.badge-pill]="pillTypeOn" [routerLink]="linkUrl">
+<span class="badge badge-{{ variation }} " [class.interactive]="emitEventOnClick" (click)="clickEvent.emit()">
   <ng-container *ngTemplateOutlet="badgeContent"></ng-container>
-</a>
-
-<ng-template #badgeStandard>
-  <span class="badge badge-{{ variation }}" [class.badge-pill]="pillTypeOn">
-    <ng-container *ngTemplateOutlet="badgeContent"></ng-container>
-  </span>
-</ng-template>
+</span>

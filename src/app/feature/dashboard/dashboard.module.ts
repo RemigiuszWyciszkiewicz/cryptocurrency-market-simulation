@@ -6,6 +6,7 @@ import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
 import { TransactionsModule as TransactionsModuleDataAccess } from '@coin-market/data-access/transactions';
 import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
+import { LabelModule } from '@coin-market/ui/label';
 import { LoaderModule } from '@coin-market/ui/loader';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -33,6 +34,7 @@ import { UserRankWidgetComponent } from './dashboard/user-rank-widget/user-rank-
     TransactionsModuleDataAccess,
     LoaderModule,
     CardModule,
+    LabelModule,
   ],
 })
 export class DashboardModule {}

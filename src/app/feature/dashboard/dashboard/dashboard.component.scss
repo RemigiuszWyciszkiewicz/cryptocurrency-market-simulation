@@ -13,11 +13,8 @@
   }
 }
 
-.asset-item-card ::ng-deep {
-  // &:nth-child(2) {
-  //   // visibility: hidden;
-  // }
+.highlighted-item ::ng-deep {
   nb-card {
-    background-color: #ff95002e !important;
+    background-color: #fffcf5;
   }
 }

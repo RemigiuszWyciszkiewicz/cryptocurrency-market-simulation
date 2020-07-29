@@ -7,15 +7,14 @@ import {
   CryptocurrenciesStore,
   CryptocurrencyService
 } from '@coin-market/data-access/cryptocurrency';
-import { Asset, AssetDictionary, Transaction, TransactionType } from '@coin-market/data-access/models';
+import { Asset, AssetDictionary } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
 import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery, UserStore } from '@coin-market/data-access/user';
-import { CoinTransactionModalComponent } from '@coin-market/ui/modal';
 import { ToastrService } from '@coin-market/ui/toastr';
 import { NbDialogService } from '@nebular/theme';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, switchMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-market',
@@ -56,50 +55,11 @@ export class MarketComponent implements OnInit {
   }
 
   buy(coin: Cryptocurrency): void {
-    this._nbDialogService
-      .open(CoinTransactionModalComponent, {
-        context: { cryptocurrency: coin, transactionType: TransactionType.PURCHASE, usdLimit: this._userQuery.getUSD() },
-      })
-      .onClose.pipe(
-        filter(Boolean),
-        switchMap((value) => {
-          return this._transactionService.saveTransaction(value, this._userQuery.getId());
-        })
-      )
-      .subscribe(
-        (transaction: Transaction) => {
-          this._toastrService.success('Transaction completed');
-          this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd - transaction.value } }));
-          this._transactionsQuery.hasEntity() ? this._transactionStore.add(transaction) : null;
-          this.assets[transaction.cryptocurrency].quantity += transaction.quantity;
-        },
-        (error: HttpErrorResponse) => {
-          this._toastrService.error('ERROR: ' + error.error.message);
-        }
-      );
+    this._transactionService.buy(coin, this.assets[coin.id]);
   }
 
   sell(coin: Cryptocurrency): void {
-    this._nbDialogService
-      .open(CoinTransactionModalComponent, {
-        context: { cryptocurrency: coin, transactionType: TransactionType.SALE, quantityLimit: this.assets[coin.id].quantity },
-      })
-      .onClose.pipe(
-        filter(Boolean),
-        switchMap((value) => {
-          return this._transactionService.saveTransaction(value, this._userQuery.getId());
-        })
-      )
-      .subscribe(
-        (transaction: Transaction) => {
-          this._toastrService.success('Transaction completed');
-          this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd + transaction.value } }));
-          this.assets[transaction.cryptocurrency].quantity -= transaction.quantity;
-        },
-        (error: HttpErrorResponse) => {
-          this._toastrService.error('ERROR: ' + error.error.message);
-        }
-      );
+    this._transactionService.sell(coin, this.assets[coin.id]);
   }
 
   fetchAllCryptocurrencies(): void {

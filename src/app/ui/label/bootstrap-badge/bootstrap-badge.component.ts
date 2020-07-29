@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 type BadgeVariations = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
 
@@ -8,8 +8,7 @@ type BadgeVariations = 'primary' | 'secondary' | 'success' | 'danger' | 'warning
   styleUrls: ['./bootstrap-badge.component.scss'],
 })
 export class BootstrapBadgeComponent {
-  @Input() linkUrl: string;
+  @Output() clickEvent = new EventEmitter();
   @Input() variation: BadgeVariations = 'primary';
-  @Input() pillTypeOn: boolean;
-  @Input() linkOn: boolean;
+  @Input() emitEventOnClick: boolean;
 }

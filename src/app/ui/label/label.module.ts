@@ -8,6 +8,7 @@ import { BootstrapBadgeComponent } from './bootstrap-badge/bootstrap-badge.compo
 const COMPONENTS = [BootstrapBadgeComponent];
 @NgModule({
   declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
   imports: [CommonModule, NbTooltipModule, RouterModule],
 })
 export class LabelModule {}

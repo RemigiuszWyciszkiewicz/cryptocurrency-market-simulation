@@ -1,16 +1,35 @@
 <div class="asset-container">
   <div class="grid">
-    <div>
-      <img [src]="data.icon" alt="icon" /> <span class="label-usd"> {{ data.id }}</span>
+    <div class="grid-cell">
+      <img [src]="data.icon" alt="icon" /> <span class="name"> {{ data.id | titlecase }}</span>
     </div>
-    <div>
-      <span class="label-11">Quantity:</span> <span class="label-usd"> {{ data.quantity }}</span>
+    <div class="grid-cell">
+      <span class="">Quantity:</span> <span class="value"> {{ data.quantity }}</span>
     </div>
-    <div>
-      <span class="label-11">Value:</span> <span class="label-usd"> {{ data.value }}</span>
+    <div class="grid-cell">
+      <span class="">Value:</span> <span class="value"> {{ data.value | number: '2.0-2' }}</span>
     </div>
-    <div>
-      <span class="label-11">Profit:</span> <span class="label-usd"> {{ assetProfitPercentage | number: '1.0-0' }}</span>
+    <div class="grid-cell">
+      <span class="">Profit:</span>
+      <span
+        class="value"
+        [ngClass]="{
+          'value-profit-danger': assetProfitPercentage < 0,
+          'value-profit-success': assetProfitPercentage >= 0
+        }"
+      >
+        {{ assetProfitPercentage | number: '1.0-0' }} %</span
+      >
+    </div>
+    <div class="action-badges">
+      <div class="d-flex justify-content-around">
+        <coin-market-bootstrap-badge [variation]="'success'" [emitEventOnClick]="true" (clickEvent)="buy()"
+          >Buy</coin-market-bootstrap-badge
+        >
+        <coin-market-bootstrap-badge [variation]="'warning'" [emitEventOnClick]="true" (clickEvent)="sell()"
+          >Sell</coin-market-bootstrap-badge
+        >
+      </div>
     </div>
   </div>
 </div>

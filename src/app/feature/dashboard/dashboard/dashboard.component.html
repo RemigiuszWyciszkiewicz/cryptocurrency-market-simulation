@@ -15,7 +15,11 @@
       </div>
     </div>
 
-    <coin-market-card class="asset-item-card" *ngFor="let asset of assetSummary">
+    <coin-market-card
+      class="asset-item-card"
+      [class.highlighted-item]="index % 2 !== 0"
+      *ngFor="let asset of assetSummary; let index = index"
+    >
       <coin-market-card-body>
         <coin-market-asset-item [data]="asset"></coin-market-asset-item>
       </coin-market-card-body>

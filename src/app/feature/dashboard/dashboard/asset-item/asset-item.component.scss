@@ -10,7 +10,32 @@
 .grid {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 8rem;
   justify-items: center;
   align-items: center;
+}
+
+.action-badges {
+  justify-self: stretch;
+}
+
+.grid-cell {
+  justify-self: start;
+
+  .value {
+    font-size: 1.2rem;
+    font-family: 'Titillium Web';
+  }
+
+  .name {
+    margin-left: 0.5rem;
+  }
+}
+
+.value-profit-danger {
+  color: red;
+}
+
+.value-profit-success {
+  color: #28a745;
 }

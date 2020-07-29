@@ -51,7 +51,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
           this.news = values;
         })
       )
-      .subscribe(console.log);
+      .subscribe();
   }
 
   compressArray(array: any): any {
