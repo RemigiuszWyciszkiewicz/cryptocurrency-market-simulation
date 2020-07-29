@@ -32,6 +32,16 @@
   animation-timing-function: linear;
   animation-fill-mode: both;
 }
+@media (max-width: 650px) {
+  .asset-item-card ::ng-deep {
+    nb-card {
+      nb-card-body {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
+}
 
 @keyframes rotation {
   from {

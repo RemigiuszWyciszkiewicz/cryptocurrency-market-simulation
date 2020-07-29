@@ -1,6 +1,8 @@
 <div class="container-fluid h-100">
   <div class="row h-100">
-    <div class="col-lg-3 col-sm-12 col-md-12 order-lg-1 col-md-2 order-sm-2">
+    <!-- login section -->
+
+    <div class="form-section col-lg-3 col-sm-12 col-md-12">
       <div class="form p-4">
         <coin-market-login-form
           *ngIf="isLoginFormVisible; else registerForm"
@@ -28,7 +30,9 @@
       </div>
     </div>
 
-    <div class="col-lg-9 col-sm-12 information-section order-lg-2 order-sm-1 order-md-1">
+    <!-- information section -->
+
+    <div class="information-section col-lg-9 col-sm-12">
       <div class="background">
         <div class="header-section">
           <div class="header-section-1">
@@ -38,37 +42,38 @@
             MARKET SIMULATION
           </div>
         </div>
+
         <div class="statements-section d-flex">
           <div class="label-text m-3">
-            <div class="label">
+            <div class="card-header">
               FUN
             </div>
             <div class="text">15 most popular crypto exchanges to play with.</div>
           </div>
 
           <div class="label-text m-3">
-            <div class="label">
+            <div class="card-header">
               EDUCATIONAL
             </div>
             <div class="text">Test your strategies on live market experience.</div>
           </div>
 
           <div class="label-text m-3">
-            <div class="label">
+            <div class="card-header">
               COMPETITION
             </div>
             <div class="text">You can compete with other traders.</div>
           </div>
 
           <div class="label-text m-3">
-            <div class="label">
+            <div class="card-header">
               NO RISK
             </div>
             <div class="text">No investment required, you can test your strategies for free.</div>
           </div>
 
           <div class="label-text m-3">
-            <div class="label">
+            <div class="card-header">
               EASY
             </div>
             <div class="text">

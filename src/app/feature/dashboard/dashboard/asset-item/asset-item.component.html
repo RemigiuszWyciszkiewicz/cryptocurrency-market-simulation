@@ -1,7 +1,7 @@
 <div class="asset-container">
   <div class="grid">
     <div class="grid-cell redirect-link" (click)="redirectToDetails()">
-      <img [src]="data.icon" alt="icon" />
+      <img class="icon" [src]="data.icon" alt="icon" />
       <span class="name"> {{ data.id | titlecase }}</span>
     </div>
     <div class="grid-cell">
@@ -23,14 +23,12 @@
       >
     </div>
     <div class="action-badges">
-      <div class="d-flex justify-content-around">
-        <coin-market-bootstrap-badge [variation]="'success'" [emitEventOnClick]="true" (clickEvent)="buy()"
-          >Buy
-        </coin-market-bootstrap-badge>
-        <coin-market-bootstrap-badge [variation]="'warning'" [emitEventOnClick]="true" (clickEvent)="sell()"
-          >Sell</coin-market-bootstrap-badge
-        >
-      </div>
+      <coin-market-bootstrap-badge [variation]="'success'" [emitEventOnClick]="true" (clickEvent)="buy()"
+        >Buy
+      </coin-market-bootstrap-badge>
+      <coin-market-bootstrap-badge [variation]="'warning'" [emitEventOnClick]="true" (clickEvent)="sell()">
+        Sell</coin-market-bootstrap-badge
+      >
     </div>
   </div>
 </div>

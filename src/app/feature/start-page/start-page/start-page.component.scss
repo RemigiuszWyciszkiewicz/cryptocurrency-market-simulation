@@ -1,60 +1,84 @@
-.form-section {
-  height: 100%;
+.create-account-info {
+  margin-top: 3rem;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  //  padding: 1rem;
+  @media (max-width: 650px) {
+    margin-bottom: 2rem;
+  }
+
+  .create-account-info-label {
+    font-family: 'Nunito Sans';
+    margin-left: 1rem;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+}
+@media only screen and (max-width: 993px) {
+  .form-section {
+    order: 2;
+  }
+  .information-section {
+    order: 1;
+  }
 }
 
 .information-section {
-  // background-color: #ff9500;
-
   background-image: url('https://images.unsplash.com/photo-1552057426-9f23e61fa7b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80');
 
   background-repeat: repeat;
   background-size: cover;
   height: 100%;
+  @media (max-width: 650px) {
+    height: 92rem;
+  }
 
-  //
-}
+  .background {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.82);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
-.background {
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-  background-color: rgba(0, 0, 0, 0.82);
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
+    .header-section-1 {
+      color: white;
 
-.header-section-1 {
-  color: white;
-  margin-top: 1.5rem;
-  text-align: center;
-  font-weight: 600;
-  font-size: 3rem;
-}
-.header-section-2 {
-  margin-top: -1.3rem;
-  color: white;
-  text-align: center;
-  font-weight: 300;
-  font-size: 2.8rem;
+      @media (min-width: 650px) {
+        margin-top: 1.5rem;
+      }
+      text-align: center;
+      font-weight: 600;
+      font-size: 3rem;
+    }
+    .header-section-2 {
+      margin-top: -1.3rem;
+      color: white;
+      text-align: center;
+      font-weight: 300;
+      font-size: 2.8rem;
+    }
+  }
 }
 
 .statements-section {
-  margin-top: 4rem;
   color: white;
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 .label-text {
   transition: transform 0.2s;
   &:hover {
     transform: scale(1.05);
   }
-  .label {
+
+  .card-header {
     color: white;
     width: 14.5rem;
     padding: 0.2rem 0.3rem 0.2rem 0.3rem;
@@ -72,7 +96,6 @@
     background-color: #ffffff29;
     border-bottom-left-radius: 2%;
     border-bottom-right-radius: 2%;
-    // padding: 0.2rem 0.3rem 0.2rem 0.3rem;
     padding: 0.7rem;
   }
 }
@@ -81,11 +104,9 @@
   color: white;
   width: 95%;
   background-color: #ffffff29;
-  @media (max-width: 500px) {
-  }
 
-  height: 10rem;
-  //margin: 2rem;
+  min-height: 10rem;
+  padding-bottom: 2rem;
 
   &-list {
     display: flex;
@@ -95,20 +116,5 @@
   &-list-item {
     margin-top: 1rem;
     margin-left: 1rem;
-  }
-}
-.create-account-info {
-  margin-top: 3rem;
-  height: 4rem;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .create-account-info-label {
-    font-family: 'Nunito Sans';
-    margin-left: 1rem;
-    width: 100%;
-    font-size: 1.5rem;
   }
 }

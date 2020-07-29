@@ -19,6 +19,11 @@
 
 .action-badges {
   justify-self: stretch;
+  display: flex;
+  justify-content: space-around;
+  @media (max-width: 650px) {
+    flex-direction: column;
+  }
 }
 
 .grid-cell {
@@ -31,6 +36,11 @@
 
   .name {
     margin-left: 0.5rem;
+  }
+  .icon {
+    @media (max-width: 650px) {
+      width: 15px;
+    }
   }
 }
 .redirect-link {
