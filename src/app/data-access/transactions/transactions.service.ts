@@ -52,7 +52,7 @@ export class TransactionsService extends ApiService {
         (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
           this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd - transaction.value } }));
-          this._transactionsQuery.hasEntity() ? this._transactionStore.add(transaction) : null;
+          this._transactionsQuery.hasEntity() ? this._transactionStore.insertTransaction(transaction) : null;
           asset.quantity += transaction.quantity;
         },
         (error: HttpErrorResponse) => {
@@ -76,6 +76,7 @@ export class TransactionsService extends ApiService {
         (transaction: Transaction) => {
           this._toastrService.success('Transaction completed');
           this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd + transaction.value } }));
+          this._transactionsQuery.hasEntity() ? this._transactionStore.insertTransaction(transaction) : null;
           asset.quantity -= transaction.quantity;
         },
         (error: HttpErrorResponse) => {

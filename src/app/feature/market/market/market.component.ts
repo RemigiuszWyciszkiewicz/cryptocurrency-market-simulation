@@ -96,7 +96,7 @@ export class MarketComponent implements OnInit {
 
   mapAssetsToDictionary(assets: Asset[]): AssetDictionary {
     return assets.reduce((pr, cr) => {
-      return { ...pr, [cr.cryptocurrency]: cr };
+      return { ...pr, [cr.id]: cr };
     }, {});
   }
 

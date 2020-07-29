@@ -29,25 +29,53 @@ export class DonutChartComponent implements OnInit {
       width: '100%',
     },
     legend: {
-      onItemHover: { highlightDataSeries: true },
       position: 'bottom',
+
       formatter: (seriesName, opts) => {
-        return `<span style="margin-right:10px;">${seriesName} <strong>${Number(opts.w.globals.series[opts.seriesIndex]).toFixed(
+        return `<span style="margin-right:10px;">${seriesName} <strong>$${Number(opts.w.globals.series[opts.seriesIndex]).toFixed(
           2
         )}</strong></span>`;
       },
     },
-    title: {
-      text: 'Portfolio',
-      align: 'center',
-      offsetY: -5,
-    },
+    title: {},
     series: [],
     labels: [],
+    colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800'],
+
+    dataLabels: {
+      enabled: true,
+    },
     tooltip: {
+      enabled: false,
       y: {
         formatter(val) {
           return val.toFixed(2);
+        },
+      },
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            show: true,
+            name: {
+              show: true,
+              formatter: (val: string) => {
+                return val;
+              },
+              fontWeight: 600,
+            },
+            value: {
+              formatter: (val: string) => {
+                return '$' + Number(val).toFixed(2);
+              },
+              offsetY: -2,
+              show: true,
+            },
+            total: {
+              show: false,
+            },
+          },
         },
       },
     },

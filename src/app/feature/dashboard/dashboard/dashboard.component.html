@@ -1,47 +1,56 @@
-<div class="row">
-  <div class="col-lg-8 col-sm-12">
+<coin-market-page-loader [isLoading]="pageLoading$ | async">
+  <ng-template aumsDigitalPageContentTpl>
     <div class="row">
-      <div class="col-lg-6">
-        <coin-market-card>
+      <div class="col-lg-8 col-sm-12">
+        <div class="row">
+          <div class="col-lg-6">
+            <coin-market-card>
+              <coin-market-card-body>
+                <coin-market-portfolio-summary
+                  class="portfolio-summary"
+                  [data]="portfolioSummary"
+                ></coin-market-portfolio-summary>
+              </coin-market-card-body>
+            </coin-market-card>
+          </div>
+          <div class="col-lg-6">
+            <coin-market-card>
+              <coin-market-card-body><coin-market-user-rank-widget></coin-market-user-rank-widget> </coin-market-card-body>
+            </coin-market-card>
+          </div>
+        </div>
+
+        <coin-market-card
+          class="asset-item-card"
+          [class.highlighted-item]="index % 2 !== 0"
+          *ngFor="let asset of assets; let index = index"
+        >
           <coin-market-card-body>
-            <coin-market-portfolio-summary class="portfolio-summary" [data]="portfolioSummary"></coin-market-portfolio-summary>
+            <coin-market-asset-item [data]="asset"></coin-market-asset-item>
           </coin-market-card-body>
         </coin-market-card>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-4 col-sm-12">
         <coin-market-card>
-          <coin-market-card-body><coin-market-user-rank-widget></coin-market-user-rank-widget> </coin-market-card-body>
+          <coin-market-card-header
+            >Portfolio
+            <div *ngIf="donutChartData" (click)="refreshDountChart($event)">
+              <i class="refresh-icon fas fa-redo-alt"></i>
+            </div>
+          </coin-market-card-header>
+          <coin-market-card-body>
+            <coin-market-donut-chart *ngIf="donutChartData" [data]="donutChartData"></coin-market-donut-chart>
+          </coin-market-card-body>
         </coin-market-card>
+        <div class="transaction-list-widget-container">
+          <coin-market-card>
+            <coin-market-card-header>Latest transactions</coin-market-card-header>
+            <coin-market-card-body>
+              <coin-market-transactions-list-widget [data]="transactions$ | async"> </coin-market-transactions-list-widget>
+            </coin-market-card-body>
+          </coin-market-card>
+        </div>
       </div>
     </div>
-
-    <coin-market-card
-      class="asset-item-card"
-      [class.highlighted-item]="index % 2 !== 0"
-      *ngFor="let asset of assetSummary; let index = index"
-    >
-      <coin-market-card-body>
-        <coin-market-asset-item [data]="asset"></coin-market-asset-item>
-      </coin-market-card-body>
-    </coin-market-card>
-  </div>
-  <div class="col-lg-4 col-sm-12">
-    <coin-market-card>
-      <coin-market-card-body>
-        <coin-market-donut-chart *ngIf="donutChartData" [data]="donutChartData"></coin-market-donut-chart>
-      </coin-market-card-body>
-    </coin-market-card>
-    <div class="transaction-list-widget-container">
-      <coin-market-card>
-        <coin-market-card-body>
-          <coin-market-transactions-list-widget
-            [loading]="transactionWidgetLoading"
-            [error]="transactionWidgetError"
-            [data]="transactions"
-          >
-          </coin-market-transactions-list-widget>
-        </coin-market-card-body>
-      </coin-market-card>
-    </div>
-  </div>
-</div>
+  </ng-template>
+</coin-market-page-loader>

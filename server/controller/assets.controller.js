@@ -3,25 +3,8 @@ const { cryptocurennciesService } = require('../services');
 const { CRYPTO_ICONS } = require('../cryptocurrency-clients');
 const assetsService = require('../services').assetsService;
 
-const getAll = async (req, res, next) => {
-  const userId = req.params.userId;
-
-  try {
-    const assets = await assetsService.getAllAssets(userId);
-    res.send(assets);
-
-    next();
-  } catch (error) {
-    res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
-    console.log(error);
-    return next();
-  }
-};
-
 const getPortfolioSummaryData = async (req, res, next) => {
   let userId;
-
-  const summarydata = {};
 
   if (req.params && req.params.userId) {
     userId = req.params.userId;
@@ -41,7 +24,7 @@ const getPortfolioSummaryData = async (req, res, next) => {
   }
 };
 
-const getAssetsDetails = async (req, res, next) => {
+const getAll = async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const cryptoMap = await cryptocurennciesService.getCryptocurrenciesPriceMap();
@@ -70,4 +53,4 @@ const getAssetsDetails = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, getPortfolioSummaryData, getAssetsDetails };
+module.exports = { getAll, getPortfolioSummaryData };

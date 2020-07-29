@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
-  country: { type: String, required: true },
+  country: { type: String },
   usd: { type: Number, required: true, min: 0 },
   lastLogin: { type: String, required: true },
   transactions: [{ type: Schema.Types.ObjectId, ref: 'transactions' }],

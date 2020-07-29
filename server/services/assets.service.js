@@ -105,7 +105,7 @@ const getAssetsPurchaseCostMap = async (userId) => {
 
 const getAssetSummary = async (userId, cryptoValueMap) => {
   let summarydata = {};
-  const crypto = await getOwnedAssetsValueMap(userId, cryptoValueMap);
+  const valueOfAssets = await getOwnedAssetsValueMap(userId, cryptoValueMap);
 
   const userUSD = await userService.getUserUSD(userId);
   const assetPurchaseConst = await getAssetsPurchaseCostMap(userId);
@@ -114,7 +114,7 @@ const getAssetSummary = async (userId, cryptoValueMap) => {
   summarydata.totalAssetsPurchaseCost = Object.values(assetPurchaseConst).reduce((prev, curr) => {
     return prev + curr;
   }, 0);
-  summarydata.totalPortfolioValue = Object.values(crypto).reduce((prev, curr) => {
+  summarydata.totalPortfolioValue = Object.values(valueOfAssets).reduce((prev, curr) => {
     return prev + curr;
   }, userUSD.usd);
   return summarydata;

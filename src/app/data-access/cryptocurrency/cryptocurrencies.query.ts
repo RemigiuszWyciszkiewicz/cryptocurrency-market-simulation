@@ -19,4 +19,8 @@ export class CryptocurrenciesQuery extends QueryEntity<CryptocurrenciesState> {
       )
     );
   }
+
+  getCryptocurrency(id: ID): Cryptocurrency {
+    return this.getEntity(id);
+  }
 }

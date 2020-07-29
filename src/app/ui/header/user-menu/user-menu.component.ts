@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { UserQuery } from '@coin-market/data-access/user';
 import { NbMenuItem } from '@nebular/theme';
 
 import { UserMenuOption } from './user-menu-options';
@@ -10,6 +11,9 @@ import { UserMenuOption } from './user-menu-options';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent {
+  constructor(private readonly _userQuery: UserQuery) {}
+
+  username: string = this._userQuery.getValue().user.name;
   items: NbMenuItem[] = [
     { title: UserMenuOption.PROFILE, link: './pages/profile' },
     { title: UserMenuOption.LOGOUT, link: './hello' },

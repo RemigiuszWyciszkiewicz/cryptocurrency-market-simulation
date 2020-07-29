@@ -1,3 +1,5 @@
+@import 'src/app/utils/styles/variables.scss';
+
 .data-container {
   height: 4.5rem;
 }
@@ -23,11 +25,11 @@
 .value {
   font-size: 1.7rem;
   margin-top: 0.3rem;
-  font-family: 'Nunito Sans';
+  font-family: $NunitoSans;
 }
 .value-contianer {
   margin-top: 0.3rem;
-  font-family: 'Nunito Sans';
+  font-family: $NunitoSans;
 }
 
 .percentage-value {

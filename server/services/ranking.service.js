@@ -4,6 +4,8 @@ const cryptoService = require('../services/cryptocurrencies.service');
 const assetsService = require('../services/assets.service');
 var { sortBy } = require('lodash');
 
+const getUserRankingInformation = async (userId) => {};
+
 async function createRanking() {
   await Ranking.remove({}).exec();
   const cryptocurrencies = await cryptoService.getCryptocurrenciesPriceMap();

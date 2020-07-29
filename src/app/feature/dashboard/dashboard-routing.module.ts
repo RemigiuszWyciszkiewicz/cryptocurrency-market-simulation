@@ -3,7 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-const routes: Routes = [{ path: '', component: DashboardComponent }];
+const routes: Routes = [
+  { path: '', component: DashboardComponent },
+  {
+    path: ':id',
+    loadChildren: () => import('@coin-market/feature/cryptocurrency-details').then((m) => m.CryptocurrencyDetailsModule),
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

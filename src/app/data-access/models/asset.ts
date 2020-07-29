@@ -1,13 +1,10 @@
-import { ID } from '@datorama/akita';
-
 export interface Asset {
-  _id: ID;
-  cryptocurrency: string;
+  id: string;
+  value: number;
   quantity: number;
-  lastUpdate: string;
+  icon: number;
   purchaseCost: number;
 }
-
 export interface AssetDictionary {
   [key: string]: Asset;
 }

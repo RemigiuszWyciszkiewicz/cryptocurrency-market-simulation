@@ -11,4 +11,10 @@ export class TransactionStore extends EntityStore<TransactionState> {
   constructor() {
     super({});
   }
+
+  insertTransaction(transaction: Transaction): void {
+    this.update((state) => {
+      return { ids: [transaction._id, ...state.ids], entities: { [transaction._id]: transaction, ...state.entities } };
+    });
+  }
 }

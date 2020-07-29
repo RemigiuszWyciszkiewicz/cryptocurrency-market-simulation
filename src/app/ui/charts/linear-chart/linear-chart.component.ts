@@ -31,6 +31,7 @@ export class LinearChartComponent {
     stroke: {
       curve: 'straight',
     },
+
     dataLabels: {
       formatter: (val, opts) => {
         return val.toFixed(2);

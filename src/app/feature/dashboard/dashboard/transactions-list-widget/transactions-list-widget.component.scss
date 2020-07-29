@@ -1,4 +1,20 @@
+@import 'src/app/utils/styles/variables.scss';
+
 .redirect-to-full-list {
-  font-size: 1.2rem;
-  color: red;
+  cursor: pointer;
+}
+
+table thead tr th {
+  border-top: 0;
+  font-family: $Roboto;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-family: $TitilliumWeb;
+}
+
+table th {
+}
+.col {
 }

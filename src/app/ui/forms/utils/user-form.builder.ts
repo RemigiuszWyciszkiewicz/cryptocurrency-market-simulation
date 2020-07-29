@@ -25,7 +25,6 @@ export class UserFormBuilder extends BaseFormBuilder {
         password: ['', [Validators.required]],
         passwordConfirmation: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        country: ['', Validators.required],
       },
       { validator: passwordConfirmationValidator('password', 'passwordConfirmation') }
     );

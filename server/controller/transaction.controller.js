@@ -12,6 +12,7 @@ const getList = async (req, res, next) => {
   try {
     transactions = await transactionService.getTransactions(userId, limit);
   } catch (error) {
+    console.log(error);
     res.status(404).send(new ErrorResponse('invalid id', 'Given user id is invalid'));
 
     return next();
@@ -35,6 +36,7 @@ const save = async (req, res, next) => {
   const error = transaction.validateSync();
 
   if (error) {
+    console.log(error);
     const invalidFields = Object.keys(error.errors);
     res.status(404).send(new ErrorResponse('invalidFileds', 'Given properties are invalid: ' + invalidFields.join(',')));
     return next();

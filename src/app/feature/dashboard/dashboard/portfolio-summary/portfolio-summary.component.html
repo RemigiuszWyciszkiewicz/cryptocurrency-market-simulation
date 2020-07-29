@@ -4,7 +4,7 @@
     <div class="data-usd">
       <div class="label">USD</div>
       <div class="value">
-        {{ data.USD | number: '1.0-2' }}
+        {{ usd$ | async | number: '1.0-2' }}
       </div>
     </div>
     <div class="data-total">
