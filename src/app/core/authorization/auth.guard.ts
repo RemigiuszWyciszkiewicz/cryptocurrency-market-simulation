@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivateChild {
     }
 
     if (this._tokenStorageService.getToken()) {
-      return this._authService.checkTokenValidity(this._tokenStorageService.getId()).pipe(
+      return this._authService.checkUserTokenValidity(this._tokenStorageService.getId()).pipe(
         map((response: User) => {
           if (response) {
             this._userStore.update({ user: response });

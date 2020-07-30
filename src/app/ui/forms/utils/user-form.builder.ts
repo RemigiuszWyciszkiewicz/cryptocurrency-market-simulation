@@ -14,6 +14,7 @@ export class UserFormBuilder extends BaseFormBuilder {
     this._form = this._formBuilder.group({
       password: ['test123', Validators.required],
       email: ['remik@remik.pl', [Validators.required, Validators.email]],
+      recaptcha: [''],
     });
     return this;
   }
@@ -28,6 +29,13 @@ export class UserFormBuilder extends BaseFormBuilder {
       },
       { validator: passwordConfirmationValidator('password', 'passwordConfirmation') }
     );
+    return this;
+  }
+
+  createRecaptchaFormGroup(): BaseFormBuilder {
+    this._form = this._formBuilder.group({
+      recaptcha: ['', Validators.required],
+    });
     return this;
   }
 }

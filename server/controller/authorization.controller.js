@@ -2,6 +2,9 @@ const passport = require('../auth').passport;
 const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../data-access').ErrorResponse;
 const User = require('../data-access/models').User;
+const axios = require('axios').default;
+
+const RECAPTCHA_SERVER_KEY = '6LdnCbgZAAAAALJ7XdgmC8-dqLr0WZcmgCRGoIth';
 
 const passportAuthenticateLogin = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
@@ -58,6 +61,30 @@ const tokenValidation = async (req, res, next) => {
   }
 };
 
+const recapchaTokenValidation = async (req, res, next) => {
+  let token = req.body.token;
+
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SERVER_KEY}&response=${token}&remoteip=${req.connection.remoteAddress}`;
+
+  if (token === null || token === undefined) {
+    res.status(201).send({ success: false, message: 'Token is empty or invalid' });
+    return next();
+  }
+
+  axios
+    .get(url)
+    .then((response) => {
+      if (!response.data.success) {
+        res.send({ success: false, message: 'recaptcha failed' });
+        return next();
+      }
+
+      res.send({ success: true, message: 'recaptcha passed' });
+      return next();
+    })
+    .catch(console.log);
+};
+
 function getFixedUser(user) {
   const userFixed = user.toObject();
   delete userFixed.password;
@@ -70,4 +97,5 @@ module.exports = {
   passportAuthenticateLogin,
   passportAuthenticateSignUp,
   tokenValidation,
+  recapchaTokenValidation,
 };

@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { ApiService } from '@coin-market/data-access/api';
-import { User } from '@coin-market/data-access/models';
+import { Rechaptcha, User } from '@coin-market/data-access/models';
 import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 
@@ -28,7 +28,11 @@ export class AuthService extends ApiService {
     return this.post<User>(user, 'signup');
   }
 
-  checkTokenValidity(userId: ID): Observable<User> {
+  checkUserTokenValidity(userId: ID): Observable<User> {
     return this.post<any>({ test: 'wfafafa' }, 'tokenValidation/' + userId);
+  }
+
+  checkRechaptchaTokenValidity(token: string): Observable<Rechaptcha> {
+    return this.post<Rechaptcha>({ token }, 'recaptchaTokenValidation');
   }
 }

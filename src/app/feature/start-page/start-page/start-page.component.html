@@ -7,18 +7,19 @@
         <coin-market-login-form
           *ngIf="isLoginFormVisible; else registerForm"
           [formGroup]="loginFormGroup"
-          (loginFormSubmit)="signIn($event)"
+          (loginFormSubmit)="onSignIn($event)"
         >
         </coin-market-login-form>
 
         <ng-template #registerForm>
           <coin-market-register-form
-            (registerFormSubmit)="createAccount($event)"
+            (registerFormSubmit)="onSignUp($event)"
             (showLoginForm)="changeForm()"
             [formGroup]="registerFormGroup"
           >
           </coin-market-register-form>
         </ng-template>
+        <div></div>
       </div>
 
       <div class="create-account-info" *ngIf="isLoginFormVisible">
@@ -27,6 +28,14 @@
         </div>
         <coin-market-button styleElement="link" class="d-inline" text="Create new account" (clickEvent)="changeForm()">
         </coin-market-button>
+      </div>
+
+      <div [formGroup]="recaptchaFormGroup">
+        <re-captcha (resolved)="recaptchaResolve($event)" formControlName="recaptcha" [siteKey]="siteKey"> </re-captcha>
+      </div>
+
+      <div *ngIf="!isRecaptchaTokenValid && showRecaptchaErrorMessage" class="text-danger">
+        Confirm that you are not a robot!
       </div>
     </div>
 
