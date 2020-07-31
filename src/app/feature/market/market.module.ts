@@ -5,6 +5,7 @@ import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
 import { TransactionsModule } from '@coin-market/data-access/transactions';
 import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
+import { LabelModule } from '@coin-market/ui/label';
 import { LoaderModule } from '@coin-market/ui/loader';
 import { ModalModule } from '@coin-market/ui/modal';
 
@@ -23,6 +24,7 @@ import { MarketComponent } from './market/market.component';
     ModalModule,
     CardModule,
     ChartsModule,
+    LabelModule,
   ],
   providers: [],
 })

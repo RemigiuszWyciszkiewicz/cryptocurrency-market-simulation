@@ -13,6 +13,11 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 8rem;
+
+  @media (max-width: 650px) {
+    grid-template-columns: 1fr 5rem 5rem 5rem 5rem;
+  }
+
   justify-items: center;
   align-items: center;
 }
@@ -23,6 +28,7 @@
   justify-content: space-around;
   @media (max-width: 650px) {
     flex-direction: column;
+    width: 4.4rem;
   }
 }
 
@@ -45,12 +51,4 @@
 }
 .redirect-link {
   cursor: pointer;
-}
-
-.value-profit-danger {
-  color: red;
-}
-
-.value-profit-success {
-  color: #28a745;
 }

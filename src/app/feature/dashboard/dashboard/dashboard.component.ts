@@ -105,16 +105,18 @@ export class DashboardComponent implements OnInit {
     this._assetsService
       .getAllAssets(this._userQuery.getId())
       .pipe(
-        tap(
-          (value: Asset[]) => {
-            console.log(value);
-            this.assets = value;
-            this.assetsLoading$.next(false);
-          },
-          finalize(() => {
-            console.log('assets finalinze');
-          })
-        )
+        tap((value: Asset[]) => {
+          console.log(value);
+          this.assets = value;
+          this.assetsLoading$.next(false);
+        }),
+        catchError((error) => {
+          console.log('', error);
+          return of(error);
+        }),
+        finalize(() => {
+          console.log('assets finalinze');
+        })
       )
       .subscribe();
   }

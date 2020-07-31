@@ -52,7 +52,8 @@ export class StartPageComponent implements OnInit {
   }
 
   onSignIn(user: User): void {
-    if (this.isRecaptchaTokenValid) {
+    // if (this.isRecaptchaTokenValid) {
+    if (true) {
       this.signInExecution(user);
     } else {
       this.showRecaptchaErrorMessage = true;

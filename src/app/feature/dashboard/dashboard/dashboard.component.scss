@@ -36,6 +36,8 @@
   .asset-item-card ::ng-deep {
     nb-card {
       nb-card-body {
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
         padding-right: 0;
         padding-left: 0;
       }

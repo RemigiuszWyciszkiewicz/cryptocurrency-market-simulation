@@ -5,37 +5,55 @@
         <table class="table" *ngIf="cryptocurrencies$ | async">
           <thead>
             <tr>
-              <th scope="col">market_cap_rank</th>
-              <th scope="col">current_price</th>
-              <th scope="col">name</th>
-              <th scope="col">symbol</th>
-              <th scope="col">market cap</th>
-              <th scope="col">price_change_percenstage_24h</th>
-              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Market Cap</th>
+              <th scope="col">Market Cap Rank</th>
+              <th scope="col">Price</th>
+
+              <th scope="col">Change 24h</th>
+
               <th scope="col">#</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let coin of cryptocurrencies$ | async">
+              <td><img [src]="coin.image" alt="coin_icon" class="mr-2" width="16" />{{ coin.name }}</td>
+              <td>{{ coin.symbol | uppercase }}</td>
+              <td>${{ coin.market_cap }}</td>
               <td width="4">
                 <a (click)="redirectToDetails(coin)">{{ coin.market_cap_rank }}</a>
               </td>
-              <td>{{ coin.current_price }}</td>
-              <td><img [src]="coin.image" alt="coin_icon" class="mr-2" width="16" />{{ coin.name }}</td>
-              <td>{{ coin.symbol }}</td>
-              <td>{{ coin.market_cap }}</td>
-              <td>{{ coin.price_change_percentage_24h }}</td>
+              <td>{{ coin.current_price | currency }}</td>
+
               <td>
-                <coin-market-sparkline-chart [data]="coin.sparkLineData"></coin-market-sparkline-chart>
+                <div class="d-flex">
+                  <coin-market-sparkline-chart [data]="coin.sparkLineData"></coin-market-sparkline-chart>
+                  <span
+                    [ngClass]="{
+                      'value-profit-danger': coin.price_change_percentage_24h < 0,
+                      'value-profit-success': coin.price_change_percentage_24h >= 0
+                    }"
+                  >
+                    {{ coin.price_change_percentage_24h | number: '1.0-0' }}%
+                  </span>
+                </div>
               </td>
-              <td>
-                <a (click)="buy(coin)">Buy</a>
-                <a *ngIf="assets && assets[coin.id] && assets[coin.id].quantity > 0" (click)="sell(coin)">Sell</a>
-              </td>
+              <coin-market-bootstrap-badge [variation]="'success'" [emitEventOnClick]="true" (clickEvent)="buy(coin)">
+                Buy
+              </coin-market-bootstrap-badge>
+              <coin-market-bootstrap-badge
+                *ngIf="assets && assets[coin.id] && assets[coin.id].quantity > 0"
+                [variation]="'warning'"
+                [emitEventOnClick]="true"
+                (clickEvent)="sell(coin)"
+              >
+                Sell
+              </coin-market-bootstrap-badge>
             </tr>
           </tbody>
-        </table></coin-market-card-body
-      >
+        </table>
+      </coin-market-card-body>
     </coin-market-card>
   </ng-template>
 </coin-market-page-loader>
