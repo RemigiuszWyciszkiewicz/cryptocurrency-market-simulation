@@ -1,47 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexDataLabels,
-  ApexFill,
-  ApexLegend,
-  ApexPlotOptions,
-  ApexStroke,
-  ApexTitleSubtitle,
-  ApexTooltip,
-  ApexXAxis,
-  ApexYAxis
-} from 'ng-apexcharts';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  markers: any; // ApexMarkers;
-  stroke: ApexStroke;
-  yaxis: ApexYAxis | ApexYAxis[];
-  plotOptions: ApexPlotOptions;
-  dataLabels: ApexDataLabels;
-  colors: string[];
-  labels: string[] | number[];
-  title: ApexTitleSubtitle;
-  subtitle: ApexTitleSubtitle;
-  legend: ApexLegend;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
-};
+import { ApxChartOptions } from '../apx-chart-options';
 
 @Component({
   selector: 'coin-market-sparkline-chart',
   templateUrl: './sparkline-chart.component.html',
   styleUrls: ['./sparkline-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SparklineChartComponent implements OnInit {
   @Input() set data(value) {
     this.chartLineSparkline1Options.series[0].data.push(...value);
   }
 
-  public commonLineSparklineOptions: Partial<ChartOptions> = {
+  public commonLineSparklineOptions: Partial<ApxChartOptions> = {
     chart: {
       type: 'line',
       width: 100,

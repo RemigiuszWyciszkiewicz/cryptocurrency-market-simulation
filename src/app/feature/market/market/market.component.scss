@@ -1,3 +1,31 @@
+@import 'src/app/utils/styles/variables.scss';
+
 .card-container {
   min-height: 713px;
+}
+
+.transaction-badge-container {
+  display: flex;
+  justify-content: center;
+}
+
+.badges-container {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+}
+
+table thead tr th {
+  border-top: 0;
+  font-family: $Roboto;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-family: $TitilliumWeb;
+}
+
+.symbol-name-container {
+  cursor: pointer;
 }
