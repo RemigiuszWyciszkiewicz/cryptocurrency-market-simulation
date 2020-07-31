@@ -18,14 +18,13 @@ export class CryptocurrencyDetailsCurrentDataComponent implements AfterViewInit 
   ngAfterViewInit(): void {
     const tmpElement = this._document.createElement('div');
 
-    //TODO Security issue.
+    // TODO Security issue.
     tmpElement.innerHTML = this.data.description;
-    this.descriptionContainer.nativeElement.textContent = this.extractHeadOfText(tmpElement.textContent);
+    this.descriptionContainer.nativeElement.textContent = this.extractHeadOfText(tmpElement.textContent, 5);
   }
 
-  extractHeadOfText(text: string): string {
+  extractHeadOfText(text: string, sentencesNumber: number): string {
     let lastIndex = 0;
-    const sentencesNumber = 5;
 
     for (let i = 0; i < sentencesNumber; i++) {
       lastIndex = text.indexOf('.', lastIndex);

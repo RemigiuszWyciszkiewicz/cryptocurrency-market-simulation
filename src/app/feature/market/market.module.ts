@@ -8,6 +8,7 @@ import { ChartsModule } from '@coin-market/ui/charts';
 import { LabelModule } from '@coin-market/ui/label';
 import { LoaderModule } from '@coin-market/ui/loader';
 import { ModalModule } from '@coin-market/ui/modal';
+import { ThemeDirectivesModule } from '@coin-market/utils/directives';
 
 import { MarketRoutingModule } from './market-routing.module';
 import { MarketComponent } from './market/market.component';
@@ -25,6 +26,7 @@ import { MarketComponent } from './market/market.component';
     CardModule,
     ChartsModule,
     LabelModule,
+    ThemeDirectivesModule,
   ],
   providers: [],
 })

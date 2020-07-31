@@ -12,13 +12,7 @@
     </div>
     <div class="grid-cell">
       <span class="">Profit:</span>
-      <span
-        class="value"
-        [ngClass]="{
-          'value-profit-danger': assetProfitPercentage < 0,
-          'value-profit-success': assetProfitPercentage >= 0
-        }"
-      >
+      <span class="value" [coinMarketPercentageChangeTheme]="assetProfitPercentage">
         {{ assetProfitPercentage | number: '1.0-0' }} %</span
       >
     </div>

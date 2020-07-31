@@ -14,7 +14,7 @@
     "component-class-suffix": true,
     "contextual-lifecycle": true,
     "directive-class-suffix": false,
-    "directive-selector": [true, "attribute", "coin-market", "camelCase"],
+    "directive-selector": [true, "attribute", "coin-market", "camelCase", "kebab-case"],
     "component-selector": [true, "element", "coin-market", "kebab-case"],
     "eofline": true,
     "import-blacklist": [true, "rxjs/Rx"],

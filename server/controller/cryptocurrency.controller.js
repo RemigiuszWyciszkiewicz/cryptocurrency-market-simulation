@@ -29,11 +29,17 @@ const getDetails = async (res, req) => {
 };
 
 const getNews = async (res, req) => {
+  let quantity;
+  if (req.req.query && req.req.query.limit) {
+    quantity = req.req.query.limit;
+  }
+
   const id = req.req.params.id;
 
   try {
     const results = await cryptocompareApi.getNews(id);
-    res.res.send(results.data.Data);
+    const news = quantity ? results.data.Data.slice(0, quantity) : results.data.Data;
+    res.res.send(news);
   } catch (error) {
     res.res.send('Can not fetch news list.');
     console.log(error);

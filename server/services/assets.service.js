@@ -40,7 +40,6 @@ const updateAssetOnPurchase = async (userId, transaction) => {
   user.save();
 };
 
-//TODO Delete asset if quantity === 0
 const updateAssetOnSale = async (userId, transaction) => {
   const user = await userService.getUser(userId);
   const asset = await getAsset(user, transaction.cryptocurrency);

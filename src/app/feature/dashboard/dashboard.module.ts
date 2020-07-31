@@ -8,6 +8,7 @@ import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
 import { LabelModule } from '@coin-market/ui/label';
 import { LoaderModule } from '@coin-market/ui/loader';
+import { ThemeDirectivesModule } from '@coin-market/utils/directives';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AssetItemComponent } from './dashboard/asset-item/asset-item.component';
@@ -35,6 +36,7 @@ import { UserRankWidgetComponent } from './dashboard/user-rank-widget/user-rank-
     LoaderModule,
     CardModule,
     LabelModule,
+    ThemeDirectivesModule,
   ],
 })
 export class DashboardModule {}

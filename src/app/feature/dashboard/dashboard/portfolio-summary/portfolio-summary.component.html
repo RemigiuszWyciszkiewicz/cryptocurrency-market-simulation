@@ -10,12 +10,7 @@
     <div class="data-total">
       <div class="label">Portfolio value</div>
       <div class="value-contianer">
-        <span
-          class="percentage-value"
-          [ngClass]="{
-            'value-profit-danger': profitPercentage < 0,
-            'value-profit-success': profitPercentage >= 0
-          }"
+        <span class="percentage-value" [coinMarketPercentageChangeTheme]="profitPercentage"
           >( <span *ngIf="profitPercentage >= 0">+</span>{{ profitPercentage | number: '1.0-0' }}%)
         </span>
         <span class="value"> {{ data.totalPortfolioValue | number: '1.0-2' }}</span>

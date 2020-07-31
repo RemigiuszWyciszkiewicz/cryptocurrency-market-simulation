@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
@@ -20,8 +21,9 @@ export class CryptocurrencyService extends ApiService {
     return this.get<CryptocurrencyDetails>(id, 'details');
   }
 
-  getCryptocurrencyNews(id: ID): Observable<News[]> {
-    return this.getAll<News>('news/' + id);
+  getCryptocurrencyNews(id: ID, limit: number): Observable<News[]> {
+    const params = new HttpParams().set('limit', String(limit));
+    return this.getAll<News>('news/' + id, params);
   }
 
   getCryptocurrencyIcons(): Observable<{ name: string; icon: string }[]> {

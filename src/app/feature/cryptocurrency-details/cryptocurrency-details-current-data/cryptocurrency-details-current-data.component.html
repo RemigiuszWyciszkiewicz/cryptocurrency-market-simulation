@@ -1,27 +1,53 @@
 <coin-market-card>
   <coin-market-card-body>
     <div class="row">
-      <div class="col-4"><img src="{{ data?.image }}" />{{ data.name }} ({{ data.symbol }})</div>
-      <div class="col-4">
-        {{ data.current_price }}
-        {{ data.market_cap_rank }}
-        {{ data.market_cap }}
+      <div class="col-12">
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-center justify-content-center">
+            <img alt="coin-icon" width="70" src="{{ data?.image }}" />
+            <span class="name ml-3">{{ data.name }} </span> <span class="symbol">({{ data.symbol | uppercase }})</span>
+          </div>
+          <div class="d-flex justify-content-center mt-2">
+            <span class="current-price-label"> Price: </span>
+            <span class="current-price-value"> {{ data.current_price | currency }}</span>
+            <span class="market-cap-label"> Capitalization: </span>
+            <span class="market-cap-value"> {{ data.market_cap | currency }}</span>
+            <span class="market-cap-rank"> ({{ data.market_cap_rank }})</span>
+          </div>
+        </div>
       </div>
-      <div class="col-4">
-        {{ data.price_change_percentage_24h | number: '1.0-0' }} % {{ data.price_change_percentage_30d | number: '1.0-0' }} %
-        {{ data.price_change_percentage_7d | number: '1.0-0' }} %
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4">
-        <div #description></div>
-      </div>
-      <div class="col-4">
-        {{ data.links.blockchain_site }}
-        {{ data.links.github }}
-        {{ data.links.homepage }}
-        {{ data.links.official_forum_url }}
-        {{ data.links.subreddit_url }}
+      <div class="row">
+        <div class="col-6">
+          <div class="description p-3">
+            <div class="description-label mb-3">What is {{ data.name }} ?</div>
+            <div class="description-text">
+              <div #description></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="historical-percentage-changes d-flex flex-column justify-content-end align-items-end">
+            <span class="change-24h-label">24-Hour Change</span>
+            <span [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h" class="change-24h-value">
+              {{ data.price_change_percentage_24h | number: '1.0-0' }} %
+            </span>
+            <span class="change-7d-label">7-Day Change</span>
+            <span [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h" class="change-7d-value">
+              {{ data.price_change_percentage_7d | number: '1.0-0' }} %</span
+            >
+            <span class="change-30d-label">30-Day Change</span>
+            <span [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h" class="change-30d-value">
+              {{ data.price_change_percentage_30d | number: '1.0-0' }} %</span
+            >
+          </div>
+        </div>
+        <div class="col-3">
+          {{ data.links.blockchain_site }}
+          {{ data.links.github }}
+          {{ data.links.homepage }}
+          {{ data.links.official_forum_url }}
+          {{ data.links.subreddit_url }}
+        </div>
       </div>
     </div>
   </coin-market-card-body>

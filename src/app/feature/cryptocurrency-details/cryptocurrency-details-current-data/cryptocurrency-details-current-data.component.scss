@@ -1,5 +1,60 @@
-nb-card::ng-deep {
-  box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
-  border: unset;
-  border-radius: unset;
+@import 'src/app/utils/styles/variables.scss';
+
+.name {
+  font-size: 4rem;
+  font-family: $Roboto;
+}
+
+.symbol {
+  position: relative;
+  top: 0.7rem;
+  font-size: 1.8rem;
+  color: rgba(39, 52, 64, 0.5);
+  font-weight: 600;
+}
+
+.current-price {
+  font-size: 1.2rem;
+}
+.market-cap {
+  &-label {
+    font-family: $NunitoSans;
+    font-weight: 600;
+    color: rgba(39, 52, 64, 0.5);
+    margin-right: 0.4rem;
+  }
+
+  &-value {
+    font-family: $Roboto;
+    font-size: 1.1rem;
+  }
+
+  &-rank {
+    color: rgba(39, 52, 64, 0.5);
+  }
+}
+.current-price {
+  &-label {
+    font-family: $NunitoSans;
+    font-weight: 600;
+    color: rgba(39, 52, 64, 0.5);
+    margin-right: 0.4rem;
+  }
+
+  &-value {
+    font-family: $Roboto;
+    margin-right: 0.6rem;
+    font-size: 1.1rem;
+  }
+}
+
+.description {
+  &-label {
+    font-family: $TitilliumWeb;
+    font-size: 1.3rem;
+    color: #ff9500;
+  }
+  &-text {
+    font-family: Arial, Helvetica, sans-serif;
+  }
 }

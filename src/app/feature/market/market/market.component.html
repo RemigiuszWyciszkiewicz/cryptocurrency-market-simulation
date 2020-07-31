@@ -30,12 +30,7 @@
               <td style="width: 14%;">{{ coin.current_price | currency }}</td>
               <td style="width: 14%;">
                 <div class="d-flex justify-content-around">
-                  <span
-                    [ngClass]="{
-                      'value-profit-danger': coin.price_change_percentage_24h < 0,
-                      'value-profit-success': coin.price_change_percentage_24h >= 0
-                    }"
-                  >
+                  <span [coinMarketPercentageChangeTheme]="price_change_percentage_24h">
                     {{ coin.price_change_percentage_24h | number: '1.0-0' }}%
                   </span>
                   <coin-market-sparkline-chart [data]="coin.sparkLineData"></coin-market-sparkline-chart>
