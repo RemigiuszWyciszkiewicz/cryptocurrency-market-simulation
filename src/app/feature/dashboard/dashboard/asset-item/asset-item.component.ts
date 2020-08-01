@@ -24,15 +24,15 @@ export class AssetItemComponent {
   }
 
   buy(): void {
-    this._transactionsService.buy(this.getCryprocurencyFromQuery(), this.data);
+    this._transactionsService.buy(this.getCryprocurencyFromStore(), this.data);
   }
 
-  getCryprocurencyFromQuery(): Cryptocurrency {
+  getCryprocurencyFromStore(): Cryptocurrency {
     return this._cryptocurrenciesQuery.getCryptocurrency(this.data.id);
   }
 
   sell(): void {
-    this._transactionsService.sell(this.getCryprocurencyFromQuery(), this.data);
+    this._transactionsService.sell(this.getCryprocurencyFromStore(), this.data);
   }
 
   redirectToDetails(): void {

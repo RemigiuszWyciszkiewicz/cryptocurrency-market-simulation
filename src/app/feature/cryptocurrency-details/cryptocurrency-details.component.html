@@ -1,19 +1,19 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-lg-12">
     <coin-market-cryptocurrency-details-current-data *ngIf="cryptocurrencyDetails" [data]="cryptocurrencyDetails">
     </coin-market-cryptocurrency-details-current-data>
   </div>
 </div>
 <div class="row">
-  <div class="col-8">
+  <div class="col-lg-8">
     <coin-market-cryptocurrency-details-chart *ngIf="!linearChartLoading" [data]="cryptocurrencyDetailsLinearChartData">
     </coin-market-cryptocurrency-details-chart>
   </div>
-  <div class="col-4">
+  <div class="col-lg-4 col-sm-12">
     //adsense
   </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-lg-12 news-container">
       <coin-market-cryptocurrency-details-news *ngFor="let item of news" [data]="item"></coin-market-cryptocurrency-details-news>
     </div>
   </div>

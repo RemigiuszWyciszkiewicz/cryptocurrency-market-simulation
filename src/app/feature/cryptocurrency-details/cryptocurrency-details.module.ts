@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChartsModule as ChartsModuleDataAccess } from '@coin-market/data-access/charts';
 import { CryptocurrencyModule as CryptocurrencyDetailsModuleDataAccess } from '@coin-market/data-access/cryptocurrency';
+import { TransactionsModule } from '@coin-market/data-access/transactions';
 import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
+import { FormsModule } from '@coin-market/ui/forms';
 import { ThemeDirectivesModule } from '@coin-market/utils/directives';
 
 import { CryptocurrencyDetailsChartComponent } from './cryptocurrency-details-chart/cryptocurrency-details-chart.component';
@@ -30,6 +32,8 @@ const COMPONENTS = [
     CryptocurrencyDetailsModuleDataAccess,
     RouterModule.forChild([{ path: '', component: CryptocurrencyDetailsComponent }]),
     ThemeDirectivesModule,
+    FormsModule,
+    TransactionsModule,
   ],
 })
 export class CryptocurrencyDetailsModule {}

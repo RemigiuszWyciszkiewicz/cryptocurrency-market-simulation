@@ -37,7 +37,7 @@ export class TransactionsService extends ApiService {
     return this.post(transaction, String(userId));
   }
 
-  buy(coin: Cryptocurrency, asset: Asset): void {
+  buy(coin: Cryptocurrency, asset?: Asset): void {
     this._dialogService
       .open(CoinTransactionModalComponent, {
         context: { cryptocurrency: coin, transactionType: TransactionType.PURCHASE, usdLimit: this._userQuery.getUSD() },
@@ -53,7 +53,9 @@ export class TransactionsService extends ApiService {
           this._toastrService.success('Transaction completed');
           this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd - transaction.value } }));
           this._transactionsQuery.hasEntity() ? this._transactionStore.insertTransaction(transaction) : null;
-          asset.quantity += transaction.quantity;
+          if (asset) {
+            asset.quantity += transaction.quantity;
+          }
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);
@@ -61,7 +63,7 @@ export class TransactionsService extends ApiService {
       );
   }
 
-  sell(coin: Cryptocurrency, asset: Asset): void {
+  sell(coin: Cryptocurrency, asset?: Asset): void {
     this._dialogService
       .open(CoinTransactionModalComponent, {
         context: { cryptocurrency: coin, transactionType: TransactionType.SALE, quantityLimit: asset.quantity },
@@ -77,7 +79,9 @@ export class TransactionsService extends ApiService {
           this._toastrService.success('Transaction completed');
           this._userStore.update((state) => ({ user: { ...state.user, usd: state.user.usd + transaction.value } }));
           this._transactionsQuery.hasEntity() ? this._transactionStore.insertTransaction(transaction) : null;
-          asset.quantity -= transaction.quantity;
+          if (asset) {
+            asset.quantity -= transaction.quantity;
+          }
         },
         (error: HttpErrorResponse) => {
           this._toastrService.error('ERROR: ' + error.error.message);

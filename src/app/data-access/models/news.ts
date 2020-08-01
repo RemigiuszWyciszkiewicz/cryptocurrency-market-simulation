@@ -11,7 +11,7 @@ export interface News {
   title: string;
   upvotes: string;
   url: string;
-  sourceInfo: SourceInfo;
+  source_info: SourceInfo;
 }
 
 export interface SourceInfo {

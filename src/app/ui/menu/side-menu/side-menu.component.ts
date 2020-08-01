@@ -37,6 +37,16 @@ export class SideMenuComponent implements OnInit {
         pack: 'font-awesome',
       },
     },
+
+    {
+      title: 'News',
+      link: '/pages/news',
+      pathMatch: 'full',
+      icon: {
+        icon: 'globe',
+        pack: 'font-awesome',
+      },
+    },
     {
       title: 'Transactions history',
       link: '/pages/transactions-history',

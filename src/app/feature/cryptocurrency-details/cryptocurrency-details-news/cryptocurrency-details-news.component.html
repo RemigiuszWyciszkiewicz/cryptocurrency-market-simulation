@@ -1,11 +1,16 @@
-<coin-market-card>
+<coin-market-card class="card">
   <coin-market-card-body>
-    <h5>
-      <a [href]="data.url" target="_blank">{{ data.title }}</a>
-    </h5>
+    <a [href]="data.url" target="_blank"> <img class="article-image" alt="article_url" src="{{ data?.imageurl }}" /></a>
 
-    <span> <div class="news-test" [innerHTML]="data.body"></div></span>
-
-    <img src="{{ data?.imageurl }}" />
+    <div class="article-content">
+      <div class="article-header">
+        {{ data.title }}
+      </div>
+      <div class="article-text" [innerHTML]="data.body"></div>
+      <div class="article-footer">
+        <div class="article-footer-source">{{ data.source_info.name }}</div>
+        <div class="article-footer-date">{{ data.published_on | date }}</div>
+      </div>
+    </div>
   </coin-market-card-body>
 </coin-market-card>

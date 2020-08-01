@@ -12,12 +12,13 @@
             <span class="current-price-value"> {{ data.current_price | currency }}</span>
             <span class="market-cap-label"> Capitalization: </span>
             <span class="market-cap-value"> {{ data.market_cap | currency }}</span>
+            &nbsp;
             <span class="market-cap-rank"> ({{ data.market_cap_rank }})</span>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-lg-6 col-sm-12">
           <div class="description p-3">
             <div class="description-label mb-3">What is {{ data.name }} ?</div>
             <div class="description-text">
@@ -25,29 +26,64 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
-          <div class="historical-percentage-changes d-flex flex-column justify-content-end align-items-end">
-            <span class="change-24h-label">24-Hour Change</span>
-            <span [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h" class="change-24h-value">
-              {{ data.price_change_percentage_24h | number: '1.0-0' }} %
-            </span>
-            <span class="change-7d-label">7-Day Change</span>
-            <span [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h" class="change-7d-value">
-              {{ data.price_change_percentage_7d | number: '1.0-0' }} %</span
-            >
-            <span class="change-30d-label">30-Day Change</span>
-            <span [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h" class="change-30d-value">
-              {{ data.price_change_percentage_30d | number: '1.0-0' }} %</span
-            >
+        <div class="col-lg-3 col-sm-12">
+          <div class="historical-percentage-changes d-flex flex-column justify-content-end align-items-end p-3">
+            <span class="description-label mb-3"> Historical change</span>
+            <div class="historical-percentage-changes-box">
+              <span class="change-label d-flex align-items-end justify-content-end">24-Hour Change</span>
+              <span
+                [coinMarketPercentageChangeTheme]="data.price_change_percentage_24h"
+                class="change-value d-flex align-items-end justify-content-end"
+              >
+                {{ data.price_change_percentage_24h | number: '1.0-0' }} %
+              </span>
+            </div>
+            <div class="historical-percentage-changes-box">
+              <span class="d-flex align-items-end justify-content-end change-label">7-Day Change</span>
+              <span
+                [coinMarketPercentageChangeTheme]="data.price_change_percentage_7d"
+                class="change-value d-flex align-items-end justify-content-end"
+              >
+                {{ data.price_change_percentage_7d | number: '1.0-0' }} %
+              </span>
+            </div>
+            <div class="historical-percentage-changes-box">
+              <span class="change-label d-flex align-items-end justify-content-end">30-Day Change</span>
+              <span
+                [coinMarketPercentageChangeTheme]="data.price_change_percentage_30d"
+                class="change-value d-flex align-items-end justify-content-end"
+              >
+                {{ data.price_change_percentage_30d | number: '1.0-0' }} %
+              </span>
+            </div>
           </div>
         </div>
-        <div class="col-3">
-          {{ data.links.blockchain_site }}
-          {{ data.links.github }}
-          {{ data.links.homepage }}
-          {{ data.links.official_forum_url }}
-          {{ data.links.subreddit_url }}
+        <div class="col-lg-3 col-sm-12">
+          <div class="d-flex flex-column justify-content-end align-items-end p-3">
+            <span class="description-label mb-3"> Socials</span>
+            <div class="social">
+              <div class="social-link header-box">
+                <i class="social-link-icon fas fa-globe"></i> <a target="_blank" [href]="data.links.homepage"> Homepage </a>
+              </div>
+              <div class="social-link header-box">
+                <i class="social-link-icon fab fa-github"></i> <a target="_blank" [href]="data.links.github"> Github</a>
+              </div>
+              <div class="social-link header-box">
+                <i class="social-link-icon far fa-comment-dots"></i>
+                <a target="_blank" [href]="data.links.official_forum_url">Official forum</a>
+              </div>
+              <div class="social-link header-box">
+                <i class="social-link-icon fas fa-project-diagram"></i
+                ><a target="_blank" [href]="data.links.blockchain_site">Blockchain</a>
+              </div>
+              <div class="social-link header-box">
+                <i class="social-link-icon fab fa-reddit-alien"></i>
+                <a target="_blank" [href]="data.links.subreddit_url">Reddit</a>
+              </div>
+            </div>
+          </div>
         </div>
+        <coin-market-button styleElement="secondary" class="ml-4" (clickEvent)="buy()" [text]="buttonText"> </coin-market-button>
       </div>
     </div>
   </coin-market-card-body>
