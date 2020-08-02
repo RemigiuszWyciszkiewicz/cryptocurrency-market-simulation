@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
-import { CryptocurrenciesQuery } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesQuery } from '@coin-market/data-access/cryptocurrencies';
 import { Cryptocurrency, CryptocurrencyDetails } from '@coin-market/data-access/models';
 import { TransactionsService } from '@coin-market/data-access/transactions';
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
   CryptocurrenciesQuery,
-  CryptocurrenciesStore,
-  CryptocurrencyService
-} from '@coin-market/data-access/cryptocurrency';
+  CryptocurrenciesService,
+  CryptocurrenciesStore
+} from '@coin-market/data-access/cryptocurrencies';
 import { UserMenuOption } from '@coin-market/ui/header';
 import { NbIconLibraries, NbMenuBag, NbMenuService } from '@nebular/theme';
 import { filter } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { UserStore } from './data-access/user';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private readonly _cryptocurrenciesService: CryptocurrencyService,
+    private readonly _cryptocurrenciesService: CryptocurrenciesService,
     private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
     private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
     private readonly _nbMenuService: NbMenuService,

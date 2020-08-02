@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, TokenStorageService } from '@coin-market/core/authorization';
 import { ErrorResponses } from '@coin-market/data-access/api';
-import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesService } from '@coin-market/data-access/cryptocurrencies';
 import { LoginResponse, User } from '@coin-market/data-access/models';
 import { UserStore } from '@coin-market/data-access/user';
 import { UserFormBuilder } from '@coin-market/ui/forms';
@@ -27,7 +27,7 @@ export class StartPageComponent implements OnInit {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _userFormBuilder: UserFormBuilder,
     private readonly _tokenStorageService: TokenStorageService,
-    private readonly _cryptocurrenciesService: CryptocurrencyService,
+    private readonly _cryptocurrenciesService: CryptocurrenciesService,
     @Inject(RECAPTCHA_SETTINGS) private readonly _recaptchaSettings: RecaptchaSettings
   ) {}
 

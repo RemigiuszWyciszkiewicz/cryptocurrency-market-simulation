@@ -30,11 +30,13 @@ const getDetails = async (res, req) => {
 
 const getNews = async (res, req) => {
   let quantity;
+  let id;
   if (req.req.query && req.req.query.limit) {
     quantity = req.req.query.limit;
   }
-
-  const id = req.req.params.id;
+  if (req.req.params && req.req.params.id) {
+    id = req.req.params.id;
+  }
 
   try {
     const results = await cryptocompareApi.getNews(id);

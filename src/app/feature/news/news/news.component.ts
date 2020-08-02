@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CryptocurrenciesService } from '@coin-market/data-access/cryptocurrencies';
+import { News } from '@coin-market/data-access/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'coin-market-news',
@@ -6,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent implements OnInit {
-  constructor() {}
+  news$: Observable<News[]>;
 
-  ngOnInit(): void {}
+  constructor(private readonly _cryptocurrenciesService: CryptocurrenciesService) {}
+
+  ngOnInit(): void {
+    this._cryptocurrenciesService.getCryptocurrencyNews('', 30).subscribe(console.log);
+  }
 }

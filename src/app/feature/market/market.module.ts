@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AssetsModule } from '@coin-market/data-access/assets';
-import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesModule } from '@coin-market/data-access/cryptocurrencies';
 import { TransactionsModule } from '@coin-market/data-access/transactions';
 import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
@@ -18,7 +18,7 @@ import { MarketComponent } from './market/market.component';
   imports: [
     CommonModule,
     MarketRoutingModule,
-    CryptocurrencyModule,
+    CryptocurrenciesModule,
     AssetsModule,
     TransactionsModule,
     LoaderModule,

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AssetsModule } from '@coin-market/data-access/assets';
 import { ChartsModule as ChartsModuleDataAccess } from '@coin-market/data-access/charts';
-import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesModule } from '@coin-market/data-access/cryptocurrencies';
 import { TransactionsModule as TransactionsModuleDataAccess } from '@coin-market/data-access/transactions';
 import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
@@ -29,7 +29,7 @@ import { UserRankWidgetComponent } from './dashboard/user-rank-widget/user-rank-
     CommonModule,
     DashboardRoutingModule,
     ChartsModule,
-    CryptocurrencyModule,
+    CryptocurrenciesModule,
     AssetsModule,
     ChartsModuleDataAccess,
     TransactionsModuleDataAccess,

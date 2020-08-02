@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
-import { CryptocurrencyService } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesService } from '@coin-market/data-access/cryptocurrencies';
 import { CryptocurrencyDetails, News } from '@coin-market/data-access/models';
 import { ID } from '@datorama/akita';
 import { map, tap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
   linearChartLoading = true;
 
   constructor(
-    private readonly _cryprocurrenciesService: CryptocurrencyService,
+    private readonly _cryprocurrenciesService: CryptocurrenciesService,
 
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _chartsService: ChartsService

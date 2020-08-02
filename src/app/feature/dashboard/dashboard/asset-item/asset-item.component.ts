@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CryptocurrenciesQuery } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesQuery } from '@coin-market/data-access/cryptocurrencies';
 import { Asset, Cryptocurrency } from '@coin-market/data-access/models';
 import { TransactionsService } from '@coin-market/data-access/transactions';
 

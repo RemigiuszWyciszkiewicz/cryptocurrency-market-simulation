@@ -8,7 +8,7 @@ import { CryptocurrencyDetails, News } from '../models';
 import { Cryptocurrency } from '../models/cryptocurrency';
 
 @Injectable()
-export class CryptocurrencyService extends ApiService {
+export class CryptocurrenciesService extends ApiService {
   constructor(injector: Injector) {
     super(injector, 'cryptocurrencies');
   }

@@ -32,7 +32,6 @@ export class DashboardComponent implements OnInit {
   pageLoading$: Observable<boolean> = combineLatest([
     this.porfolioSummaryLoading$,
     this.rankingLoading$,
-
     this.transactionsLoading$,
     this.assetsLoading$,
   ]).pipe(

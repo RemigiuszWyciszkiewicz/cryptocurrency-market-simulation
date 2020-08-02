@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AuthorizationModule, httpInterceptorProviders } from '@coin-market/core/authorization';
-import { CryptocurrencyModule } from '@coin-market/data-access/cryptocurrency';
+import { CryptocurrenciesModule } from '@coin-market/data-access/cryptocurrencies';
 import { LayoutModule } from '@coin-market/ui/layout';
 import { MenuModule } from '@coin-market/ui/menu';
 import { ToastrModule } from '@coin-market/ui/toastr';
@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     AppRoutingModule,
     RouterModule,
-    CryptocurrencyModule,
+    CryptocurrenciesModule,
     BrowserAnimationsModule,
     ToastrModule,
     AuthorizationModule,

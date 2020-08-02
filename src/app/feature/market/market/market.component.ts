@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import {
   CryptocurrenciesQuery,
-  CryptocurrenciesStore,
-  CryptocurrencyService
-} from '@coin-market/data-access/cryptocurrency';
+  CryptocurrenciesService,
+  CryptocurrenciesStore
+} from '@coin-market/data-access/cryptocurrencies';
 import { Asset, AssetDictionary } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
 import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
@@ -35,7 +35,7 @@ export class MarketComponent implements OnInit {
     private readonly _transactionsQuery: TransactionsQuery,
     private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
     private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
-    private readonly _cryptocurrencyService: CryptocurrencyService
+    private readonly _cryptocurrenciesService: CryptocurrenciesService
   ) {}
 
   isLoading = this._cryptocurrenciesQuery.selectLoading();
@@ -63,7 +63,7 @@ export class MarketComponent implements OnInit {
   }
 
   fetchAllCryptocurrencies(): void {
-    this._cryptocurrencyService
+    this._cryptocurrenciesService
       .getCryptocurrenciesList()
       .pipe(
         tap((value: Cryptocurrency[]) => {
