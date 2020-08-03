@@ -20,6 +20,7 @@ speed-measure-plugin*.json
 /server/node_modules
 /server/dist
 .env
+env
 
 # IDEs and editors
 /.idea

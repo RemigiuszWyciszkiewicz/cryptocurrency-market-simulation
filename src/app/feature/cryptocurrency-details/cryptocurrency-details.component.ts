@@ -44,7 +44,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
 
   getNews(): void {
     this._cryprocurrenciesService
-      .getCryptocurrencyNews(this.id, 15)
+      .getCryptocurrencyNews(this.id, 12)
       .pipe(
         tap((values: News[]) => {
           this.news = values;
