@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptocurrenciesService } from '@coin-market/data-access/cryptocurrencies';
 import { News } from '@coin-market/data-access/models';
-import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-news',
@@ -9,11 +9,22 @@ import { Observable } from 'rxjs';
   styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent implements OnInit {
-  news$: Observable<News[]>;
+  news: News[];
+  pageLoading = true;
 
   constructor(private readonly _cryptocurrenciesService: CryptocurrenciesService) {}
 
   ngOnInit(): void {
-    this._cryptocurrenciesService.getCryptocurrencyNews('', 30).subscribe(console.log);
+    this._cryptocurrenciesService
+      .getCryptocurrencyNews('', 32)
+      .pipe(
+        tap((value) => {
+          this.news = value;
+        }),
+        finalize(() => {
+          this.pageLoading = false;
+        })
+      )
+      .subscribe();
   }
 }

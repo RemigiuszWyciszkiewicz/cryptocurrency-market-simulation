@@ -1,0 +1,14 @@
+@import 'src/app/utils/styles/variables.scss';
+
+.news-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 0;
+
+  .news-header-container {
+    font-size: 1.8rem;
+    font-family: $NunitoSans;
+  }
+}

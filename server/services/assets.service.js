@@ -1,8 +1,5 @@
 const User = require('../data-access/models').User;
 const userService = require('./user.service');
-const cryptoService = require('./cryptocurrencies.service');
-const { async } = require('rxjs/internal/scheduler/async');
-const { Asset } = require('../data-access/models/asset');
 
 const addAssetToUser = async (userId, asset) => {
   await User.findById(userId)

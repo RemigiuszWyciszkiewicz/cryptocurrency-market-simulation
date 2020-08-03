@@ -37,7 +37,7 @@ export abstract class ApiService implements RestService {
     });
   }
 
-  get<T>(id: ID, endpoint: string, params?: HttpParams): Observable<T> {
+  get<T>(id: ID, endpoint: string = '', params?: HttpParams): Observable<T> {
     return this._httpClient.get<T>(`${this.generateEndpointUrl(endpoint, params)}/${id}`, { params });
   }
 
@@ -49,7 +49,7 @@ export abstract class ApiService implements RestService {
     return this._httpClient.delete<T>(`${this.generateEndpointUrl(endpoint)}/${id}`);
   }
 
-  getAll<T>(endpoint: string, params?: HttpParams): Observable<T[]> {
+  getAll<T>(endpoint: string = '', params?: HttpParams): Observable<T[]> {
     return this._httpClient.get<T[]>(`${this.generateEndpointUrl(endpoint)}`, { params });
   }
 

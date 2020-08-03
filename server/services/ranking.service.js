@@ -2,9 +2,11 @@ const Ranking = require('../data-access/models').Ranking;
 const User = require('../data-access/models').User;
 const cryptoService = require('../services/cryptocurrencies.service');
 const assetsService = require('../services/assets.service');
-var { sortBy } = require('lodash');
+var { sortBy, forEach } = require('lodash');
 
-const getUserRankingInformation = async (userId) => {};
+const appendRankToRankingEntity = (value, index) => {
+  value.rank = index + 1;
+};
 
 async function createRanking() {
   await Ranking.remove({}).exec();
@@ -28,7 +30,7 @@ async function createRanking() {
     result.push({ ...user.toObject(), ...summary });
   }
 
-  let ranking = sortBy(result, ['totalPortfolioValue']).reverse();
+  let ranking = forEach(sortBy(result, ['totalPortfolioValue']).reverse(), appendRankToRankingEntity);
 
   Ranking.create(ranking, {}, (err, res) => {
     if (err) {

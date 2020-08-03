@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AssetsModule } from '@coin-market/data-access/assets';
 import { ChartsModule as ChartsModuleDataAccess } from '@coin-market/data-access/charts';
 import { CryptocurrenciesModule } from '@coin-market/data-access/cryptocurrencies';
+import { RankingModule } from '@coin-market/data-access/ranking';
 import { TransactionsModule as TransactionsModuleDataAccess } from '@coin-market/data-access/transactions';
 import { CardModule } from '@coin-market/ui/card';
 import { ChartsModule } from '@coin-market/ui/charts';
@@ -33,6 +34,7 @@ import { UserRankWidgetComponent } from './dashboard/user-rank-widget/user-rank-
     AssetsModule,
     ChartsModuleDataAccess,
     TransactionsModuleDataAccess,
+    RankingModule,
     LoaderModule,
     CardModule,
     LabelModule,

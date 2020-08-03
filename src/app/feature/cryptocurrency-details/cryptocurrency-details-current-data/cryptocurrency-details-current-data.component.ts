@@ -33,6 +33,14 @@ export class CryptocurrencyDetailsCurrentDataComponent implements AfterViewInit 
     this.descriptionContainer.nativeElement.textContent = this.extractHeadOfText(tmpElement.textContent, 5);
   }
 
+  buy(): void {
+    this._transactionsService.buy(this.getCryprocurencyFromStore());
+  }
+
+  getCryprocurencyFromStore(): Cryptocurrency {
+    return this._cryptocurrenciesQuery.getCryptocurrency(this.data.id);
+  }
+
   extractHeadOfText(text: string, sentencesNumber: number): string {
     let lastIndex = 0;
 
@@ -41,13 +49,5 @@ export class CryptocurrencyDetailsCurrentDataComponent implements AfterViewInit 
       lastIndex++;
     }
     return text.substring(0, lastIndex);
-  }
-
-  buy(): void {
-    this._transactionsService.buy(this.getCryprocurencyFromStore());
-  }
-
-  getCryprocurencyFromStore(): Cryptocurrency {
-    return this._cryptocurrenciesQuery.getCryptocurrency(this.data.id);
   }
 }

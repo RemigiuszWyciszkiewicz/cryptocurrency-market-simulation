@@ -8,8 +8,10 @@
       </div>
       <div class="article-text" [innerHTML]="data.body"></div>
       <div class="article-footer">
-        <div class="article-footer-source">{{ data.source_info.name }}</div>
-        <div class="article-footer-date">{{ data.published_on | date }}</div>
+        <div class="article-footer-source">
+          <a [href]="data.url" target="_blank">{{ data.source_info.name }}</a>
+        </div>
+        <div class="article-footer-date">{{ data.published_on | unixTimestampTime }}</div>
       </div>
     </div>
   </coin-market-card-body>

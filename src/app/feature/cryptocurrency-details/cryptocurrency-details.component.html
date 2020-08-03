@@ -14,7 +14,11 @@
   </div>
   <div class="row">
     <div class="col-lg-12 news-container">
-      <coin-market-cryptocurrency-details-news *ngFor="let item of news" [data]="item"></coin-market-cryptocurrency-details-news>
+      <div class="news-header-container d-block w-100 mb-4 ml-5 mt-4" *ngIf="cryptocurrencyDetails">
+        {{ cryptocurrencyDetails.name }} news
+      </div>
+
+      <coin-market-cryptocurrency-news *ngFor="let item of news" [data]="item"></coin-market-cryptocurrency-news>
     </div>
   </div>
 </div>

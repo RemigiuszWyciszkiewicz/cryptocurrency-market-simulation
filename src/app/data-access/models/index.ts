@@ -8,4 +8,5 @@ export * from './ranking';
 export * from './cryptocurrency-details';
 export * from './news';
 export * from './ui-state';
+export * from './user-ranking-information';
 export * from './recaptcha';

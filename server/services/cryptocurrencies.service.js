@@ -1,5 +1,3 @@
-const { coingeckoApi } = require('../cryptocurrency-clients');
-
 const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
 const CRYPTO_ICONS = require('../cryptocurrency-clients/').CRYPTO_ICONS;
 

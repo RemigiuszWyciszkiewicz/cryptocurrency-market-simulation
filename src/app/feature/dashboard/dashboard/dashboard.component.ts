@@ -1,7 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
-import { Asset, PortfolioSummary, Transaction } from '@coin-market/data-access/models';
+import { Asset, PortfolioSummary, Transaction, UserRankingInformaton } from '@coin-market/data-access/models';
+import { RankingService } from '@coin-market/data-access/ranking';
 import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery } from '@coin-market/data-access/user';
 import { DonutChartData } from '@coin-market/ui/charts/donut-chart/donut-chart.component';
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
     private readonly _transactionsService: TransactionsService,
     private readonly _transactionsStore: TransactionStore,
     private readonly _transactionsQuery: TransactionsQuery,
+    private readonly _rankingService: RankingService,
     private readonly _chartsService: ChartsService,
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery,
@@ -26,12 +28,12 @@ export class DashboardComponent implements OnInit {
 
   porfolioSummaryLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   assetsLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-  rankingLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  userRankingInformationLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   transactionsLoading$: Observable<boolean> = this._transactionsQuery.selectLoading();
 
   pageLoading$: Observable<boolean> = combineLatest([
     this.porfolioSummaryLoading$,
-    this.rankingLoading$,
+    this.userRankingInformationLoading$,
     this.transactionsLoading$,
     this.assetsLoading$,
   ]).pipe(
@@ -44,6 +46,7 @@ export class DashboardComponent implements OnInit {
 
   donutChartData: DonutChartData;
   portfolioSummary: PortfolioSummary;
+  userRankingInformation: UserRankingInformaton;
   transactions$: Observable<Transaction[]> = this._transactionsQuery.selectAll();
   assets: Asset[];
 
@@ -51,6 +54,7 @@ export class DashboardComponent implements OnInit {
     this.getDonutChartData();
     this.getTransactionsListWidgetData();
     this.getPortfolioSummary();
+    this.getUserRankingInformation();
     this.getAssets();
   }
 
@@ -111,6 +115,25 @@ export class DashboardComponent implements OnInit {
         }),
         catchError((error) => {
           console.log('', error);
+          return of(error);
+        }),
+        finalize(() => {
+          console.log('assets finalinze');
+        })
+      )
+      .subscribe();
+  }
+
+  getUserRankingInformation(): void {
+    this._rankingService
+      .getUserRankingInformation(this._userQuery.getId())
+      .pipe(
+        tap((value: UserRankingInformaton) => {
+          console.log(value);
+          this.userRankingInformation = value;
+          this.userRankingInformationLoading$.next(false);
+        }),
+        catchError((error) => {
           return of(error);
         }),
         finalize(() => {

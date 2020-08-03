@@ -7,6 +7,7 @@ const rankingSchema = new mongoose.Schema({
   name: { type: String, required: true },
   totalPortfolioValue: { type: Number, required: true },
   change: { type: Number, required: true },
+  rank: { type: Number, required: true },
 });
 
 const Ranking = mongoose.model('ranking', rankingSchema);

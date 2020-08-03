@@ -1,1 +1,13 @@
-<p>news works!</p>
+<coin-market-page-loader [isLoading]="pageLoading">
+  <ng-template aumsDigitalPageContentTpl>
+    <div class="row">
+      <div class="col-lg-12 news-container">
+        <div class="news-header-container d-block w-100 mb-4 ml-5 mt-4">
+          Latest news
+        </div>
+
+        <coin-market-cryptocurrency-news *ngFor="let item of news" [data]="item"></coin-market-cryptocurrency-news>
+      </div>
+    </div>
+  </ng-template>
+</coin-market-page-loader>

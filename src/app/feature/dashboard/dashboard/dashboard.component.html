@@ -13,7 +13,9 @@
           </div>
           <div class="col-lg-6">
             <coin-market-card>
-              <coin-market-card-body><coin-market-user-rank-widget></coin-market-user-rank-widget> </coin-market-card-body>
+              <coin-market-card-body>
+                <coin-market-user-rank-widget [data]="userRankingInformation"></coin-market-user-rank-widget>
+              </coin-market-card-body>
             </coin-market-card>
           </div>
         </div>

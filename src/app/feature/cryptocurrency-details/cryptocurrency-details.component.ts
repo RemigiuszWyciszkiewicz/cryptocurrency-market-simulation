@@ -23,7 +23,6 @@ export class CryptocurrencyDetailsComponent implements OnInit {
 
   constructor(
     private readonly _cryprocurrenciesService: CryptocurrenciesService,
-
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _chartsService: ChartsService
   ) {}

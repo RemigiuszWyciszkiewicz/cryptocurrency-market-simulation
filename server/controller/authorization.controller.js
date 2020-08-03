@@ -4,7 +4,7 @@ const ErrorResponse = require('../data-access').ErrorResponse;
 const User = require('../data-access/models').User;
 const axios = require('axios').default;
 
-const RECAPTCHA_SERVER_KEY = '6LdnCbgZAAAAALJ7XdgmC8-dqLr0WZcmgCRGoIth';
+const RECAPTCHA_SERVER_KEY = process.env.RECAPTCHA_SERVER_KEY;
 
 const passportAuthenticateLogin = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {

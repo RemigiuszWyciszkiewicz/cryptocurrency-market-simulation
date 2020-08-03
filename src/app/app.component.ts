@@ -20,12 +20,12 @@ export class AppComponent implements OnInit {
     private readonly _cryptocurrenciesService: CryptocurrenciesService,
     private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
     private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
+    private readonly _iconLibraries: NbIconLibraries,
     private readonly _nbMenuService: NbMenuService,
     private readonly _authService: AuthService,
-    private readonly _userStore: UserStore,
-    private iconLibraries: NbIconLibraries
+    private readonly _userStore: UserStore
   ) {
-    this.iconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa', packClass: 'fa' });
+    this._iconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa', packClass: 'fa' });
   }
 
   ngOnInit(): void {

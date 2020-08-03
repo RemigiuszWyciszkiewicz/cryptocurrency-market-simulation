@@ -12,6 +12,10 @@
 
 a {
   text-decoration: none;
+  color: black;
+  &:hover {
+    color: black;
+  }
 }
 .card {
   width: 22rem;

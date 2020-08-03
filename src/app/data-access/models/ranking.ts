@@ -4,4 +4,5 @@ export interface Ranking {
   name: string;
   totalPortfolioValue: number;
   change: number;
+  rank: number;
 }
