@@ -18,14 +18,15 @@ import { PortfolioSummaryComponent } from './dashboard/portfolio-summary/portfol
 import { TransactionsListWidgetComponent } from './dashboard/transactions-list-widget/transactions-list-widget.component';
 import { UserRankWidgetComponent } from './dashboard/user-rank-widget/user-rank-widget.component';
 
+const COMPONENTS = [
+  DashboardComponent,
+  UserRankWidgetComponent,
+  TransactionsListWidgetComponent,
+  PortfolioSummaryComponent,
+  AssetItemComponent,
+];
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    UserRankWidgetComponent,
-    TransactionsListWidgetComponent,
-    PortfolioSummaryComponent,
-    AssetItemComponent,
-  ],
+  declarations: [...COMPONENTS],
   imports: [
     CommonModule,
     DashboardRoutingModule,
