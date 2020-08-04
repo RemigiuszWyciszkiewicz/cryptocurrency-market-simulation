@@ -40,8 +40,6 @@ export class DashboardComponent implements OnInit {
     this.assetsLoading$,
   ]).pipe(
     map((value) => {
-      console.log('', value);
-      console.log(value[0] || value[1] || value[2] || value[3]);
       return value[0] || value[1] || value[2] || value[3];
     })
   );
@@ -81,7 +79,6 @@ export class DashboardComponent implements OnInit {
           }
         }),
         catchError((error) => {
-          console.log(error);
           return of(error);
         })
       )
@@ -96,7 +93,6 @@ export class DashboardComponent implements OnInit {
           this.portfolioSummary = value;
         }),
         catchError((error) => {
-          console.log(error);
           return of(error);
         }),
         finalize(() => {
@@ -131,7 +127,6 @@ export class DashboardComponent implements OnInit {
       .getUserRankingInformation(this._userQuery.getId())
       .pipe(
         tap((value: UserRankingInformaton) => {
-          console.log(value);
           this.userRankingInformation = value;
           this.userRankingInformationLoading$.next(false);
         }),

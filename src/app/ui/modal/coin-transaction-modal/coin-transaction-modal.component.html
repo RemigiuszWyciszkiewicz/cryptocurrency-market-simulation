@@ -1,14 +1,20 @@
-<coin-market-modal-card [modalTitle]="transactionType | uppercase">
+<coin-market-modal-card (cancel)="cancel()" [modalTitle]="transactionType | uppercase" [hideFooter]="true" modalSize="auto">
   <coin-market-modal-card-body>
-    <div [formGroup]="formGroup" class="mb-3 input-container">
-      <coin-market-input type="number" formControlName="cryptoquantity"></coin-market-input>
-      <div>
-        <span>CURRENT PRICE </span> <span>{{ cryptocurrency.current_price }} </span> <span>VALUE </span>
-        <span>{{ transactionValue }} </span>
+    <div class="grid mb-3">
+      <div class="label">
+        Quantity
       </div>
-      <div class="color-danger" *ngIf="showLimitExceededStatement$ | async">You have exceeded the limit: $ {{ usdLimit }}</div>
+      <div [formGroup]="formGroup">
+        <coin-market-input type="number" formControlName="cryptoquantity"></coin-market-input>
+      </div>
+      <div class="label">Price</div>
+      <div class="value">{{ cryptocurrency.current_price | currency }}</div>
+      <div class="label">Value</div>
+      <div class="value">{{ transactionValue | currency }}</div>
     </div>
+
     <coin-market-button (click)="buy()" [text]="buttonText"></coin-market-button>
+    <coin-market-button *ngIf="showMaxButton" (click)="max()" class="ml-2" text="MAX"></coin-market-button>
     <coin-market-button (click)="cancel()" class="ml-2" text="Cancel"></coin-market-button>
   </coin-market-modal-card-body>
 </coin-market-modal-card>

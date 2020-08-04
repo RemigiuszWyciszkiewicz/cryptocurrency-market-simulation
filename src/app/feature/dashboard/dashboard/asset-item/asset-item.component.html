@@ -5,14 +5,14 @@
       <span class="name"> {{ data.id | titlecase }}</span>
     </div>
     <div class="grid-cell">
-      <span class="">Quantity:</span> <span class="value"> {{ data.quantity }}</span>
+      <span class="girid-cell-label">Quantity:</span> <span class="girid-cell-value"> {{ data.quantity }}</span>
     </div>
     <div class="grid-cell">
-      <span class="">Value:</span> <span class="value"> {{ data.value | number: '2.0-2' }}</span>
+      <span class="girid-cell-label">Value:</span> <span class="girid-cell-value"> {{ data.value | number: '2.0-2' }}</span>
     </div>
     <div class="grid-cell">
-      <span class="">Profit:</span>
-      <span class="value" [coinMarketPercentageChangeTheme]="assetProfitPercentage">
+      <span class="girid-cell-label">Profit:</span>
+      <span class="girid-cell-value" [coinMarketPercentageChangeTheme]="assetProfitPercentage">
         {{ assetProfitPercentage | number: '1.0-0' }} %</span
       >
     </div>

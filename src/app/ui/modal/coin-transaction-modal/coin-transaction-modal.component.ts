@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cryptocurrency, TransactionType } from '@coin-market/data-access/models';
 import { NbDialogRef } from '@nebular/theme';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-coin-transaction-modal',
@@ -23,12 +22,14 @@ export class CoinTransactionModalComponent implements OnInit {
     return `${this.transactionType === TransactionType.PURCHASE ? 'BUY' : 'SELL'} ${this.cryptocurrency.name} `;
   }
 
+  get showMaxButton(): boolean {
+    return this.transactionType === TransactionType.SALE;
+  }
+
   @Input() usdLimit: number;
   @Input() quantityLimit: number;
   @Input() transactionType: TransactionType;
   @Input() cryptocurrency: Cryptocurrency;
-
-  showLimitExceededStatement$: Observable<boolean>;
 
   formGroup: FormGroup;
 
@@ -37,9 +38,14 @@ export class CoinTransactionModalComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({ cryptoquantity: ['', [Validators.min(0), Validators.max(this.quantityLimit)]] });
 
-    this.showLimitExceededStatement$ = this.cryptoquantityControl.valueChanges.pipe(
-      map(() => this.transactionValue > this.usdLimit)
-    );
+    this.cryptoquantityControl.valueChanges
+      .pipe(
+        map(() => this.transactionValue > this.usdLimit),
+        tap((value) => {
+          value ? this.cryptoquantityControl.setErrors({ moneyExceed: false }) : this.cryptoquantityControl.setErrors(null);
+        })
+      )
+      .subscribe();
   }
 
   buy(): void {
@@ -56,6 +62,10 @@ export class CoinTransactionModalComponent implements OnInit {
 
   countTransactionValue(value: number): number {
     return this.cryptocurrency.current_price * Number(value);
+  }
+
+  max(): void {
+    this.formGroup.get('cryptoquantity').setValue(this.quantityLimit);
   }
 
   cancel(): void {

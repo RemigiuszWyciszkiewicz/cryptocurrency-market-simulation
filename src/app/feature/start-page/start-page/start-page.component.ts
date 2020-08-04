@@ -45,7 +45,7 @@ export class StartPageComponent implements OnInit {
   ngOnInit(): void {
     this.createFormGroups();
     this.siteKey = this._recaptchaSettings.siteKey;
-    this.cryptocurrenciesIconsMap$ = this._cryptocurrenciesService.getCryptocurrencyIcons().pipe(tap(console.log));
+    this.cryptocurrenciesIconsMap$ = this._cryptocurrenciesService.getCryptocurrencyIcons();
   }
 
   changeForm(): void {

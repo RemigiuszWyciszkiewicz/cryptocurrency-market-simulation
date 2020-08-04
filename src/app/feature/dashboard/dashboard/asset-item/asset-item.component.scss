@@ -35,9 +35,19 @@
 .grid-cell {
   justify-self: start;
 
-  .value {
+  &-value {
     font-size: 1.2rem;
+
+    @media (max-width: 650px) {
+      font-size: 0.9rem;
+    }
     font-family: $TitilliumWeb;
+  }
+
+  &-label {
+    @media (max-width: 650px) {
+      font-size: 0.9rem;
+    }
   }
 
   .name {

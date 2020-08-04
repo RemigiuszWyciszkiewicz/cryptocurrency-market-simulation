@@ -7,13 +7,17 @@
   font-size: 0.7rem;
   font-weight: 600;
   color: white;
-  background-color: #000000b3;
+  background-color: rgba(0, 0, 0, 0.702);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.6rem;
 
-  .priamry-color {
+  .primary-color {
+    color: $color-primary;
+  }
+
+  a {
     color: $color-primary;
   }
 }

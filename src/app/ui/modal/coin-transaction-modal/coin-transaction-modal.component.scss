@@ -1,21 +1,24 @@
-nb-card {
-  max-width: 600px;
-  max-height: 500px;
-  box-shadow: 0 2px 15px 0 #707070;
+@import 'src/app/utils/styles/variables.scss';
 
-  nb-card-footer {
-    display: flex;
-    justify-content: flex-end;
+.grid {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 3rem 3rem 3rem;
+  grid-row-gap: 0.5rem;
+  width: 28rem;
+
+  @media (max-width: 650px) {
+    width: 23rem;
   }
-}
 
-nb-card-header::ng-deep {
-  border: unset;
-}
-nb-card-footer::ng-deep {
-  border: unset;
-}
+  .label {
+    font-family: $Roboto;
+    font-size: 1rem;
+  }
 
-.input-container {
-  display: flex;
+  .value {
+    font-size: 1.2rem;
+  }
 }
