@@ -5,7 +5,7 @@ import { ChartsService } from '@coin-market/data-access/charts/charts.service';
 import { Asset, PortfolioSummary, Transaction, UserRankingInformaton } from '@coin-market/data-access/models';
 import { RankingService } from '@coin-market/data-access/ranking';
 import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
-import { UserQuery } from '@coin-market/data-access/user';
+import { UserQuery, UserStore } from '@coin-market/data-access/user';
 import { DonutChartData } from '@coin-market/ui/charts/donut-chart/donut-chart.component';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     private readonly _chartsService: ChartsService,
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery,
+    private readonly _userStore: UserStore,
     private readonly _render: Renderer2,
     private readonly _router: Router
   ) {}
@@ -107,7 +108,7 @@ export class DashboardComponent implements OnInit {
       .getAllAssets(this._userQuery.getId())
       .pipe(
         tap((value: Asset[]) => {
-          console.log(value);
+          console.log('fetched assets', value);
           this.assets = value;
           this.assetsLoading$.next(false);
         }),
@@ -129,12 +130,10 @@ export class DashboardComponent implements OnInit {
         tap((value: UserRankingInformaton) => {
           this.userRankingInformation = value;
           this.userRankingInformationLoading$.next(false);
+          this._userStore.update((state) => ({ user: { ...state.user, userRank: value.rank } }));
         }),
         catchError((error) => {
           return of(error);
-        }),
-        finalize(() => {
-          console.log('assets finalinze');
         })
       )
       .subscribe();

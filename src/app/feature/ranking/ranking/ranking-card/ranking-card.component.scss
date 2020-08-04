@@ -1,0 +1,41 @@
+@import 'src/app/utils/styles/variables.scss';
+
+.ranking-card {
+  & ::ng-deep {
+    nb-card {
+      border-radius: 8px;
+      width: 13rem;
+      height: 237px;
+      display: inline-block;
+    }
+  }
+  margin-left: 2rem;
+}
+
+nb-user ::ng-deep {
+  .user-picture {
+    height: 6.25rem !important;
+    width: 6.25rem !important;
+  }
+}
+
+.outcome {
+  font-family: $Roboto;
+  &-value {
+  }
+  &-change {
+  }
+}
+
+.user-rank {
+  font-family: 'Titillium Web';
+  position: relative;
+  font-size: 1.3rem;
+  font-weight: 600;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+  border-radius: 14%;
+  top: -1rem;
+  box-shadow: 0 1px 3px 1px #d0d0d0;
+}

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../data-access').ErrorResponse;
 const User = require('../data-access/models').User;
 const axios = require('axios').default;
-
+const Ranking = require('../data-access/models').Ranking;
 const RECAPTCHA_SERVER_KEY = process.env.RECAPTCHA_SERVER_KEY;
 
 const passportAuthenticateLogin = async (req, res, next) => {
@@ -53,8 +53,8 @@ const tokenValidation = async (req, res, next) => {
 
   try {
     const user = await User.findById(userId);
-
-    res.send(getFixedUser(user));
+    const userRank = await Ranking.find({ _id: user._id }).select({ rank: 1 });
+    res.send({ ...getFixedUser(user), userRank: userRank[0].rank });
     return next();
   } catch (error) {
     res.status(404).send(new ErrorResponse('tokenValidityError', error.message));

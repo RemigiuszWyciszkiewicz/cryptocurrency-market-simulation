@@ -17,8 +17,6 @@ const getUserRankingInformation = async (req, res, next) => {
     const userRank = await Ranking.find({ _id: userId }).select({ rank: 1 });
     const usersCount = await Ranking.count();
 
-    console.log('userRank', userRank);
-
     res.send({ count: usersCount, rank: userRank[0].rank });
   } catch (error) {
     console.log(error);

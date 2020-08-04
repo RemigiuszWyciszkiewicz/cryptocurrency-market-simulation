@@ -7,4 +7,5 @@ export interface User {
   email: string;
   country: string;
   usd: number;
+  userRank: number;
 }
