@@ -10,7 +10,7 @@ Install dependencies
 npm install
 ```
 
-Set enviroment variables based on **_.env-sample_** file.
+Create **.env** file and set enviroment variables based on **_.env-sample_**.
 
 ```
 MONGODB_CONNECTION_URL = <your mongodb connection link>
