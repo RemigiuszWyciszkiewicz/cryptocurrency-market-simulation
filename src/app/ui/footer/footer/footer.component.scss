@@ -1,0 +1,19 @@
+@import 'src/app/utils/styles/variables';
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  background-color: #000000b3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
+
+  .priamry-color {
+    color: $color-primary;
+  }
+}

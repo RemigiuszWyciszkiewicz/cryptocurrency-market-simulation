@@ -12,6 +12,7 @@ import { ToastrService } from '@coin-market/ui/toastr';
 import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'coin-market-start-page',
@@ -52,8 +53,7 @@ export class StartPageComponent implements OnInit {
   }
 
   onSignIn(user: User): void {
-    // if (this.isRecaptchaTokenValid) {
-    if (true) {
+    if (!environment.production || this.isRecaptchaTokenValid) {
       this.signInExecution(user);
     } else {
       this.showRecaptchaErrorMessage = true;

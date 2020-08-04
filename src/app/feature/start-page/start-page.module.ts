@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FooterModule } from '@coin-market/ui/footer';
 import { FormsModule, UserFormBuilder } from '@coin-market/ui/forms';
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
@@ -10,7 +11,7 @@ import { StartPageComponent } from './start-page/start-page.component';
 
 @NgModule({
   declarations: [StartPageComponent, LoginFormComponent, RegisterFormComponent],
-  imports: [CommonModule, StartPageRoutingModule, FormsModule, RecaptchaModule, RecaptchaFormsModule],
+  imports: [CommonModule, StartPageRoutingModule, FormsModule, RecaptchaModule, RecaptchaFormsModule, FooterModule],
   providers: [
     UserFormBuilder,
     { provide: RECAPTCHA_SETTINGS, useValue: { siteKey: '6LdnCbgZAAAAAHY9rts1ncT1vTWnzqx0Ipel2R7R' } },
