@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
 import { Asset, PortfolioSummary, Transaction, UserRankingInformaton } from '@coin-market/data-access/models';
@@ -23,7 +24,8 @@ export class DashboardComponent implements OnInit {
     private readonly _chartsService: ChartsService,
     private readonly _assetsService: AssetsService,
     private readonly _userQuery: UserQuery,
-    private readonly _render: Renderer2
+    private readonly _render: Renderer2,
+    private readonly _router: Router
   ) {}
 
   porfolioSummaryLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -146,5 +148,9 @@ export class DashboardComponent implements OnInit {
   refreshDountChart(event: Event): void {
     this.getDonutChartData();
     this._render.addClass(event.target, 'animation');
+  }
+
+  redirectToMarketList(): void {
+    this._router.navigate(['../pages/market']);
   }
 }

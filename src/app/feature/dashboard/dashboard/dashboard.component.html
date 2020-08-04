@@ -19,16 +19,19 @@
             </coin-market-card>
           </div>
         </div>
-
-        <coin-market-card
-          class="asset-item-card"
-          [class.highlighted-item]="index % 2 !== 0"
-          *ngFor="let asset of assets; let index = index"
-        >
-          <coin-market-card-body>
-            <coin-market-asset-item [data]="asset"></coin-market-asset-item>
-          </coin-market-card-body>
-        </coin-market-card>
+        <ng-container *ngIf="assets && assets.length; else noAssetsTmp">
+          <ng-container *ngFor="let asset of assets; let index = index">
+            <ng-container *ngIf="asset.quantity > 0 || assets.length > 1; else noAssetsTmp">
+              <ng-container *ngIf="asset.quantity > 0">
+                <coin-market-card class="asset-item-card" [class.highlighted-item]="index % 2 !== 0">
+                  <coin-market-card-body>
+                    <coin-market-asset-item [data]="asset"></coin-market-asset-item>
+                  </coin-market-card-body>
+                </coin-market-card>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
       <div class="col-lg-4 col-sm-12">
         <coin-market-card>
@@ -46,7 +49,11 @@
           <coin-market-card>
             <coin-market-card-header>Latest transactions</coin-market-card-header>
             <coin-market-card-body>
-              <coin-market-transactions-list-widget [data]="transactions$ | async"> </coin-market-transactions-list-widget>
+              <ng-container *ngIf="transactions$ | async as transactions">
+                <ng-container *ngIf="transactions && transactions.length; else noTransactionsTmp">
+                  <coin-market-transactions-list-widget [data]="transactions"> </coin-market-transactions-list-widget>
+                </ng-container>
+              </ng-container>
             </coin-market-card-body>
           </coin-market-card>
         </div>
@@ -54,3 +61,22 @@
     </div>
   </ng-template>
 </coin-market-page-loader>
+
+<ng-template #noAssetsTmp>
+  <div class="no-assets-label">
+    Here displays cryptocurrencies which you have bought. <br />
+    You do not have any coins in your wallet at the moment, go to market and make the purchase.
+    <coin-market-bootstrap-badge
+      class="pointer"
+      variation="primary"
+      [emitEventOnClick]="true"
+      (clickEvent)="redirectToMarketList()"
+    >
+      Visit market
+    </coin-market-bootstrap-badge>
+  </div>
+</ng-template>
+
+<ng-template #noTransactionsTmp>
+  Transactions list is empty.
+</ng-template>

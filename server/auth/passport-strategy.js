@@ -3,6 +3,7 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const passport = require('passport');
 const User = require('../data-access/models').User;
+const Ranking = require('../data-access/models').Ranking;
 const bcrypt = require('bcrypt');
 
 passport.use(
@@ -24,7 +25,11 @@ passport.use(
           return done(null, false, { nameDuplication: 'User with given name already exists.' });
         } else {
           req.body.password = await bcrypt.hash(password, 10);
-          await User.create({ email, ...req.body, usd: 50000, lastLogin: new Date().toISOString() });
+          const documnetCount = await Ranking.count();
+          const user = await User.create({ email, ...req.body, usd: 50000, lastLogin: new Date().toISOString() });
+          await addNewUserToRanking(user, documnetCount);
+          console.log(user);
+          console.log('documnetCount', documnetCount);
 
           return done(null, { email, ...req.body, lastLogin: new Date().toISOString(), usd: 50000 });
         }
@@ -80,5 +85,16 @@ passport.use(
     }
   )
 );
+
+async function addNewUserToRanking(user, documnetCount) {
+  await Ranking.create({
+    _id: user._id,
+    email: user.email,
+    name: user.name,
+    totalPortfolioValue: 50000,
+    change: 0,
+    rank: documnetCount + 1,
+  });
+}
 
 module.exports = passport;

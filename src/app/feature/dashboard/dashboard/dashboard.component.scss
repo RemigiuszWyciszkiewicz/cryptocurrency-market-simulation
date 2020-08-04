@@ -1,3 +1,5 @@
+@import 'src/app/utils/styles/variables.scss';
+
 .transaction-list-widget-container {
   margin-top: 2rem;
 }
@@ -58,4 +60,15 @@
   to {
     transform: rotate(-40deg);
   }
+}
+
+.no-assets-label {
+  font-family: $Roboto;
+  line-height: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: rgba(128, 128, 128, 0.541);
+}
+.pointer {
+  cursor: pointer;
 }
