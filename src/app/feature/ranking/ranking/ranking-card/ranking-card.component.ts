@@ -8,4 +8,5 @@ import { Ranking } from '@coin-market/data-access/models';
 })
 export class RankingCardComponent {
   @Input() data: Ranking;
+  @Input() highlighted;
 }

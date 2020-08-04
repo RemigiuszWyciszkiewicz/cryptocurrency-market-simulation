@@ -1,7 +1,8 @@
 <coin-market-page-loader [isLoading]="loading$ | async">
   <ng-template aumsDigitalPageContentTpl>
     <ng-container class="d-flex">
-      <coin-market-ranking-card *ngFor="let item of ranking$ | async" [data]="item"></coin-market-ranking-card>
+      <coin-market-ranking-card *ngFor="let item of ranking$ | async" [data]="item" [highlighted]="userRank === item.rank">
+      </coin-market-ranking-card>
     </ng-container>
   </ng-template>
 </coin-market-page-loader>

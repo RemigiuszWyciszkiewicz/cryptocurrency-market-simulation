@@ -1,4 +1,4 @@
-<coin-market-card class="ranking-card">
+<coin-market-card class="ranking-card" [class.highlighted]="highlighted">
   <coin-market-card-body>
     <div class="d-flex flex-column align-items-center">
       <div class="d-flex flex-column align-items-center">
@@ -11,11 +11,11 @@
         </nb-user>
         <div class="user-rank">{{ data.rank }}</div>
       </div>
+      <div class="user-name" [style.font-weight]="highlighted ? '600' : '500'">{{ data.name }}</div>
       <div class="outcome d-flex">
         <div class="outcome-value mr-2">{{ data.totalPortfolioValue | currency }}</div>
         <div class="outcome-change" [coinMarketPercentageChangeTheme]="data.change">{{ data.change | number: '1.0-0' }}%</div>
       </div>
-      <div class="user-name">{{ data.name }}</div>
     </div>
   </coin-market-card-body>
 </coin-market-card>

@@ -23,6 +23,10 @@ export class UserQuery extends Query<UserState> {
     return this.getValue().user.usd;
   }
 
+  getUserRank(): number {
+    return this.getValue().user.userRank;
+  }
+
   getId(): ID {
     return this.getValue().user._id;
   }
