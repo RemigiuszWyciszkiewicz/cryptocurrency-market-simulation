@@ -1,5 +1,5 @@
-# Launch in development
+# Cryptocurrency market simulation
+## Getting Started
 
-## 1. Run server -> npm run app
-
-## 2. Run front-end -> ng serve
+### These instructions will get you copy of this project and runnning on your local machine for development.
+#### 1. Copy master
