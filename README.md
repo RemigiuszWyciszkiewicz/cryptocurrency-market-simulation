@@ -1,8 +1,8 @@
 # Cryptocurrency market simulation
-## Getting Started
+### Getting Started
 
-### These instructions will get you copy of this project and runnning on your local machine for development.
-####  Install dependencies
+#### These instructions will get you copy of this project and runnning on your local machine for development.
+#####  Install dependencies
 ```
 npm install
 ```
