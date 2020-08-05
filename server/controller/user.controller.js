@@ -1,3 +1,7 @@
+const User = require('../data-access/models').User;
+const Ranking = require('../data-access/models').Ranking;
+const getFixedUser = require('../data-access/utils').getFixedUser;
+
 const tokenValidation = async (req, res, next) => {
   const userId = req.params.userId;
 
@@ -11,5 +15,7 @@ const tokenValidation = async (req, res, next) => {
   }
 };
 
-const resetAccount = async (req, res, next) => {};
+const resetAccount = async (req, res, next) => {
+  res.send('account deleted');
+};
 module.exports = { resetAccount, tokenValidation };

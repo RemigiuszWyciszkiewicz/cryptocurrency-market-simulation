@@ -48,19 +48,6 @@ const passportAuthenticateSignUp = async (req, res, next) => {
   })(req, res, next);
 };
 
-const tokenValidation = async (req, res, next) => {
-  const userId = req.params.userId;
-
-  try {
-    const user = await User.findById(userId);
-    const userRank = await Ranking.find({ _id: user._id }).select({ rank: 1 });
-    res.send({ ...getFixedUser(user), userRank: userRank[0].rank });
-    return next();
-  } catch (error) {
-    res.status(404).send(new ErrorResponse('tokenValidityError', error.message));
-  }
-};
-
 const recapchaTokenValidation = async (req, res, next) => {
   let token = req.body.token;
 
@@ -96,6 +83,5 @@ function getFixedUser(user) {
 module.exports = {
   passportAuthenticateLogin,
   passportAuthenticateSignUp,
-  tokenValidation,
   recapchaTokenValidation,
 };

@@ -24,12 +24,8 @@ app.use('/api/assets', passport.authenticate('jwt', { session: false }), routes.
 app.use('/api/charts', passport.authenticate('jwt', { session: false }), routes.chartsRouter);
 app.use('/api/transactions', passport.authenticate('jwt', { session: false }), routes.transactionsRouter);
 app.use('/api/ranking', passport.authenticate('jwt', { session: false }), routes.rankingRouter);
-app.use('/api/user', routes.authorizationRouter);
-app.use(
-  '/api/user',
-  passport.authenticate('jwt', { session: false }),
-  router.post('/tokenValidation/:userId', authorizationController.tokenValidation)
-);
+app.use('/api/user', passport.authenticate('jwt', { session: false }), routes.userRouter);
+app.use('/api/authorization', routes.authorizationRouter);
 
 // ---- SERVE STATIC FILES ---- //
 app.get('*.*', express.static(_app_folder, { maxAge: '1y' }));

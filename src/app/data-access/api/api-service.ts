@@ -20,7 +20,7 @@ export interface RestService {
 
 export abstract class ApiService implements RestService {
   protected _apiServiceUrl = environment.production
-    ? 'https://cryptocurrencymarketsimulation.herokuapp.com'
+    ? 'https://cryptocurrencymarketsimulation.herokuapp.com/api'
     : 'http://localhost:4100/api';
   protected _httpClient: HttpClient;
   protected _route: string;

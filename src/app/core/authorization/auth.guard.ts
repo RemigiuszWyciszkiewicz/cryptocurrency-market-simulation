@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivateChild, Router } from '@angular/router';
 import { User } from '@coin-market/data-access/models';
-import { UserStore } from '@coin-market/data-access/user';
+import { UserService, UserStore } from '@coin-market/data-access/user';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,6 +13,7 @@ export class AuthGuard implements CanActivateChild {
   constructor(
     private readonly _router: Router,
     private readonly _userStore: UserStore,
+    private readonly _userService: UserService,
     private readonly _authService: AuthService,
     private readonly _tokenStorageService: TokenStorageService
   ) {}
@@ -23,7 +24,7 @@ export class AuthGuard implements CanActivateChild {
     }
 
     if (this._tokenStorageService.getToken()) {
-      return this._authService.checkUserTokenValidity(this._tokenStorageService.getId()).pipe(
+      return this._userService.checkUserTokenValidity(this._tokenStorageService.getId()).pipe(
         map((response: User) => {
           if (response) {
             this._userStore.update({ user: response });
