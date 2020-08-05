@@ -68,9 +68,6 @@ export class ConfirmationModalComponent {
   }
 
   confirm(): void {
-    console.log('action', this.confirmationModalTitleDir);
-    console.log('action', this.confirmationModalContentDir);
-    console.log('action', this.confirmationModalActionBtnDir);
     this._ref.close(true);
   }
 }

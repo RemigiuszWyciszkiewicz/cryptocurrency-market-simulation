@@ -4,6 +4,7 @@ import { UserQuery } from '@coin-market/data-access/user';
 import { ConfirmationModalComponent } from '@coin-market/ui/modal/confirmation-modal/confirmation-modal.component';
 import { NbDialogService } from '@nebular/theme';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-user-profile-widget',
@@ -25,10 +26,11 @@ export class UserProfileWidgetComponent implements OnInit {
       .open(ConfirmationModalComponent, {
         context: {
           action: { buttonText: 'Yes', preventAction: false, buttonType: 'primary' },
-          title: 'Account data reseting',
+          title: 'Account reseting',
           content: 'Are you sure you want to reset you account and restore it to inital state?',
         },
       })
-      .onClose.subscribe(console.log);
+      .onClose.pipe(filter(Boolean))
+      .subscribe(() => {});
   }
 }
