@@ -9,3 +9,10 @@ table tbody td {
   font-weight: 500;
   font-family: $TitilliumWeb;
 }
+.no-data-label {
+  font-family: $Roboto;
+  line-height: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: rgba(128, 128, 128, 0.541);
+}

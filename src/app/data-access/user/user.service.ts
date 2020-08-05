@@ -12,6 +12,10 @@ export class UserService extends ApiService {
   }
 
   checkUserTokenValidity(userId: ID): Observable<User> {
-    return this.post<any>({ test: 'wfafafa' }, 'tokenValidation/' + userId);
+    return this.post<any>({}, 'tokenValidation/' + userId);
+  }
+
+  resetAccount(userId: ID): Observable<User> {
+    return this.put<any>(userId, {}, 'accountReset');
   }
 }

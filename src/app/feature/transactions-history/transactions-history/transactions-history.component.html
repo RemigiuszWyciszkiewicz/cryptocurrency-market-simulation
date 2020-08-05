@@ -1,33 +1,41 @@
 <coin-market-page-loader [isLoading]="loading" [error]="transactionError">
   <ng-template aumsDigitalPageContentTpl>
-    <coin-market-card>
-      <coin-market-card-body>
-        <table class="table">
-          <thead>
-            <tr class="text-center">
-              <th scope="col">Cryptocurrency</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Price</th>
-              <th scope="col">Value</th>
-              <th scope="col">Type</th>
-              <th scope="col">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let coin of transactions$ | async | paginate: { itemsPerPage: 15, currentPage: currentPage }">
-              <td>{{ coin.cryptocurrency | titlecase }}</td>
-              <td>{{ coin.quantity }}</td>
-              <td>{{ coin.price | currency }}</td>
-              <td>{{ coin.value | currency }}</td>
-              <td>{{ coin.type | titlecase }}</td>
-              <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="d-flex justify-content-center align-items-center">
-          <pagination-controls (pageChange)="paginationChange($event)"></pagination-controls>
-        </div>
-      </coin-market-card-body>
-    </coin-market-card>
+    <ng-container *ngIf="transactions$ | async as transactions">
+      <coin-market-card *ngIf="transactions.length; else noDataStatement">
+        <coin-market-card-body>
+          <table class="table">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">Cryptocurrency</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Value</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let coin of transactions | paginate: { itemsPerPage: 15, currentPage: currentPage }">
+                <td>{{ coin.cryptocurrency | titlecase }}</td>
+                <td>{{ coin.quantity }}</td>
+                <td>{{ coin.price | currency }}</td>
+                <td>{{ coin.value | currency }}</td>
+                <td>{{ coin.type | titlecase }}</td>
+                <td>{{ coin.date | date: 'd-MM-yyyy HH:mm' }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center align-items-center">
+            <pagination-controls (pageChange)="paginationChange($event)"></pagination-controls>
+          </div>
+        </coin-market-card-body>
+      </coin-market-card>
+    </ng-container>
   </ng-template>
 </coin-market-page-loader>
+
+<ng-template #noDataStatement>
+  <div class="no-data-label">
+    Transactions list is empty.
+  </div>
+</ng-template>

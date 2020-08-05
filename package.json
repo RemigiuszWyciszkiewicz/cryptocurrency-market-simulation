@@ -47,6 +47,7 @@
     "ng-recaptcha": "^5.0.0",
     "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^13.0.0",
+    "nodemailer": "^6.4.11",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
