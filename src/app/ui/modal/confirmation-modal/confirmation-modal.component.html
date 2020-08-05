@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-header>{{ modalTitle }}</nb-card-header>
+  <nb-card-body>
+    {{ modalContent }}
+  </nb-card-body>
+  <nb-card-footer [class.btn-direction-prevent]="modalActionBtnConfig.preventAction">
+    <button class="btn btn-primary" type="button" (click)="confirm()">
+      {{ modalActionBtnConfig.buttonText }}
+    </button>
+    <button *ngIf="showCancelButton" (click)="dismiss()" class="btn cancel-button" type="button">
+      <ng-container *ngIf="modalCancelBtnConfig; else defaultCancelButtonText">
+        {{ modalCancelBtnConfig.buttonText }}
+      </ng-container>
+      <ng-template #defaultCancelButtonText>Cancel</ng-template>
+    </button>
+  </nb-card-footer>
+</nb-card>

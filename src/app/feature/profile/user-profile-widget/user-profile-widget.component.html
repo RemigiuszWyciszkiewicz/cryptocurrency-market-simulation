@@ -1,6 +1,11 @@
 <nb-card>
-  <nb-card-body>
-    // Name: Email: LastLogin: Country:
-    {{ user$ | async | json }}
+  <nb-card-body *ngIf="user$ | async as user">
+    <div class="user-information">
+      <div class="label">Name</div>
+      <div class="value">{{ user.name }}</div>
+      <div class="label">Email</div>
+      <div class="value">{{ user.email }}</div>
+    </div>
+    <coin-market-button styleElement="danger mt-3" (clickEvent)="resetAccount()" text="Reset account"> </coin-market-button>
   </nb-card-body>
 </nb-card>
