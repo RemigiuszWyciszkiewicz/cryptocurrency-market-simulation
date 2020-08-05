@@ -9,12 +9,11 @@ import {
 } from '@coin-market/data-access/cryptocurrencies';
 import { Asset, AssetDictionary } from '@coin-market/data-access/models';
 import { Cryptocurrency } from '@coin-market/data-access/models/cryptocurrency';
-import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
-import { UserQuery, UserStore } from '@coin-market/data-access/user';
+import { TransactionsService } from '@coin-market/data-access/transactions';
+import { UserQuery } from '@coin-market/data-access/user';
 import { ToastrService } from '@coin-market/ui/toastr';
-import { NbDialogService } from '@nebular/theme';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-market',
@@ -23,22 +22,18 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class MarketComponent implements OnInit {
   constructor(
-    private readonly _assetsService: AssetsService,
-    private readonly _userQuery: UserQuery,
     private readonly _router: Router,
-    private readonly _userStore: UserStore,
+    private readonly _userQuery: UserQuery,
+    private readonly _assetsService: AssetsService,
     private readonly _toastrService: ToastrService,
     private readonly _activatedRoute: ActivatedRoute,
-    private readonly _nbDialogService: NbDialogService,
     private readonly _transactionService: TransactionsService,
-    private readonly _transactionStore: TransactionStore,
-    private readonly _transactionsQuery: TransactionsQuery,
     private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
     private readonly _cryptocurrenciesQuery: CryptocurrenciesQuery,
     private readonly _cryptocurrenciesService: CryptocurrenciesService
   ) {}
 
-  isLoading = this._cryptocurrenciesQuery.selectLoading();
+  loading = false;
 
   serverError: HttpErrorResponse;
 
@@ -46,12 +41,11 @@ export class MarketComponent implements OnInit {
   assets: AssetDictionary;
 
   ngOnInit(): void {
-    console.log('does has entity ', this._cryptocurrenciesQuery.hasEntity());
     if (!this._cryptocurrenciesQuery.hasEntity()) {
-      this.fetchAllCryptocurrencies();
+      this.fetchCryptocurrencies();
     }
 
-    this.fetchAllAssets();
+    this.fetchAssets();
   }
 
   buy(coin: Cryptocurrency): void {
@@ -62,7 +56,8 @@ export class MarketComponent implements OnInit {
     this._transactionService.sell(coin, this.assets[coin.id]);
   }
 
-  fetchAllCryptocurrencies(): void {
+  fetchCryptocurrencies(): void {
+    this.loading = true;
     this._cryptocurrenciesService
       .getCryptocurrenciesList()
       .pipe(
@@ -73,12 +68,15 @@ export class MarketComponent implements OnInit {
           this.serverError = error;
           this._toastrService.error('ERROR: ' + error.error.message);
           return of(error);
+        }),
+        finalize(() => {
+          this.loading = false;
         })
       )
       .subscribe();
   }
 
-  fetchAllAssets(): void {
+  fetchAssets(): void {
     this._assetsService
       .getAllAssets(this._userQuery.getId())
       .pipe(

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
@@ -16,6 +17,10 @@ import { catchError, finalize, map, tap } from 'rxjs/operators';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  get httpErrorResponse(): HttpErrorResponse {
+    return this.assetsError || this.transactionsError || this.userRankingInformationError || this.porfolioSummaryError;
+  }
+
   constructor(
     private readonly _transactionsService: TransactionsService,
     private readonly _transactionsStore: TransactionStore,
@@ -33,6 +38,11 @@ export class DashboardComponent implements OnInit {
   assetsLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   userRankingInformationLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   transactionsLoading$: Observable<boolean> = this._transactionsQuery.selectLoading();
+
+  porfolioSummaryError: HttpErrorResponse;
+  userRankingInformationError: HttpErrorResponse;
+  transactionsError: HttpErrorResponse;
+  assetsError: HttpErrorResponse;
 
   pageLoading$: Observable<boolean> = combineLatest([
     this.porfolioSummaryLoading$,
@@ -52,14 +62,14 @@ export class DashboardComponent implements OnInit {
   assets: Asset[];
 
   ngOnInit(): void {
-    this.getDonutChartData();
-    this.getTransactionsListWidgetData();
-    this.getPortfolioSummary();
-    this.getUserRankingInformation();
-    this.getAssets();
+    this.fetchDonutChartData();
+    this.fetchTransactionsListWidgetData();
+    this.fetchPortfolioSummary();
+    this.fetchUserRankingInformation();
+    this.fetchAssets();
   }
 
-  getDonutChartData(): void {
+  fetchDonutChartData(): void {
     combineLatest([this._chartsService.getDonutChartData(this._userQuery.getId()), this._userQuery.selectUSD()])
       .pipe(
         map((value) => ({ labels: [...value[0].labels, 'USD'], values: [...value[0].values, value[1]] })),
@@ -70,7 +80,7 @@ export class DashboardComponent implements OnInit {
       .subscribe();
   }
 
-  getTransactionsListWidgetData(): void {
+  fetchTransactionsListWidgetData(): void {
     this._transactionsService
       .getTransactions(this._userQuery.getId(), 15)
       .pipe(
@@ -80,13 +90,14 @@ export class DashboardComponent implements OnInit {
           }
         }),
         catchError((error) => {
+          this.transactionsError = error;
           return of(error);
         })
       )
       .subscribe();
   }
 
-  getPortfolioSummary(): void {
+  fetchPortfolioSummary(): void {
     this._assetsService
       .getPortforioSummary(this._userQuery.getId())
       .pipe(
@@ -94,6 +105,7 @@ export class DashboardComponent implements OnInit {
           this.portfolioSummary = value;
         }),
         catchError((error) => {
+          this.porfolioSummaryError = error;
           return of(error);
         }),
         finalize(() => {
@@ -103,44 +115,48 @@ export class DashboardComponent implements OnInit {
       .subscribe();
   }
 
-  getAssets(): void {
+  fetchAssets(): void {
     this._assetsService
       .getAllAssets(this._userQuery.getId())
       .pipe(
         tap((value: Asset[]) => {
           console.log('fetched assets', value);
           this.assets = value;
-          this.assetsLoading$.next(false);
         }),
         catchError((error) => {
           console.log('', error);
+          this.assetsError = error;
           return of(error);
         }),
         finalize(() => {
-          console.log('assets finalinze');
+          this.assetsLoading$.next(false);
         })
       )
       .subscribe();
   }
 
-  getUserRankingInformation(): void {
+  fetchUserRankingInformation(): void {
     this._rankingService
       .getUserRankingInformation(this._userQuery.getId())
       .pipe(
         tap((value: UserRankingInformaton) => {
           this.userRankingInformation = value;
-          this.userRankingInformationLoading$.next(false);
+
           this._userStore.update((state) => ({ user: { ...state.user, userRank: value.rank } }));
         }),
         catchError((error) => {
+          this.porfolioSummaryError = error;
           return of(error);
+        }),
+        finalize(() => {
+          this.userRankingInformationLoading$.next(false);
         })
       )
       .subscribe();
   }
 
   refreshDountChart(event: Event): void {
-    this.getDonutChartData();
+    this.fetchDonutChartData();
     this._render.addClass(event.target, 'animation');
   }
 

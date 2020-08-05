@@ -1,4 +1,4 @@
-<coin-market-page-loader [isLoading]="pageLoading$ | async">
+<coin-market-page-loader [isLoading]="pageLoading$ | async" [error]="httpErrorResponse">
   <ng-template aumsDigitalPageContentTpl>
     <div class="row">
       <div class="col-lg-8 col-sm-12">

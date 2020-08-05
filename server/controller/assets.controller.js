@@ -43,7 +43,7 @@ const getAll = async (req, res, next) => {
         },
       ];
     }, []);
-
+    console.log('assets has been fetched, results:', result.length);
     res.send(result);
     return next();
   } catch (error) {

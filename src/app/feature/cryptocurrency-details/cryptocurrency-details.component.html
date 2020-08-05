@@ -6,7 +6,10 @@
 </div>
 <div class="row">
   <div class="col-lg-8">
-    <coin-market-cryptocurrency-details-chart *ngIf="!linearChartLoading" [data]="cryptocurrencyDetailsLinearChartData">
+    <coin-market-cryptocurrency-details-chart
+      *ngIf="(linearChartLoading$ | async) === false"
+      [data]="cryptocurrencyDetailsLinearChartData"
+    >
     </coin-market-cryptocurrency-details-chart>
   </div>
   <div class="col-lg-4 col-sm-12">

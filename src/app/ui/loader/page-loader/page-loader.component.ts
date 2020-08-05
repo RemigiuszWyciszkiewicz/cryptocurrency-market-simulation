@@ -10,9 +10,7 @@ import { PageContentTplDirective, PageErrorTplDirective, PageLoaderTplDirective 
 })
 export class PageLoaderComponent {
   @Input() isLoading: boolean;
-
   @Input() error: HttpErrorResponse;
-
   @Input() disableLabel = false;
 
   @ContentChild(PageContentTplDirective, { static: true }) pageContentTpl: PageContentTplDirective;

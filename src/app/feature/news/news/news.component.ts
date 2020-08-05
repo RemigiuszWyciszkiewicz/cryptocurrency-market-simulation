@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CryptocurrenciesService } from '@coin-market/data-access/cryptocurrencies';
 import { News } from '@coin-market/data-access/models';
-import { finalize, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-news',
@@ -10,19 +12,26 @@ import { finalize, tap } from 'rxjs/operators';
 })
 export class NewsComponent implements OnInit {
   news: News[];
-  pageLoading = true;
+  loading = false;
+
+  error: HttpErrorResponse;
 
   constructor(private readonly _cryptocurrenciesService: CryptocurrenciesService) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this._cryptocurrenciesService
       .getCryptocurrencyNews('', 32)
       .pipe(
         tap((value) => {
           this.news = value;
         }),
+        catchError((error) => {
+          this.error = error;
+          return of(error);
+        }),
         finalize(() => {
-          this.pageLoading = false;
+          this.loading = false;
         })
       )
       .subscribe();

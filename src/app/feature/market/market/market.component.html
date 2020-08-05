@@ -1,4 +1,4 @@
-<coin-market-page-loader [isLoading]="isLoading | async" [error]="serverError">
+<coin-market-page-loader [isLoading]="loading" [error]="serverError">
   <ng-template aumsDigitalPageContentTpl>
     <coin-market-card>
       <coin-market-card-body>
@@ -11,7 +11,6 @@
               <th scope="col">Market Cap</th>
               <th scope="col">Price</th>
               <th scope="col">Change 24h</th>
-
               <th scope="col"></th>
             </tr>
           </thead>

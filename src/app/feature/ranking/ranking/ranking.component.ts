@@ -23,6 +23,7 @@ export class RankingComponent implements OnInit {
   ) {}
   ranking$: Observable<Ranking[]> = this._rankingQuery.selectAll();
   loading$: Observable<boolean> = this._rankingQuery.selectLoading();
+
   ngOnInit(): void {
     if (!this._rankingQuery.hasEntity()) {
       this.fetchRanking();

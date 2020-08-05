@@ -3,10 +3,7 @@
 <div class="error-container mt-5 d-flex flex-column align-items-center">
   <div class="header mb-5" *ngIf="header">{{ header }}</div>
   <div class="error-content mb-5 d-flex flex-column align-items-center">
-    <div
-      class="description text-uppercase mb-3"
-      *ngIf="!status; else statusWithMessage"
-    >
+    <div class="description text-uppercase mb-3" *ngIf="!status; else statusWithMessage">
       {{ message }}
     </div>
     <div class="hint" *ngIf="hint">
@@ -18,7 +15,7 @@
       {{ backLinkLabel }}
     </ng-container>
     <ng-template #defaultBackButtonLabel>
-      Wróć na stronę główną
+      Back to main page.
     </ng-template>
   </a>
 </div>

@@ -1,10 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
 import { CryptocurrenciesService } from '@coin-market/data-access/cryptocurrencies';
 import { CryptocurrencyDetails, News } from '@coin-market/data-access/models';
 import { ID } from '@datorama/akita';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-cryptocurrency-details',
@@ -19,7 +21,12 @@ export class CryptocurrencyDetailsComponent implements OnInit {
   cryptocurrencyDetails: CryptocurrencyDetails;
   news: News[];
   cryptocurrencyDetailsLinearChartData: number[][];
-  linearChartLoading = true;
+
+  linearChartLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+  linearChartError: HttpErrorResponse;
+  cryptocurrencyDetailsError: HttpErrorResponse;
+  newsError: HttpErrorResponse;
 
   constructor(
     private readonly _cryprocurrenciesService: CryptocurrenciesService,
@@ -28,21 +35,42 @@ export class CryptocurrencyDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getNews();
-    this._cryprocurrenciesService.getCryptocurrencyDetails(this.id).subscribe((value: CryptocurrencyDetails) => {
-      this.cryptocurrencyDetails = value;
-    });
-
-    this._chartsService
-      .getLinearChartData(this.id)
-      .pipe(map(this.compressArray))
-      .subscribe((value) => {
-        this.cryptocurrencyDetailsLinearChartData = value;
-        this.linearChartLoading = false;
-      });
+    this.fetchNews();
+    this.fetchCryptocurrencyDetails();
+    this.fetchLinearChartData();
   }
 
-  getNews(): void {
+  fetchLinearChartData(): void {
+    this._chartsService
+      .getLinearChartData(this.id)
+      .pipe(
+        map(this.compressArray),
+        tap((value) => {
+          this.cryptocurrencyDetailsLinearChartData = value;
+        }),
+        finalize(() => {
+          this.linearChartLoading$.next(false);
+        })
+      )
+      .subscribe();
+  }
+
+  fetchCryptocurrencyDetails(): void {
+    this._cryprocurrenciesService
+      .getCryptocurrencyDetails(this.id)
+      .pipe(
+        tap((value: CryptocurrencyDetails) => {
+          this.cryptocurrencyDetails = value;
+        }),
+        catchError((error) => {
+          this.cryptocurrencyDetailsError = error;
+          return of(error);
+        })
+      )
+      .subscribe();
+  }
+
+  fetchNews(): void {
     this._cryprocurrenciesService
       .getCryptocurrencyNews(this.id, 12)
       .pipe(

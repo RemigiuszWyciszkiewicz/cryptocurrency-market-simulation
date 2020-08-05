@@ -4,7 +4,7 @@ import { Transaction } from '@coin-market/data-access/models';
 import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery } from '@coin-market/data-access/user';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'coin-market-transactions-history',
@@ -13,9 +13,9 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class TransactionsHistoryComponent implements OnInit {
   transactions$: Observable<Transaction[]> = this._transactionQuery.selectAll();
-  loading$: Observable<boolean>;
+  loading = false;
 
-  getTransactionsError: HttpErrorResponse;
+  transactionError: HttpErrorResponse;
 
   constructor(
     private readonly _transactionService: TransactionsService,
@@ -32,6 +32,7 @@ export class TransactionsHistoryComponent implements OnInit {
   }
 
   fetchTransactions(): void {
+    this.loading = true;
     this._transactionService
       .getTransactions(this._userQuery.getId(), 15)
       .pipe(
@@ -40,8 +41,11 @@ export class TransactionsHistoryComponent implements OnInit {
         }),
 
         catchError((error: HttpErrorResponse) => {
-          this.getTransactionsError = error;
+          this.transactionError = error;
           return of(error);
+        }),
+        finalize(() => {
+          this.loading = false;
         })
       )
       .subscribe();

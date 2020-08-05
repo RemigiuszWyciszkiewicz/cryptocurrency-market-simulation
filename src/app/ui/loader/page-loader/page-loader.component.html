@@ -12,8 +12,10 @@
 
     <ng-template #defaultPageLoaderTpl>
       <div class="loader-container mx-auto">
-        <ng-container *ngIf="!disableLabel; else withoutLabel">
-          <coin-market-spinner class="default-loader" message="Loading..."> </coin-market-spinner>
+        <ng-container *ngIf="!error">
+          <ng-container *ngIf="!disableLabel; else withoutLabel">
+            <coin-market-spinner class="default-loader" message="Loading..."> </coin-market-spinner>
+          </ng-container>
         </ng-container>
       </div>
     </ng-template>
