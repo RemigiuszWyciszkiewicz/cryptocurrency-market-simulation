@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { EndpointUrlBuilder } from './api-url-builder';
 
@@ -18,7 +19,9 @@ export interface RestService {
 }
 
 export abstract class ApiService implements RestService {
-  protected _apiServiceUrl = 'http://localhost:4100/api';
+  protected _apiServiceUrl = environment.production
+    ? 'https://cryptocurrencymarketsimulation.herokuapp.com'
+    : 'http://localhost:4100/api';
   protected _httpClient: HttpClient;
   protected _route: string;
 
