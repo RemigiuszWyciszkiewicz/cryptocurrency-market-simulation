@@ -1,0 +1,11 @@
+@import 'src/app/utils/styles/variables.scss';
+
+table thead tr th {
+  border-top: 0;
+  font-family: $Roboto;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-family: $TitilliumWeb;
+}

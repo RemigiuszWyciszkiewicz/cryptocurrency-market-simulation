@@ -1,7 +1,12 @@
 <div [formGroup]="formGroup">
   <coin-market-input label="Email" placeholder="Email" formControlName="email"></coin-market-input>
-  <coin-market-input label="Password" placeholder="Password" formControlName="password"></coin-market-input>
-  <coin-market-input label="Password confirmation" placeholder="Password confirmation" formControlName="passwordConfirmation">
+  <coin-market-input label="Password" placeholder="Password" formControlName="password" type="password"></coin-market-input>
+  <coin-market-input
+    label="Password confirmation"
+    placeholder="Password confirmation"
+    formControlName="passwordConfirmation"
+    type="password"
+  >
   </coin-market-input>
   <coin-market-input label="Name" placeholder="Name" formControlName="name"></coin-market-input>
   <div class="mt-3 d-flex justify-content-between">

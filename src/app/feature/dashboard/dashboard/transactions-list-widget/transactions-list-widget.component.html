@@ -12,7 +12,7 @@
     <tr *ngFor="let coin of data">
       <td>{{ coin.cryptocurrency | titlecase }}</td>
       <td>{{ coin.quantity }}</td>
-      <td>{{ coin.price | number }}</td>
+      <td>{{ coin.price | currency }}</td>
       <td>{{ coin.value | number }}</td>
       <td>{{ coin.type | titlecase }}</td>
     </tr>

@@ -14,7 +14,7 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 export class TransactionsHistoryComponent implements OnInit {
   transactions$: Observable<Transaction[]> = this._transactionQuery.selectAll();
   loading = false;
-
+  currentPage = 1;
   transactionError: HttpErrorResponse;
 
   constructor(
@@ -34,7 +34,7 @@ export class TransactionsHistoryComponent implements OnInit {
   fetchTransactions(): void {
     this.loading = true;
     this._transactionService
-      .getTransactions(this._userQuery.getId(), 15)
+      .getTransactions(this._userQuery.getId(), 300)
       .pipe(
         tap((value: Transaction[]) => {
           this._transactionStore.set(value);
@@ -49,5 +49,9 @@ export class TransactionsHistoryComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  paginationChange(event: number): void {
+    this.currentPage = event;
   }
 }
