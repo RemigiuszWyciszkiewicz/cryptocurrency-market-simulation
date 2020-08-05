@@ -1,5 +1,6 @@
 const User = require('../data-access/models').User;
 const Ranking = require('../data-access/models').Ranking;
+const Transaction = require('../data-access/models').Transaction;
 const getFixedUser = require('../data-access/utils').getFixedUser;
 
 const tokenValidation = async (req, res, next) => {

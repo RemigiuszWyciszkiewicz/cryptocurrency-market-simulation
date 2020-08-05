@@ -25,6 +25,7 @@ const getPortfolioSummaryData = async (req, res, next) => {
 };
 
 const getAll = async (req, res, next) => {
+  console.log('get all');
   try {
     const userId = req.params.userId;
     const cryptoMap = await cryptocurennciesService.getCryptocurrenciesPriceMap();

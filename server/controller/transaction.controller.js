@@ -1,6 +1,6 @@
-const { User, Transaction } = require('../data-access/models');
+const { Transaction } = require('../data-access/models');
 const { ErrorResponse } = require('../data-access');
-const assetsService = require('../services').assetsService;
+
 const transactionService = require('../services').transactionService;
 
 const getList = async (req, res, next) => {

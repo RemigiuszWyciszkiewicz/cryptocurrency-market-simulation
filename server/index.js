@@ -37,10 +37,9 @@ app.all('*', function (req, res) {
 
 startGenerateRanking(3600000);
 
-// app.use(function (err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.json({ error: err });
-// });
+app.use(function (err, req, res, next) {
+  console.log(err);
+});
 
 // ---- START UP THE NODE SERVER  ----
 app.listen(PORT, function () {
