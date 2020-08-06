@@ -6,9 +6,6 @@ const bodyParser = require('body-parser');
 const routes = require('./routers');
 const _app_folder = 'server/dist/my-dream-app';
 const passport = require('./auth').passport;
-const { Router } = require('express');
-const authorizationController = require('./controller').authorizationController;
-const router = Router();
 const { startGenerateRanking } = require('./services').rankingService;
 
 let PORT = process.env.PORT || 4100;
@@ -45,3 +42,4 @@ app.use(function (err, req, res, next) {
 app.listen(PORT, function () {
   console.log('Node Express server for ' + app.name + ' listening on http://localhost:' + PORT);
 });
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
