@@ -28,8 +28,6 @@ passport.use(
           const documnetCount = await Ranking.count();
           const user = await User.create({ email, ...req.body, usd: 50000, lastLogin: new Date().toISOString() });
           await addNewUserToRanking(user, documnetCount);
-          console.log(user);
-          console.log('documnetCount', documnetCount);
 
           return done(null, { email, ...req.body, lastLogin: new Date().toISOString(), usd: 50000 });
         }
