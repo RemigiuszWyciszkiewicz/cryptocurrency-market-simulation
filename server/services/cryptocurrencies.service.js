@@ -7,10 +7,10 @@ const getAllCryptocurrencies = async (sparkline, symbols) => {
 
   for (const crypto of cryptoList) {
     crypto.image = CRYPTO_ICONS[crypto.id];
-    if (sparkline) {
-      const results = await cryptoApi.getLineChartData(crypto.id, 1);
-      crypto.sparkLineData = compressArray(results.data.prices);
-    }
+    // if (sparkline) {
+    //   const results = await cryptoApi.getLineChartData(crypto.id, 1);
+    //   crypto.sparkLineData = compressArray(results.data.prices);
+    // }
   }
 
   return cryptoList;
