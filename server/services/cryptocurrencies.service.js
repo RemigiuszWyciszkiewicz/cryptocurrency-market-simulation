@@ -1,4 +1,5 @@
 const cryptoApi = require('../cryptocurrency-clients').coingeckoApi;
+const cryptocompareApi = require('../cryptocurrency-clients').cryptocompareApi;
 const CRYPTO_ICONS = require('../cryptocurrency-clients/').CRYPTO_ICONS;
 
 const getAllCryptocurrencies = async (sparkline, symbols) => {
@@ -7,14 +8,25 @@ const getAllCryptocurrencies = async (sparkline, symbols) => {
 
   for (const crypto of cryptoList) {
     crypto.image = CRYPTO_ICONS[crypto.id];
-    // if (sparkline) {
-    //   const results = await cryptoApi.getLineChartData(crypto.id, 1);
-    //   crypto.sparkLineData = compressArray(results.data.prices);
-    // }
+
+    if (sparkline) {
+      let id = cryptocompareApi.CRYPTOCOMPARE_ID_MAP[crypto.id];
+      id === 'XML' ? (id = 'BTC') : null;
+      const result = await cryptocompareApi.getSparkLine(id);
+
+      crypto.sparkLineData = mapToSparkLineArray(result.data);
+    }
   }
 
   return cryptoList;
 };
+
+function mapToSparkLineArray(data) {
+  console.log(data.Data.Data);
+  return data.Data.Data.map((value) => {
+    return [value.time, value.open];
+  });
+}
 
 const getCryptocurrenciesPriceMap = async (symbols) => {
   const result = await getAllCryptocurrencies(false, symbols);

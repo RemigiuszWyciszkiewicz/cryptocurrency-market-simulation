@@ -13,7 +13,7 @@ export class UserFormBuilder extends BaseFormBuilder {
   createLoginForm(): BaseFormBuilder {
     this._form = this._formBuilder.group({
       password: ['test123', Validators.required],
-      email: ['remik@remik.pl', [Validators.required, Validators.email]],
+      email: ['john.doe@example.pl', [Validators.required, Validators.email]],
       recaptcha: [''],
     });
     return this;

@@ -27,4 +27,8 @@ const getNews = async (id) => {
   });
 };
 
-module.exports.getNews = getNews;
+const getSparkLine = async (id) => {
+  return await axios.get(`https://min-api.cryptocompare.com/data/v2/histohour?fsym=${id}&tsym=USD&limit=12`);
+};
+
+module.exports = { getNews, getSparkLine, CRYPTOCOMPARE_ID_MAP };
