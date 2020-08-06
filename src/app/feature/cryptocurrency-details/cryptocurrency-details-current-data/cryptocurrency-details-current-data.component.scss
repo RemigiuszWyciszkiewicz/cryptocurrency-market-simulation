@@ -52,7 +52,7 @@
   &-label {
     font-family: $TitilliumWeb;
     font-size: 1.3rem;
-    color: #ff9500;
+    color: rgb(255, 149, 0);
   }
   &-text {
     font-family: Arial, Helvetica, sans-serif;
@@ -64,7 +64,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.6rem;
-  background-color: #ff9500;
+  background-color: rgb(255, 149, 0);
   padding: 0.3rem;
   border-radius: 4%;
   width: 8.5rem;
@@ -84,9 +84,9 @@
 
 a {
   text-decoration: none;
-  color: white;
+  color: rgb(255, 255, 255);
   &:hover {
-    color: black;
+    color: rgb(0, 0, 0);
   }
 }
 
@@ -97,4 +97,10 @@ a {
 .change-value {
   margin-bottom: 1rem;
   font-family: $Roboto;
+}
+
+.section-box {
+  @media (max-width: 650px) {
+    width: 50%;
+  }
 }

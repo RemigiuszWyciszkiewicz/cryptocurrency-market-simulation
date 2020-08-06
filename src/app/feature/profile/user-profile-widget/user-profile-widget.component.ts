@@ -3,6 +3,7 @@ import { User } from '@coin-market/data-access/models';
 import { TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery, UserService, UserStore } from '@coin-market/data-access/user';
 import { ConfirmationModalComponent } from '@coin-market/ui/modal/confirmation-modal/confirmation-modal.component';
+import { ToastrService } from '@coin-market/ui/toastr';
 import { NbDialogService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
@@ -20,6 +21,7 @@ export class UserProfileWidgetComponent implements OnInit {
     private readonly _userQuery: UserQuery,
     private readonly _userStore: UserStore,
     private readonly _userService: UserService,
+    private readonly _toastrService: ToastrService,
     private readonly _dialogService: NbDialogService,
     private readonly _transactionStore: TransactionStore
   ) {}
@@ -43,6 +45,7 @@ export class UserProfileWidgetComponent implements OnInit {
       )
       .subscribe((value) => {
         this._userStore.update((state) => ({ user: { ...state.user, usd: value.usd } }));
+        this._toastrService.success('Account has been reseted.');
         this._transactionStore.reset();
       });
   }

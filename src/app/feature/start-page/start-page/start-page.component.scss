@@ -4,8 +4,8 @@
   bottom: 0;
   font-size: 0.7rem;
   font-weight: 600;
-  color: white;
-  background-color: #000000b3;
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.702);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,12 +93,12 @@
   }
 
   .card-header {
-    color: white;
+    color: rgb(255, 255, 255);
     width: 14.5rem;
     padding: 0.2rem 0.3rem 0.2rem 0.3rem;
     font-weight: 600;
     font-size: 1.4rem;
-    background-color: #ff9500;
+    background-color: rgb(255, 149, 0);
     text-align: center;
     border-radius: 2%;
     font-family: 'Titillium Web';
@@ -107,7 +107,7 @@
   .text {
     font-family: 'Titillium Web';
     width: 14.5rem;
-    background-color: #ffffff29;
+    background-color: rgba(255, 255, 255, 0.161);
     border-bottom-left-radius: 2%;
     border-bottom-right-radius: 2%;
     padding: 0.7rem;
@@ -115,9 +115,9 @@
 }
 
 .supported-coin-section {
-  color: white;
+  color: rgb(255, 255, 255);
   width: 95%;
-  background-color: #ffffff29;
+  background-color: rgba(255, 255, 255, 0.161);
 
   min-height: 10rem;
   padding-bottom: 2rem;

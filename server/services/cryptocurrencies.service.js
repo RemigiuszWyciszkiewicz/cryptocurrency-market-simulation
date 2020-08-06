@@ -22,7 +22,6 @@ const getAllCryptocurrencies = async (sparkline, symbols) => {
 };
 
 function mapToSparkLineArray(data) {
-  console.log(data.Data.Data);
   return data.Data.Data.map((value) => {
     return [value.time, value.open];
   });

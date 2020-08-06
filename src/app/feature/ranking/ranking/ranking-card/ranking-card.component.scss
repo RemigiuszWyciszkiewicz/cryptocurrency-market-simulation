@@ -14,8 +14,13 @@
     nb-card {
       border-radius: 8px;
       width: 13rem;
-      height: 237px;
+      height: 15rem;
       display: inline-block;
+
+      @media (max-width: 650px) {
+        width: 11rem;
+        height: 13rem;
+      }
     }
   }
   margin-left: 2rem;
