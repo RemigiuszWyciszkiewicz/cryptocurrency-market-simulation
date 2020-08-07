@@ -15,7 +15,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 8rem;
 
   @media (max-width: 650px) {
-    grid-template-columns: 1fr 1.2fr 1.2fr 0.9fr 1fr;
+    grid-template-columns: 1fr 1fr 1.2fr 0.9fr 1.2fr;
   }
 
   justify-items: center;
@@ -30,6 +30,11 @@
 
 .grid-cell {
   justify-self: start;
+
+  @media (max-width: 650px) {
+    display: flex;
+    flex-direction: column;
+  }
 
   &-value {
     font-size: 1.2rem;
@@ -57,4 +62,8 @@
 }
 .redirect-link {
   cursor: pointer;
+  &:hover {
+    color: rgb(51, 102, 255);
+    text-decoration: underline;
+  }
 }

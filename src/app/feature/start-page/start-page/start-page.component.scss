@@ -4,20 +4,6 @@
   }
 }
 
-.footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: rgb(255, 255, 255);
-  background-color: rgba(0, 0, 0, 0.702);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.6rem;
-}
-
 .create-account-info {
   margin-bottom: 1rem;
   height: 4rem;
@@ -51,11 +37,11 @@
   background-repeat: repeat;
   background-size: cover;
   height: 100%;
-  @media (max-width: 830px) {
-    height: 92rem;
-  }
-  @media (max-width: 1500px) {
-    height: 123%;
+  // @media (max-width: 830px) {
+  //   height: 92rem;
+  // }
+  @media (max-width: 650px) {
+    height: 85rem;
   }
 
   .background {
@@ -72,8 +58,8 @@
     .header-section-1 {
       color: white;
 
-      @media (min-width: 650px) {
-        margin-top: 1.5rem;
+      @media (max-width: 650px) {
+        font-size: 2.5rem;
       }
       text-align: center;
       font-weight: 600;
@@ -85,6 +71,11 @@
       text-align: center;
       font-weight: 300;
       font-size: 2.8rem;
+
+      @media (max-width: 650px) {
+        margin-top: -1rem;
+        font-size: 2.35rem;
+      }
     }
   }
 }
@@ -139,6 +130,11 @@
   &-list-item {
     margin-top: 1rem;
     margin-left: 1rem;
+  }
+  &-list-item-icon {
+    @media (max-width: 650px) {
+      width: 1.5rem;
+    }
   }
 }
 

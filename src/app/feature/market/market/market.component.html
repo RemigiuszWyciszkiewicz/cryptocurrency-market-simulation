@@ -18,7 +18,9 @@
             <tr *ngFor="let coin of cryptocurrencies$ | async">
               <td class="symbol-name-container" style="width: 14%;">
                 <a (click)="redirectToDetails(coin)">
-                  <img [src]="coin.image" alt="coin_icon" class="mr-2" width="16" />{{ coin.name }}
+                  <img [src]="coin.image" alt="coin_icon" class="mr-2" width="16" /><span>
+                    {{ coin.name }}
+                  </span>
                 </a>
               </td>
               <td style="width: 14%;">{{ coin.symbol | uppercase }}</td>
@@ -29,7 +31,7 @@
               <td style="width: 14%;">{{ coin.current_price | currency }}</td>
               <td style="width: 14%;">
                 <div class="d-flex justify-content-around">
-                  <span [coinMarketPercentageChangeTheme]="coin.price_change_percentage_24h">
+                  <span class="mr-1" [coinMarketPercentageChangeTheme]="coin.price_change_percentage_24h">
                     {{ coin.price_change_percentage_24h | number: '1.0-0' }}%
                   </span>
                   <coin-market-sparkline-chart
@@ -44,6 +46,7 @@
                     Buy
                   </coin-market-bootstrap-badge>
                   <coin-market-bootstrap-badge
+                    class="ml-1"
                     *ngIf="assets && assets[coin.id] && assets[coin.id].quantity > 0"
                     [variation]="'warning'"
                     [emitEventOnClick]="true"

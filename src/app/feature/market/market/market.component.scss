@@ -33,4 +33,14 @@ table tbody td {
 
 .symbol-name-container {
   cursor: pointer;
+  &:hover {
+    color: rgb(51, 102, 255);
+    text-decoration: underline;
+  }
+  @media (max-width: 650px) {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import {
   CryptocurrenciesQuery,
@@ -7,6 +7,7 @@ import {
 } from '@coin-market/data-access/cryptocurrencies';
 import { UserMenuOption } from '@coin-market/ui/header';
 import { NbIconLibraries, NbMenuBag, NbMenuService } from '@nebular/theme';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AuthService } from './core/authorization';
@@ -17,7 +18,7 @@ declare let gtag: Function;
   selector: 'coin-market',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private readonly _cryptocurrenciesService: CryptocurrenciesService,
     private readonly _cryptocurrenciesStore: CryptocurrenciesStore,
@@ -31,14 +32,22 @@ export class AppComponent implements OnInit {
     this._iconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa', packClass: 'fa' });
   }
 
+  menuEventSubscription: Subscription;
+  routerEventSubscription: Subscription;
+
   ngOnInit(): void {
     this.initializeGoogleAnalyticsTrackling();
     this.fetchCryptocurrencies();
     this.startListeningOnLogoutAction();
   }
 
+  ngOnDestroy(): void {
+    this.menuEventSubscription.unsubscribe();
+    this.routerEventSubscription.unsubscribe();
+  }
+
   startListeningOnLogoutAction(): void {
-    this._nbMenuService
+    this.menuEventSubscription = this._nbMenuService
       .onItemClick()
       .pipe(filter(this.filterUserMenuEvents))
       .subscribe(() => {
@@ -60,7 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   initializeGoogleAnalyticsTrackling(): void {
-    this._router.events.subscribe((event) => {
+    this.routerEventSubscription = this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         gtag('config', 'UA-174901242-1', {
           page_path: event.urlAfterRedirects,

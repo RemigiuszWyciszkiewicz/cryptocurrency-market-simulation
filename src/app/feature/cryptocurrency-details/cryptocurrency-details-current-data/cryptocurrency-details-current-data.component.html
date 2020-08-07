@@ -8,12 +8,16 @@
             <span class="name ml-3">{{ data.name }} </span> <span class="symbol">({{ data.symbol | uppercase }})</span>
           </div>
           <div class="d-flex justify-content-center mt-2">
-            <span class="current-price-label"> Price: </span>
-            <span class="current-price-value"> {{ data.current_price | currency }}</span>
-            <span class="market-cap-label"> Capitalization: </span>
-            <span class="market-cap-value"> {{ data.market_cap | currency }}</span>
-            &nbsp;
-            <span class="market-cap-rank"> ({{ data.market_cap_rank }})</span>
+            <div>
+              <span class="current-price-label"> Price: </span>
+              <span class="current-price-value"> {{ data.current_price | currency }}</span>
+            </div>
+            <div>
+              <span class="market-cap-label"> Capitalization: </span>
+              <span class="market-cap-value"> {{ data.market_cap | currency }}</span>
+              &nbsp;
+              <span class="market-cap-rank"> ({{ data.market_cap_rank }})</span>
+            </div>
           </div>
         </div>
       </div>

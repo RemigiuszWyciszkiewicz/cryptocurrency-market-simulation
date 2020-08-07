@@ -12,6 +12,7 @@ export class SideMenuComponent implements OnInit {
       title: 'Dashboard',
       link: '/pages/dashboard',
       home: true,
+
       icon: {
         icon: 'chart-area',
         pack: 'font-awesome',

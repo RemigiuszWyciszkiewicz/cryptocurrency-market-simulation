@@ -1,3 +1,5 @@
+@import 'src/app/utils/styles/variables';
+
 :host {
   width: 100%;
 }
@@ -10,18 +12,19 @@
 }
 
 .header-title {
-  font-family: 'Roboto', sans-serif;
-  background-color: white;
+  cursor: pointer;
+  font-family: $Roboto;
+  background-color: rgb(255, 255, 255);
   padding: 0.4rem;
   border-radius: 5%;
-  border: 2px solid black;
+  border: 2px solid rgb(0, 0, 0);
   &-text-1 {
     font-size: 1.4rem;
     font-weight: 600;
   }
   &-text-2 {
     font-size: 1.23rem;
-    color: #ff9500;
+    color: $color-primary;
   }
 
   &-icon {

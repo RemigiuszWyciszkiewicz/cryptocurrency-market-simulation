@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbMenuItem } from '@nebular/theme';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'coin-market-compact-side-menu',
   templateUrl: './compact-side-menu.component.html',
   styleUrls: ['./compact-side-menu.component.scss'],
 })
-export class CompactSideMenuComponent implements OnInit {
+export class CompactSideMenuComponent implements OnInit, OnDestroy {
   selectedItem: NbMenuItem;
+  subscription: Subscription;
   items: NbMenuItem[] = [
     {
       title: 'Dashboard',
@@ -33,10 +35,24 @@ export class CompactSideMenuComponent implements OnInit {
     },
   ];
 
-  constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _sideMenuService: NbMenuService
+  ) {}
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.selectedItem = this.items[0];
+
+    this.subscription = this._sideMenuService.onItemSelect().subscribe((value) => {
+      if (value.item.title === 'Dashboard') {
+        this.selectedItem = this.items[0];
+      }
+    });
   }
 
   select(menuItem: NbMenuItem): void {

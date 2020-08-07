@@ -30,7 +30,7 @@
         </coin-market-button>
       </div>
 
-      <div [formGroup]="recaptchaFormGroup">
+      <div [formGroup]="recaptchaFormGroup" class="mb-4">
         <re-captcha (resolved)="recaptchaResolve($event)" formControlName="recaptcha" [siteKey]="siteKey"> </re-captcha>
       </div>
 
@@ -100,7 +100,7 @@
 
             <div class="supported-coin-section-list" *ngIf="supportedCryptocurrencies$ | async as coins; else loader">
               <div class="supported-coin-section-list-item" *ngFor="let items of coins">
-                <img [src]="items.icon" alt="coin" />
+                <img class="supported-coin-section-list-item-icon" [src]="items.icon" alt="coin" />
                 {{ items.name }}
               </div>
             </div>

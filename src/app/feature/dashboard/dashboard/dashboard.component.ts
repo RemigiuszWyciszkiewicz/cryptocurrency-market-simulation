@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssetsService } from '@coin-market/data-access/assets/assets.service';
 import { ChartsService } from '@coin-market/data-access/charts/charts.service';
@@ -8,7 +8,7 @@ import { RankingService } from '@coin-market/data-access/ranking';
 import { TransactionsQuery, TransactionsService, TransactionStore } from '@coin-market/data-access/transactions';
 import { UserQuery, UserStore } from '@coin-market/data-access/user';
 import { DonutChartData } from '@coin-market/ui/charts/donut-chart/donut-chart.component';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ import { catchError, finalize, map, tap } from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   get httpErrorResponse(): HttpErrorResponse {
     return this.assetsError || this.transactionsError || this.userRankingInformationError || this.porfolioSummaryError;
   }
@@ -33,6 +33,8 @@ export class DashboardComponent implements OnInit {
     private readonly _render: Renderer2,
     private readonly _router: Router
   ) {}
+
+  domutChartDataSubscription: Subscription;
 
   porfolioSummaryLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   assetsLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -70,7 +72,10 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchDonutChartData(): void {
-    combineLatest([this._chartsService.getDonutChartData(this._userQuery.getId()), this._userQuery.selectUSD()])
+    this.domutChartDataSubscription = combineLatest([
+      this._chartsService.getDonutChartData(this._userQuery.getId()),
+      this._userQuery.selectUSD(),
+    ])
       .pipe(
         map((value) => ({ labels: [...value[0].labels, 'USD'], values: [...value[0].values, value[1]] })),
         tap((value: DonutChartData) => {
@@ -120,11 +125,9 @@ export class DashboardComponent implements OnInit {
       .getAllAssets(this._userQuery.getId())
       .pipe(
         tap((value: Asset[]) => {
-          console.log('fetched assets', value);
           this.assets = value;
         }),
         catchError((error) => {
-          console.log('', error);
           this.assetsError = error;
           return of(error);
         }),
@@ -162,5 +165,9 @@ export class DashboardComponent implements OnInit {
 
   redirectToMarketList(): void {
     this._router.navigate(['../pages/market']);
+  }
+
+  ngOnDestroy(): void {
+    this.domutChartDataSubscription.unsubscribe();
   }
 }
