@@ -12,15 +12,10 @@ export type SpinnerColor = 'primary' | 'secondary' | 'success' | 'danger' | 'war
 })
 export class SpinnerComponent {
   @Input() message: string;
-
   @Input() status: string;
-
   @Input() size: SpinnerSize = 'md';
-
   @Input() type: SpinnerType = 'border';
-
   @Input() color: SpinnerColor = 'primary';
-
   @Input() boxHeight: number;
 
   get getPreferedHeight(): object {

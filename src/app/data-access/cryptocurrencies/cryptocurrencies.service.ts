@@ -26,7 +26,7 @@ export class CryptocurrenciesService extends ApiService {
     return this.getAll<News>('news/' + id, params);
   }
 
-  getCryptocurrencyIcons(): Observable<{ name: string; icon: string }[]> {
+  getSupportedCryptocurrencies(): Observable<{ name: string; icon: string }[]> {
     return this.getAll<{ name: string; icon: string }>('icons');
   }
 }

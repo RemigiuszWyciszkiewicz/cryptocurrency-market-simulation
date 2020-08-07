@@ -1,3 +1,9 @@
+.container-fluid {
+  @media (min-width: 1700px) {
+    height: 115%;
+  }
+}
+
 .footer {
   width: 100%;
   position: absolute;
@@ -45,8 +51,11 @@
   background-repeat: repeat;
   background-size: cover;
   height: 100%;
-  @media (max-width: 650px) {
+  @media (max-width: 830px) {
     height: 92rem;
+  }
+  @media (max-width: 1500px) {
+    height: 123%;
   }
 
   .background {
@@ -131,4 +140,8 @@
     margin-top: 1rem;
     margin-left: 1rem;
   }
+}
+
+.loader-container {
+  margin-top: 2.3rem;
 }

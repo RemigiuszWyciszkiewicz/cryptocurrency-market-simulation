@@ -60,3 +60,7 @@ button {
 nb-context-menu {
   margin-top: 10px;
 }
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

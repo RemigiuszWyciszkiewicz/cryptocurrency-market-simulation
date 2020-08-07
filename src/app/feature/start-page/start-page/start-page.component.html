@@ -98,8 +98,8 @@
               Suppported coins
             </div>
 
-            <div class="supported-coin-section-list">
-              <div class="supported-coin-section-list-item" *ngFor="let items of cryptocurrenciesIconsMap$ | async">
+            <div class="supported-coin-section-list" *ngIf="supportedCryptocurrencies$ | async as coins; else loader">
+              <div class="supported-coin-section-list-item" *ngFor="let items of coins">
                 <img [src]="items.icon" alt="coin" />
                 {{ items.name }}
               </div>
@@ -111,3 +111,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #loader>
+  <div class="d-flex justify-content-center align-content-center loader-container">
+    <coin-market-spinner></coin-market-spinner>
+  </div>
+</ng-template>

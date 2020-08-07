@@ -11,7 +11,7 @@ import { UserFormBuilder } from '@coin-market/ui/forms';
 import { ToastrService } from '@coin-market/ui/toastr';
 import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -38,14 +38,19 @@ export class StartPageComponent implements OnInit {
   isLoginFormVisible = true;
   isRecaptchaTokenValid = false;
   showRecaptchaErrorMessage = false;
+  supportedCryptocurrenciesLoading = true;
   siteKey: string;
 
-  cryptocurrenciesIconsMap$: Observable<{ name: string; icon: string }[]>;
+  supportedCryptocurrencies$: Observable<{ name: string; icon: string }[]>;
 
   ngOnInit(): void {
     this.createFormGroups();
     this.siteKey = this._recaptchaSettings.siteKey;
-    this.cryptocurrenciesIconsMap$ = this._cryptocurrenciesService.getCryptocurrencyIcons();
+    this.supportedCryptocurrencies$ = this._cryptocurrenciesService.getSupportedCryptocurrencies().pipe(
+      finalize(() => {
+        this.supportedCryptocurrenciesLoading = false;
+      })
+    );
   }
 
   changeForm(): void {
