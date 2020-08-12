@@ -12,5 +12,12 @@ export class CardComponent {
   @ContentChild(CardHeaderComponent, { static: true }) cardHeaderComponent: CardHeaderComponent;
   @Input() loading: boolean;
   @Input() spinnerStatus: string;
+  @Input() loadingMinHeight;
   @Input() spinnerMessage = 'Loading...';
+
+  get minHightWhileLoading(): object {
+    return {
+      height: this.loadingMinHeight && this.loading ? `${this.loadingMinHeight}rem` : 'auto',
+    };
+  }
 }

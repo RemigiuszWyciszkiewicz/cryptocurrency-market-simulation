@@ -2,3 +2,9 @@
   height: 25vh;
   padding-top: 10vh;
 }
+
+.loader-card ::ng-deep {
+  nb-card {
+    background-color: transparent;
+  }
+}

@@ -72,3 +72,9 @@
 .pointer {
   cursor: pointer;
 }
+
+.loading-card ::ng-deep {
+  nb-card {
+    height: 4rem !important;
+  }
+}

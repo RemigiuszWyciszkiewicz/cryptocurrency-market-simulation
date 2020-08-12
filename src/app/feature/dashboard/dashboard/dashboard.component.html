@@ -1,52 +1,59 @@
-<coin-market-page-loader [isLoading]="pageLoading$ | async" [error]="httpErrorResponse">
+<coin-market-page-loader [isLoading]="false" [error]="httpErrorResponse">
   <ng-template aumsDigitalPageContentTpl>
     <div class="row">
       <div class="col-lg-8 col-sm-12">
         <div class="row">
           <div class="col-lg-6">
-            <coin-market-card>
+            <coin-market-card [loadingMinHeight]="6.5" [loading]="porfolioSummaryLoading$ | async">
               <coin-market-card-body>
-                <coin-market-portfolio-summary class="portfolio-summary" [data]="portfolioSummary">
+                <coin-market-portfolio-summary class="portfolio-summary" [data]="portfolioSummary$ | async">
                 </coin-market-portfolio-summary>
               </coin-market-card-body>
             </coin-market-card>
           </div>
           <div class="col-lg-6">
-            <coin-market-card>
+            <coin-market-card [loadingMinHeight]="6.5" [loading]="userRankingInformationLoading$ | async">
               <coin-market-card-body>
-                <coin-market-user-rank-widget [data]="userRankingInformation"></coin-market-user-rank-widget>
+                <ng-container *ngIf="userRankingInformation$ | async as userRankingInformation">
+                  <coin-market-user-rank-widget [data]="userRankingInformation"></coin-market-user-rank-widget>
+                </ng-container>
               </coin-market-card-body>
             </coin-market-card>
           </div>
         </div>
-        <ng-container *ngIf="assets && assets.length; else noAssetsTmp">
-          <ng-container *ngFor="let asset of assets; let index = index">
-            <ng-container *ngIf="asset.quantity > 0 || assets.length > 1; else noAssetsTmp">
-              <ng-container *ngIf="asset.quantity > 0">
-                <coin-market-card class="asset-item-card" [class.highlighted-item]="index % 2 !== 0">
-                  <coin-market-card-body>
-                    <coin-market-asset-item [data]="asset"></coin-market-asset-item>
-                  </coin-market-card-body>
-                </coin-market-card>
+
+        <ng-container>
+          <ng-container *ngIf="assets$ | async as assets; else loaderAssets">
+            <ng-container *ngIf="assets && assets.length; else noAssetsTmp">
+              <ng-container *ngFor="let asset of assets; let index = index">
+                <ng-container *ngIf="asset.quantity > 0 || assets.length > 1; else noAssetsTmp">
+                  <ng-container *ngIf="asset.quantity > 0">
+                    <coin-market-card class="asset-item-card" [class.highlighted-item]="index % 2 !== 0">
+                      <coin-market-card-body>
+                        <coin-market-asset-item [data]="asset"></coin-market-asset-item>
+                      </coin-market-card-body>
+                    </coin-market-card>
+                  </ng-container>
+                </ng-container>
               </ng-container>
             </ng-container>
           </ng-container>
         </ng-container>
       </div>
       <div class="col-lg-4 col-sm-12">
-        <coin-market-card>
+        <coin-market-card [loadingMinHeight]="23.7" [loading]="donutChartDataLoading$ | async">
           <coin-market-card-header>
             Portfolio
-            <div *ngIf="donutChartData" (click)="refreshDountChart($event)">
+            <div (click)="refreshDountChart($event)">
               <i class="refresh-icon fas fa-redo-alt"></i>
             </div>
           </coin-market-card-header>
           <coin-market-card-body>
-            <coin-market-donut-chart *ngIf="donutChartData" [data]="donutChartData"></coin-market-donut-chart>
+            <coin-market-donut-chart [data]="donutChartData$ | async"></coin-market-donut-chart>
           </coin-market-card-body>
         </coin-market-card>
         <div class="transaction-list-widget-container">
-          <coin-market-card>
+          <coin-market-card [loadingMinHeight]="49" [loading]="transactionsLoading$ | async">
             <coin-market-card-header>Latest transactions</coin-market-card-header>
             <coin-market-card-body>
               <ng-container *ngIf="transactions$ | async as transactions">
@@ -75,6 +82,10 @@
       Visit market
     </coin-market-bootstrap-badge>
   </div>
+</ng-template>
+
+<ng-template #loaderAssets>
+  <coin-market-card class="loading-card" [loading]="assetsLoading$ | async"></coin-market-card>
 </ng-template>
 
 <ng-template #noTransactionsTmp>
